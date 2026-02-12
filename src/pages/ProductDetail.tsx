@@ -32,6 +32,15 @@ const ProductDetail = () => {
   const currentVariant = product?.variants?.edges?.find(v => v.node.id === selectedVariant)?.node;
   const images = product?.images?.edges || [];
 
+  // Sync gallery image to selected variant's image
+  useEffect(() => {
+    if (!currentVariant?.image?.url || images.length === 0) return;
+    const matchIndex = images.findIndex(img => img.node.url === currentVariant.image!.url);
+    if (matchIndex !== -1 && matchIndex !== selectedImage) {
+      setSelectedImage(matchIndex);
+    }
+  }, [selectedVariant, currentVariant, images, selectedImage]);
+
   const handleAddToCart = async () => {
     if (!product || !currentVariant) return;
     await addItem({
