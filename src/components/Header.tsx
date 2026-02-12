@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { Menu, X, Search, User } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { CartDrawer } from '@/components/CartDrawer';
@@ -7,6 +7,8 @@ const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
+  const closeMenu = useCallback(() => setIsMobileMenuOpen(false), []);
+
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 50);
@@ -14,6 +16,26 @@ const Header = () => {
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
+  // Lock body scroll when mobile menu is open
+  useEffect(() => {
+    if (isMobileMenuOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => { document.body.style.overflow = ''; };
+  }, [isMobileMenuOpen]);
+
+  // Close on ESC
+  useEffect(() => {
+    if (!isMobileMenuOpen) return;
+    const handleKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') closeMenu();
+    };
+    window.addEventListener('keydown', handleKey);
+    return () => window.removeEventListener('keydown', handleKey);
+  }, [isMobileMenuOpen, closeMenu]);
 
   const navLinks = [
     { name: 'Home', href: '/' },
@@ -96,26 +118,41 @@ const Header = () => {
         </div>
       </nav>
 
-      {/* Mobile Menu */}
-      <div
-        className={`lg:hidden fixed inset-0 top-[116px] bg-obsidian/98 backdrop-blur-lg transition-all duration-500 ${
-          isMobileMenuOpen ? 'opacity-100 visible' : 'opacity-0 invisible'
-        }`}
-      >
-        <div className="flex flex-col items-center justify-center h-full gap-8">
-          {navLinks.map((link, index) => (
-            <Link
-              key={link.name}
-              to={link.href}
-              onClick={() => setIsMobileMenuOpen(false)}
-              className="text-cream font-display text-4xl tracking-wider hover:text-gold transition-colors"
-              style={{ animationDelay: `${index * 100}ms` }}
-            >
-              {link.name}
-            </Link>
-          ))}
-        </div>
-      </div>
+      {/* Mobile Menu — full-screen drawer */}
+      {isMobileMenuOpen && (
+        <>
+          {/* Backdrop */}
+          <div
+            className="lg:hidden fixed inset-0 z-40 bg-black/60"
+            onClick={closeMenu}
+            aria-hidden="true"
+          />
+          {/* Drawer */}
+          <div className="lg:hidden fixed inset-0 z-50 bg-obsidian flex flex-col overflow-y-auto">
+            {/* Drawer header with close button */}
+            <div className="flex items-center justify-between px-6 h-20 border-b border-border shrink-0">
+              <span className="font-display text-3xl text-cream tracking-wider">MOD#$T</span>
+              <button onClick={closeMenu} className="text-cream hover:text-gold transition-colors" aria-label="Close menu">
+                <X size={28} />
+              </button>
+            </div>
+            {/* Nav links — stacked, push layout */}
+            <nav className="flex flex-col items-center justify-center flex-1 gap-8 py-12">
+              {navLinks.map((link, index) => (
+                <Link
+                  key={link.name}
+                  to={link.href}
+                  onClick={closeMenu}
+                  className="text-cream font-display text-4xl tracking-wider hover:text-gold transition-colors"
+                  style={{ animationDelay: `${index * 80}ms` }}
+                >
+                  {link.name}
+                </Link>
+              ))}
+            </nav>
+          </div>
+        </>
+      )}
     </header>
   );
 };
