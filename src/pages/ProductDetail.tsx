@@ -123,8 +123,14 @@ const ProductDetail = () => {
                   <label className="text-cream text-sm tracking-[0.15em] uppercase mb-3 block">{option.name}</label>
                   <div className="flex flex-wrap gap-2">
                     {option.values.map((value) => {
+                      // Build desired options: current selections with this option replaced
+                      const desiredOptions = (currentVariant?.selectedOptions || []).map(o =>
+                        o.name === option.name ? { ...o, value } : o
+                      );
                       const matchingVariant = product.variants.edges.find(v =>
-                        v.node.selectedOptions.some(o => o.name === option.name && o.value === value)
+                        desiredOptions.every(desired =>
+                          v.node.selectedOptions.some(o => o.name === desired.name && o.value === desired.value)
+                        )
                       );
                       const isSelected = currentVariant?.selectedOptions?.some(o => o.name === option.name && o.value === value);
                       return (
