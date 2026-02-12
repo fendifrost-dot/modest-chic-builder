@@ -44,7 +44,7 @@ const CollectionsSection = () => {
             <Link
               key={collection.name}
               to={collection.href}
-              className="group relative overflow-hidden aspect-[3/4] opacity-0 animate-slide-up"
+              className="group relative overflow-hidden aspect-[3/4] animate-slide-up"
               style={{ animationDelay: `${index * 0.15}s` }}
             >
               {/* Image */}
