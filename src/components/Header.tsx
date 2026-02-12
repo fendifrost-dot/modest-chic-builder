@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
-import { Menu, X, ShoppingBag, Search, User } from 'lucide-react';
+import { Menu, X, Search, User } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { CartDrawer } from '@/components/CartDrawer';
 
 const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -90,12 +91,7 @@ const Header = () => {
             <button className="hidden sm:block text-cream hover:text-gold transition-colors" aria-label="Account">
               <User size={20} />
             </button>
-            <button className="relative text-cream hover:text-gold transition-colors" aria-label="Cart">
-              <ShoppingBag size={20} />
-              <span className="absolute -top-1 -right-1 w-4 h-4 bg-gold text-obsidian text-[10px] rounded-full flex items-center justify-center font-medium">
-                0
-              </span>
-            </button>
+            <CartDrawer />
           </div>
         </div>
       </nav>
