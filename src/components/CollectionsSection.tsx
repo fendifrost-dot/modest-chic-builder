@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
-import mensImage from '@/assets/collection-mens.jpg';
-import womensImage from '@/assets/collection-womens.jpg';
-import accessoriesImage from '@/assets/collection-accessories.jpg';
+import mensImage from '@/assets/collection-mens-brand.jpg';
+import womensImage from '@/assets/collection-womens-brand.jpg';
+import accessoriesImage from '@/assets/collection-accessories-brand.jpg';
 
 const collections = [
   {

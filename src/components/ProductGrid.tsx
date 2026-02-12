@@ -34,18 +34,20 @@ const ProductCard = ({ product }: ProductCardProps) => {
 
   return (
     <Link to={`/product/${node.handle}`} className="product-card group block">
-      <div className="relative overflow-hidden aspect-[3/4] bg-charcoal">
-        {image ? (
-          <img
-            src={image.url}
-            alt={image.altText || node.title}
-            className="product-card-image"
-          />
-        ) : (
-          <div className="w-full h-full flex items-center justify-center text-muted-foreground">
-            No Image
-          </div>
-        )}
+      <div className="relative overflow-hidden aspect-[3/4] bg-secondary rounded-sm border border-border">
+        <div className="absolute inset-0 p-3">
+          {image ? (
+            <img
+              src={image.url}
+              alt={image.altText || node.title}
+              className="product-card-image rounded-sm"
+            />
+          ) : (
+            <div className="w-full h-full flex items-center justify-center text-muted-foreground bg-muted rounded-sm">
+              No Image
+            </div>
+          )}
+        </div>
 
         <div className="absolute inset-0 bg-obsidian/60 opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-center justify-center">
           <button
@@ -62,7 +64,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
         <h3 className="text-cream text-sm font-medium mb-2 group-hover:text-gold transition-colors duration-300">
           {node.title}
         </h3>
-        <span className="text-cream font-medium">
+        <span className="text-gold-muted font-medium text-sm">
           ${parseFloat(price.amount).toFixed(2)} {price.currencyCode}
         </span>
       </div>
