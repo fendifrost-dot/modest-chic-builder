@@ -14,7 +14,7 @@ const Index = () => {
       <main>
         <HeroSection />
         <MarqueeBanner />
-        <ProductGrid title="Shop Now" subtitle="Featured" limit={6} />
+        <ProductGrid title="Shop Now" subtitle="Featured" limit={8} />
         <CollectionsSection />
         <BrandStory />
         <Newsletter />
