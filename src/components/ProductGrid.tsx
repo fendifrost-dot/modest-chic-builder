@@ -33,40 +33,38 @@ const ProductCard = ({ product }: ProductCardProps) => {
   };
 
   return (
-    <Link to={`/product/${node.handle}`} className="product-card group block">
-      <div className="relative overflow-hidden aspect-[3/4] bg-secondary rounded-sm border border-border">
-        <div className="absolute inset-0 p-3">
-          {image ? (
-            <img
-              src={image.url}
-              alt={image.altText || node.title}
-              className="product-card-image rounded-sm"
-            />
-          ) : (
-            <div className="w-full h-full flex items-center justify-center text-muted-foreground bg-muted rounded-sm">
-              No Image
-            </div>
-          )}
-        </div>
+    <Link to={`/product/${node.handle}`} className="group block">
+      <div className="relative overflow-hidden aspect-[3/4]">
+        {image ? (
+          <img
+            src={image.url}
+            alt={image.altText || node.title}
+            className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.02]"
+          />
+        ) : (
+          <div className="w-full h-full flex items-center justify-center text-muted-foreground bg-muted">
+            No Image
+          </div>
+        )}
 
-        <div className="absolute inset-0 bg-obsidian/60 opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-center justify-center">
+        <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-background/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-end justify-center pb-4">
           <button
             onClick={handleAddToCart}
             disabled={isLoading || !firstVariant?.availableForSale}
-            className="btn-hero px-8 py-3 text-xs transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500"
+            className="text-cream text-xs tracking-[0.2em] uppercase border border-cream/40 px-6 py-2.5 bg-background/60 backdrop-blur-sm hover:bg-cream hover:text-obsidian transition-all duration-300"
           >
             {isLoading ? <Loader2 className="w-4 h-4 animate-spin" /> : 'Add to Cart'}
           </button>
         </div>
       </div>
 
-      <div className="p-4">
-        <h3 className="text-cream text-sm font-medium mb-2 group-hover:text-gold transition-colors duration-300">
+      <div className="mt-4 space-y-1">
+        <h3 className="text-cream text-sm tracking-wide group-hover:text-gold transition-colors duration-300">
           {node.title}
         </h3>
-        <span className="text-gold-muted font-medium text-sm">
+        <p className="text-muted-foreground text-sm">
           ${parseFloat(price.amount).toFixed(2)} {price.currencyCode}
-        </span>
+        </p>
       </div>
     </Link>
   );
@@ -96,7 +94,7 @@ const ProductGrid = ({
   }, [limit, query]);
 
   return (
-    <section id="shop" className="py-24 bg-charcoal">
+    <section id="shop" className="py-24 bg-background">
       <div className="container mx-auto px-6 lg:px-12">
         <div className="text-center mb-16">
           <p className="text-gold text-sm tracking-[0.3em] uppercase mb-4">{subtitle}</p>
@@ -112,7 +110,7 @@ const ProductGrid = ({
             <p className="text-muted-foreground text-lg">No products found</p>
           </div>
         ) : (
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 lg:gap-6 stagger-children">
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-4 gap-y-10 lg:gap-x-6 lg:gap-y-14 stagger-children">
             {products.map((product) => (
               <ProductCard key={product.node.id} product={product} />
             ))}
