@@ -1,4 +1,4 @@
-import heroImage from '@/assets/hero-main.jpg';
+import heroImage from '@/assets/hero-brand-upload.jpg';
 
 const HeroSection = () => {
   return (
@@ -7,8 +7,8 @@ const HeroSection = () => {
       <div className="absolute inset-0">
         <img
           src={heroImage}
-          alt="MOD#$T Bear Collection"
-          className="parallax-bg"
+          alt="MOD#$T Brand Hero"
+          className="absolute inset-0 w-full h-full object-cover object-top"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-obsidian via-obsidian/70 to-obsidian/30"></div>
         <div className="overlay-vignette absolute inset-0"></div>
