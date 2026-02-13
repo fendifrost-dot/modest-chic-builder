@@ -6,6 +6,7 @@ import ProductGrid from '@/components/ProductGrid';
 import BrandStory from '@/components/BrandStory';
 import Newsletter from '@/components/Newsletter';
 import Footer from '@/components/Footer';
+import WelcomeOfferModal from '@/components/WelcomeOfferModal';
 
 const Index = () => {
   return (
@@ -20,6 +21,7 @@ const Index = () => {
         <Newsletter />
       </main>
       <Footer />
+      <WelcomeOfferModal />
     </div>
   );
 };
