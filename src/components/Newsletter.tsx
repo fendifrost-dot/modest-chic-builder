@@ -26,12 +26,18 @@ const Newsletter = () => {
           </h2>
           
           <p className="text-cream/60 mb-8">
-            Be the first to know about exclusive drops, limited editions, and special offers.
+            Join for early access to drops, limited editions, and receive
+            <span className="text-gold font-medium"> 10% off </span>
+            your first order.
           </p>
 
           {isSubscribed ? (
-            <div className="text-gold text-lg">
-              ✓ Welcome to the MOD#$T family
+            <div className="space-y-4">
+              <p className="text-gold text-lg">✓ Welcome to the MOD#$T family</p>
+              <div className="inline-flex items-center gap-3 px-6 py-3 border border-gold/40 text-gold font-display text-xl tracking-[0.2em]">
+                WELCOME10
+              </div>
+              <p className="text-cream/40 text-xs">Use this code at checkout for 10% off</p>
             </div>
           ) : (
             <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-4 max-w-md mx-auto">
