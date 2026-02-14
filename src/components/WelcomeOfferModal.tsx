@@ -35,8 +35,7 @@ const WelcomeOfferModal = () => {
 
   // Trigger: 15s timer OR 50% scroll
   useEffect(() => {
-    try { localStorage.removeItem(STORAGE_KEY); } catch {}
-    // if (isDismissed()) return;
+    if (isDismissed()) return;
 
     let triggered = false;
     const trigger = () => {
@@ -45,7 +44,7 @@ const WelcomeOfferModal = () => {
       setIsOpen(true);
     };
 
-    const timer = setTimeout(trigger, 3_000);
+    const timer = setTimeout(trigger, 15_000);
 
     const handleScroll = () => {
       const scrollPercent = window.scrollY / (document.documentElement.scrollHeight - window.innerHeight);

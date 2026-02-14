@@ -6,6 +6,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { useCartSync } from "@/hooks/useCartSync";
 import Index from "./pages/Index";
 import ProductDetail from "./pages/ProductDetail";
+import Collection from "./pages/Collection";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -15,6 +16,9 @@ const AppContent = () => {
   return (
     <Routes>
       <Route path="/" element={<Index />} />
+      <Route path="/mens" element={<Collection collection="mens" />} />
+      <Route path="/womens" element={<Collection collection="womens" />} />
+      <Route path="/accessories" element={<Collection collection="accessories" />} />
       <Route path="/product/:handle" element={<ProductDetail />} />
       {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
       <Route path="*" element={<NotFound />} />
