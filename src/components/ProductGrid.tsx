@@ -60,7 +60,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
 
       <div className="mt-4 space-y-1">
         <h3 className="text-cream text-sm tracking-wide group-hover:text-gold transition-colors duration-300">
-          {node.title}
+          {node.title.toLowerCase().replace(/\b\w/g, (c) => c.toUpperCase())}
         </h3>
         <p className="text-muted-foreground text-sm">
           ${parseFloat(price.amount).toFixed(2)} {price.currencyCode}
