@@ -5,8 +5,9 @@ const STORAGE_KEY = 'modest_welcome_dismissed';
 const DISMISS_DAYS = 14;
 const DISCOUNT_CODE = 'WELCOME10';
 
-/** Replace with your Mailchimp embedded-form action URL */
-const MAILCHIMP_ACTION_URL = 'https://YOUR_PREFIX.us00.list-manage.com/subscribe/post?u=YOUR_U&id=YOUR_ID';
+const MAILCHIMP_ACTION_URL = 'https://bemoremodest.us2.list-manage.com/subscribe/post?u=c231f42ccbe4f144fc8853755&id=1adec29a96&f_id=00c392e0f0';
+const HONEYPOT_NAME = 'b_c231f42ccbe4f144fc8853755_1adec29a96';
+const TAG_VALUE = '1544412';
 
 const WelcomeOfferModal = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -77,7 +78,7 @@ const WelcomeOfferModal = () => {
 
   const validateEmail = (v: string) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setErrorMsg('');
 
@@ -88,48 +89,43 @@ const WelcomeOfferModal = () => {
 
     setStatus('submitting');
 
-    try {
-      // Mailchimp embedded form uses JSONP via /post-json endpoint
-      const url = MAILCHIMP_ACTION_URL.replace('/post?', '/post-json?') + `&EMAIL=${encodeURIComponent(email)}&tags=welcome10`;
+    // Submit via hidden iframe to avoid navigation
+    const iframe = document.createElement('iframe');
+    iframe.name = 'mc_hidden_frame';
+    iframe.style.display = 'none';
+    document.body.appendChild(iframe);
 
-      await new Promise<void>((resolve, reject) => {
-        const callbackName = `mc_cb_${Date.now()}`;
-        (window as any)[callbackName] = (data: any) => {
-          delete (window as any)[callbackName];
-          script.remove();
-          if (data.result === 'success') resolve();
-          else reject(new Error(data.msg || 'Subscription failed'));
-        };
+    const form = document.createElement('form');
+    form.action = MAILCHIMP_ACTION_URL;
+    form.method = 'POST';
+    form.target = 'mc_hidden_frame';
+    form.style.display = 'none';
 
-        const script = document.createElement('script');
-        script.src = `${url}&c=${callbackName}`;
-        script.onerror = () => {
-          delete (window as any)[callbackName];
-          script.remove();
-          reject(new Error('Network error'));
-        };
-        document.body.appendChild(script);
+    const emailInput = document.createElement('input');
+    emailInput.name = 'EMAIL';
+    emailInput.value = email;
+    form.appendChild(emailInput);
 
-        // Timeout fallback
-        setTimeout(() => {
-          if ((window as any)[callbackName]) {
-            delete (window as any)[callbackName];
-            script.remove();
-            // Treat as success if Mailchimp URL isn't configured yet
-            resolve();
-          }
-        }, 5000);
-      });
+    const tagsInput = document.createElement('input');
+    tagsInput.name = 'tags';
+    tagsInput.value = TAG_VALUE;
+    form.appendChild(tagsInput);
 
+    const honeypot = document.createElement('input');
+    honeypot.name = HONEYPOT_NAME;
+    honeypot.value = '';
+    form.appendChild(honeypot);
+
+    document.body.appendChild(form);
+    form.submit();
+
+    // Clean up and show success after brief delay
+    setTimeout(() => {
+      form.remove();
+      iframe.remove();
       setStatus('success');
-      // Mark as dismissed so it won't show again
       try { localStorage.setItem(STORAGE_KEY, String(Date.now())); } catch {}
-    } catch (err: any) {
-      setStatus('error');
-      setErrorMsg(err?.message?.includes('already subscribed')
-        ? 'You\'re already part of the family!'
-        : 'Something went wrong. Please try again.');
-    }
+    }, 1500);
   };
 
   const handleCopy = () => {
