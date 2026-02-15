@@ -15,7 +15,7 @@ const Index = () => {
       <main>
         <HeroSection />
         <MarqueeBanner />
-        <ProductGrid title="New Season" subtitle="Essentials" limit={8} />
+        <ProductGrid title="Heart Chakra Collection" subtitle="Essentials" limit={50} query="collection:Essentials" />
         <CollectionsSection />
         <BrandStory />
         <Newsletter />
