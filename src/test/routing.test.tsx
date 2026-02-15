@@ -60,7 +60,7 @@ describe("Collection routing", () => {
         </Routes>
       </MemoryRouter>
     );
-    expect(screen.getByText("Accessories")).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "Accessories" })).toBeInTheDocument();
     expect(screen.getByText("Complete the Look")).toBeInTheDocument();
     expect(mockFetchCollectionProducts).toHaveBeenCalledWith("accessories", 50);
     expect(mockFetchProducts).not.toHaveBeenCalled();

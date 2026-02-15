@@ -41,11 +41,12 @@ describe("Header – mobile hamburger menu", () => {
     renderHeader();
     fireEvent.click(screen.getByLabelText("Toggle menu"));
 
-    expect(screen.getByText("Home")).toBeInTheDocument();
-    expect(screen.getByText("Mens")).toBeInTheDocument();
-    expect(screen.getByText("Womens")).toBeInTheDocument();
-    expect(screen.getByText("Accessories")).toBeInTheDocument();
-    expect(screen.getByText("New Arrivals")).toBeInTheDocument();
+    // Desktop nav + mobile drawer both render these links
+    expect(screen.getAllByText("Home").length).toBeGreaterThanOrEqual(2);
+    expect(screen.getAllByText("Mens").length).toBeGreaterThanOrEqual(2);
+    expect(screen.getAllByText("Womens").length).toBeGreaterThanOrEqual(2);
+    expect(screen.getAllByText("Accessories").length).toBeGreaterThanOrEqual(2);
+    expect(screen.getAllByText("New Arrivals").length).toBeGreaterThanOrEqual(2);
     expect(screen.getByLabelText("Close menu")).toBeInTheDocument();
   });
 
