@@ -1,13 +1,21 @@
 import { useState, useEffect, useCallback } from 'react';
 import { Menu, X, Search, User } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { CartDrawer } from '@/components/CartDrawer';
 
 const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const location = useLocation();
+  const navigate = useNavigate();
 
   const closeMenu = useCallback(() => setIsMobileMenuOpen(false), []);
+
+  // Close menu and restore scroll on route change
+  useEffect(() => {
+    setIsMobileMenuOpen(false);
+    document.body.style.overflow = '';
+  }, [location.pathname]);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -37,6 +45,14 @@ const Header = () => {
     return () => window.removeEventListener('keydown', handleKey);
   }, [isMobileMenuOpen, closeMenu]);
 
+  // Navigate with instant menu close
+  const handleNavClick = useCallback((e: React.MouseEvent, href: string) => {
+    e.preventDefault();
+    console.log('nav link click', href);
+    closeMenu();
+    requestAnimationFrame(() => navigate(href));
+  }, [closeMenu, navigate]);
+
   const navLinks = [
     { name: 'Home', href: '/' },
     { name: 'Mens', href: '/mens' },
@@ -62,7 +78,10 @@ const Header = () => {
         <div className="flex items-center justify-between h-20">
           {/* Mobile Menu Button */}
           <button
-            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            onClick={() => {
+              console.log('hamburger click');
+              setIsMobileMenuOpen(!isMobileMenuOpen);
+            }}
             className="lg:hidden text-cream hover:text-gold transition-colors"
             aria-label="Toggle menu"
           >
@@ -138,16 +157,16 @@ const Header = () => {
             </div>
             {/* Nav links — stacked, push layout */}
             <nav className="flex flex-col items-center justify-center flex-1 gap-8 py-12">
-              {navLinks.map((link, index) => (
-                <Link
+            {navLinks.map((link, index) => (
+                <a
                   key={link.name}
-                  to={link.href}
-                  onClick={closeMenu}
+                  href={link.href}
+                  onClick={(e) => handleNavClick(e, link.href)}
                   className="text-cream font-display text-4xl tracking-wider hover:text-gold transition-colors"
                   style={{ animationDelay: `${index * 80}ms` }}
                 >
                   {link.name}
-                </Link>
+                </a>
               ))}
             </nav>
           </div>
