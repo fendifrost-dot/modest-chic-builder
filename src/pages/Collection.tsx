@@ -12,7 +12,7 @@ interface CollectionPageProps {
 }
 
 const collectionConfig: Record<string, CollectionPageProps> = {
-  mens: { query: 'tag:mens', title: "Men's Collection", subtitle: 'For Him' },
+  mens: { collectionHandle: 'frontpage', title: "Men's Collection", subtitle: 'For Him' },
   womens: { collectionHandle: 'womens', title: "Women's Collection", subtitle: 'For Her' },
   accessories: { collectionHandle: 'accessories', title: 'Accessories', subtitle: 'Complete the Look' },
 };
