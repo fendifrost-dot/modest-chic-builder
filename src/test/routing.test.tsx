@@ -23,7 +23,7 @@ describe("Collection routing", () => {
     mockFetchCollectionProducts.mockClear();
   });
 
-  it("renders mens collection page at /mens using tag query (no Shopify collection)", () => {
+  it("renders mens collection page at /mens using collectionByHandle('frontpage')", () => {
     render(
       <MemoryRouter initialEntries={["/mens"]}>
         <Routes>
@@ -33,12 +33,12 @@ describe("Collection routing", () => {
     );
     expect(screen.getByText("Men's Collection")).toBeInTheDocument();
     expect(screen.getByText("For Him")).toBeInTheDocument();
-    // Mens has no Shopify collection — must use tag-based fetchProducts
-    expect(mockFetchProducts).toHaveBeenCalledWith(50, "tag:mens");
-    expect(mockFetchCollectionProducts).not.toHaveBeenCalled();
+    // Mens must use collectionByHandle("frontpage") for exact Shopify parity
+    expect(mockFetchCollectionProducts).toHaveBeenCalledWith("frontpage", 50);
+    expect(mockFetchProducts).not.toHaveBeenCalled();
   });
 
-  it("renders womens collection page at /womens using collectionByHandle", () => {
+  it("renders womens collection page at /womens using collectionByHandle('womens')", () => {
     render(
       <MemoryRouter initialEntries={["/womens"]}>
         <Routes>
@@ -48,12 +48,11 @@ describe("Collection routing", () => {
     );
     expect(screen.getByText("Women's Collection")).toBeInTheDocument();
     expect(screen.getByText("For Her")).toBeInTheDocument();
-    // Womens must use collectionByHandle for exact Shopify parity
     expect(mockFetchCollectionProducts).toHaveBeenCalledWith("womens", 50);
     expect(mockFetchProducts).not.toHaveBeenCalled();
   });
 
-  it("renders accessories collection page at /accessories using collectionByHandle", () => {
+  it("renders accessories collection page at /accessories using collectionByHandle('accessories')", () => {
     render(
       <MemoryRouter initialEntries={["/accessories"]}>
         <Routes>
@@ -63,7 +62,6 @@ describe("Collection routing", () => {
     );
     expect(screen.getByText("Accessories")).toBeInTheDocument();
     expect(screen.getByText("Complete the Look")).toBeInTheDocument();
-    // Accessories must use collectionByHandle for exact Shopify parity
     expect(mockFetchCollectionProducts).toHaveBeenCalledWith("accessories", 50);
     expect(mockFetchProducts).not.toHaveBeenCalled();
   });
