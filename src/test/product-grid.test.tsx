@@ -25,17 +25,17 @@ describe("ProductGrid", () => {
   it("renders with correct heading and subtitle", async () => {
     render(
       <MemoryRouter>
-        <ProductGrid title="New Season" subtitle="Essentials" limit={4} />
+        <ProductGrid title="Heart Chakra Collection" subtitle="Essentials" limit={4} />
       </MemoryRouter>
     );
-    expect(screen.getByText("New Season")).toBeInTheDocument();
+    expect(screen.getByText("Heart Chakra Collection")).toBeInTheDocument();
     expect(screen.getByText("Essentials")).toBeInTheDocument();
   });
 
   it("transforms product titles to title case", async () => {
     render(
       <MemoryRouter>
-        <ProductGrid title="New Season" subtitle="Essentials" limit={4} />
+        <ProductGrid title="Heart Chakra Collection" subtitle="Essentials" limit={4} />
       </MemoryRouter>
     );
     // Wait for products to load
