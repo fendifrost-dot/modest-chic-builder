@@ -10,13 +10,14 @@ vi.mock("@/lib/shopify", () => ({
       node: {
         id: "1",
         handle: "test-product",
-        title: "BOMBER JACKET",
+        title: "HEART CHAKRA BEAR T-SHIRT",
         images: { edges: [] },
-        priceRange: { minVariantPrice: { amount: "99.00", currencyCode: "USD" } },
-        variants: { edges: [{ node: { id: "v1", title: "Default", price: { amount: "99.00", currencyCode: "USD" }, availableForSale: true, selectedOptions: [] } }] },
+        priceRange: { minVariantPrice: { amount: "25.00", currencyCode: "USD" } },
+        variants: { edges: [{ node: { id: "v1", title: "Default", price: { amount: "25.00", currencyCode: "USD" }, availableForSale: true, selectedOptions: [] } }] },
       },
     },
   ]),
+  fetchCollectionProducts: vi.fn().mockResolvedValue([]),
 }));
 
 import ProductGrid from "@/components/ProductGrid";
@@ -39,7 +40,7 @@ describe("ProductGrid", () => {
       </MemoryRouter>
     );
     // Wait for products to load
-    const title = await screen.findByText("Bomber Jacket");
+    const title = await screen.findByText("Heart Chakra Bear T-Shirt");
     expect(title).toBeInTheDocument();
   });
 });
