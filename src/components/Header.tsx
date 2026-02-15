@@ -48,7 +48,6 @@ const Header = () => {
   // Navigate with instant menu close
   const handleNavClick = useCallback((e: React.MouseEvent, href: string) => {
     e.preventDefault();
-    console.log('nav link click', href);
     closeMenu();
     requestAnimationFrame(() => navigate(href));
   }, [closeMenu, navigate]);
@@ -78,10 +77,7 @@ const Header = () => {
         <div className="flex items-center justify-between h-20">
           {/* Mobile Menu Button */}
           <button
-            onClick={() => {
-              console.log('hamburger click');
-              setIsMobileMenuOpen(!isMobileMenuOpen);
-            }}
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             className="lg:hidden text-cream hover:text-gold transition-colors"
             aria-label="Toggle menu"
           >

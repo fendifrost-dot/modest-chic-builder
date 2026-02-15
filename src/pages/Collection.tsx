@@ -3,15 +3,18 @@ import ProductGrid from '@/components/ProductGrid';
 import Footer from '@/components/Footer';
 
 interface CollectionPageProps {
-  tag: string;
   title: string;
   subtitle: string;
+  /** If set, uses collectionByHandle query (exact Shopify parity). */
+  collectionHandle?: string;
+  /** Fallback: tag-based search query (used when no Shopify collection exists). */
+  query?: string;
 }
 
 const collectionConfig: Record<string, CollectionPageProps> = {
-  mens: { tag: 'mens', title: "Men's Collection", subtitle: 'For Him' },
-  womens: { tag: 'womens', title: "Women's Collection", subtitle: 'For Her' },
-  accessories: { tag: 'accessories', title: 'Accessories', subtitle: 'Complete the Look' },
+  mens: { query: 'tag:mens', title: "Men's Collection", subtitle: 'For Him' },
+  womens: { collectionHandle: 'womens', title: "Women's Collection", subtitle: 'For Her' },
+  accessories: { collectionHandle: 'accessories', title: 'Accessories', subtitle: 'Complete the Look' },
 };
 
 interface Props {
@@ -29,7 +32,8 @@ const Collection = ({ collection }: Props) => {
           title={config.title}
           subtitle={config.subtitle}
           limit={50}
-          query={`tag:${config.tag}`}
+          collectionHandle={config.collectionHandle}
+          query={config.query}
         />
       </main>
       <Footer />
