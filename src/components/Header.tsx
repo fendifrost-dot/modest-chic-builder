@@ -123,12 +123,12 @@ const Header = () => {
         <>
           {/* Backdrop */}
           <div
-            className="lg:hidden fixed inset-0 z-40 bg-black/60"
+            className="lg:hidden fixed inset-0 z-[70] bg-black/60"
             onClick={closeMenu}
             aria-hidden="true"
           />
           {/* Drawer */}
-          <div className="lg:hidden fixed inset-0 z-50 bg-obsidian flex flex-col overflow-y-auto">
+          <div className="lg:hidden fixed inset-0 z-[71] bg-obsidian flex flex-col overflow-y-auto">
             {/* Drawer header with close button */}
             <div className="flex items-center justify-between px-6 h-20 border-b border-border shrink-0">
               <span className="font-display text-3xl text-cream tracking-wider">MOD#$T</span>
