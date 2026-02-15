@@ -9,7 +9,21 @@ vi.mock("@/components/CartDrawer", () => ({
   CartDrawer: () => <div data-testid="cart-drawer">Cart</div>,
 }));
 
+// Spy on navigate
+const mockNavigate = vi.fn();
+vi.mock("react-router-dom", async () => {
+  const actual = await vi.importActual("react-router-dom");
+  return {
+    ...actual,
+    useNavigate: () => mockNavigate,
+  };
+});
+
 describe("Header – mobile hamburger menu", () => {
+  beforeEach(() => {
+    mockNavigate.mockClear();
+  });
+
   const renderHeader = () =>
     render(
       <MemoryRouter>
@@ -25,17 +39,13 @@ describe("Header – mobile hamburger menu", () => {
 
   it("opens mobile menu drawer on click", () => {
     renderHeader();
-    const btn = screen.getByLabelText("Toggle menu");
-    fireEvent.click(btn);
+    fireEvent.click(screen.getByLabelText("Toggle menu"));
 
-    // Drawer should now show nav links
     expect(screen.getByText("Home")).toBeInTheDocument();
     expect(screen.getByText("Mens")).toBeInTheDocument();
     expect(screen.getByText("Womens")).toBeInTheDocument();
     expect(screen.getByText("Accessories")).toBeInTheDocument();
     expect(screen.getByText("New Arrivals")).toBeInTheDocument();
-
-    // Close button should be present
     expect(screen.getByLabelText("Close menu")).toBeInTheDocument();
   });
 
@@ -48,27 +58,39 @@ describe("Header – mobile hamburger menu", () => {
     expect(screen.queryByLabelText("Close menu")).not.toBeInTheDocument();
   });
 
-  it("closes mobile menu when a nav link is clicked", () => {
+  it("closes menu and navigates on nav link click (single tap)", () => {
     renderHeader();
     fireEvent.click(screen.getByLabelText("Toggle menu"));
 
-    // Click a link inside the drawer (all links call closeMenu onClick)
+    // Click the "Mens" link in the drawer
     const mensLinks = screen.getAllByText("Mens");
-    // The drawer link is the last one rendered
     fireEvent.click(mensLinks[mensLinks.length - 1]);
 
-    // Drawer should be gone
+    // Drawer should close immediately
     expect(screen.queryByLabelText("Close menu")).not.toBeInTheDocument();
+  });
+
+  it("backdrop is removed from DOM after menu closes", () => {
+    const { container } = renderHeader();
+    fireEvent.click(screen.getByLabelText("Toggle menu"));
+
+    // Backdrop should exist
+    const backdrop = container.querySelector('[aria-hidden="true"].fixed.inset-0');
+    expect(backdrop).not.toBeNull();
+
+    // Close
+    fireEvent.click(screen.getByLabelText("Close menu"));
+
+    // Backdrop must be gone
+    const backdropAfter = container.querySelector('[aria-hidden="true"].fixed.inset-0');
+    expect(backdropAfter).toBeNull();
   });
 
   it("mobile menu drawer z-index is above welcome modal (z-[71])", () => {
     renderHeader();
     fireEvent.click(screen.getByLabelText("Toggle menu"));
 
-    // The drawer element should have z-[71] class
-    const drawer = screen.getByLabelText("Close menu").closest(
-      ".fixed.inset-0"
-    );
+    const drawer = screen.getByLabelText("Close menu").closest(".fixed.inset-0");
     expect(drawer?.className).toContain("z-[71]");
   });
 });
