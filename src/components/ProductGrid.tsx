@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-import { fetchProducts, ShopifyProduct } from '@/lib/shopify';
+import { fetchProducts, fetchCollectionProducts, ShopifyProduct } from '@/lib/shopify';
 import { useCartStore } from '@/stores/cartStore';
 import { toast } from 'sonner';
 import { Loader2 } from 'lucide-react';
@@ -75,6 +75,7 @@ interface ProductGridProps {
   subtitle?: string;
   limit?: number;
   query?: string;
+  collectionHandle?: string;
 }
 
 const ProductGrid = ({
@@ -82,16 +83,20 @@ const ProductGrid = ({
   subtitle = "Featured",
   limit = 20,
   query,
+  collectionHandle,
 }: ProductGridProps) => {
   const [products, setProducts] = useState<ShopifyProduct[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetchProducts(limit, query).then((p) => {
+    const load = collectionHandle
+      ? fetchCollectionProducts(collectionHandle, limit)
+      : fetchProducts(limit, query);
+    load.then((p) => {
       setProducts(p);
       setLoading(false);
     });
-  }, [limit, query]);
+  }, [limit, query, collectionHandle]);
 
   return (
     <section id="shop" className="py-24 bg-background">

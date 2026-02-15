@@ -187,6 +187,63 @@ export async function fetchProducts(first = 20, query?: string): Promise<Shopify
   return data?.data?.products?.edges || [];
 }
 
+const COLLECTION_BY_HANDLE_QUERY = `
+  query GetCollectionByHandle($handle: String!, $first: Int!) {
+    collectionByHandle(handle: $handle) {
+      products(first: $first) {
+        edges {
+          node {
+            id
+            title
+            description
+            handle
+            priceRange {
+              minVariantPrice {
+                amount
+                currencyCode
+              }
+            }
+            images(first: 5) {
+              edges {
+                node {
+                  url
+                  altText
+                }
+              }
+            }
+            variants(first: 10) {
+              edges {
+                node {
+                  id
+                  title
+                  price {
+                    amount
+                    currencyCode
+                  }
+                  availableForSale
+                  selectedOptions {
+                    name
+                    value
+                  }
+                }
+              }
+            }
+            options {
+              name
+              values
+            }
+          }
+        }
+      }
+    }
+  }
+`;
+
+export async function fetchCollectionProducts(handle: string, first = 20): Promise<ShopifyProduct[]> {
+  const data = await storefrontApiRequest(COLLECTION_BY_HANDLE_QUERY, { handle, first });
+  return data?.data?.collectionByHandle?.products?.edges || [];
+}
+
 export async function fetchProductByHandle(handle: string) {
   const data = await storefrontApiRequest(PRODUCT_BY_HANDLE_QUERY, { handle });
   return data?.data?.productByHandle || null;
