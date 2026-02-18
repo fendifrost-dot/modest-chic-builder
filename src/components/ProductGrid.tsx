@@ -76,6 +76,8 @@ interface ProductGridProps {
   limit?: number;
   query?: string;
   collectionHandle?: string;
+  sortKey?: string;
+  reverse?: boolean;
 }
 
 const ProductGrid = ({
@@ -84,6 +86,8 @@ const ProductGrid = ({
   limit = 20,
   query,
   collectionHandle,
+  sortKey,
+  reverse,
 }: ProductGridProps) => {
   const [products, setProducts] = useState<ShopifyProduct[]>([]);
   const [loading, setLoading] = useState(true);
@@ -91,12 +95,12 @@ const ProductGrid = ({
   useEffect(() => {
     const load = collectionHandle
       ? fetchCollectionProducts(collectionHandle, limit)
-      : fetchProducts(limit, query);
+      : fetchProducts(limit, query, sortKey, reverse);
     load.then((p) => {
       setProducts(p);
       setLoading(false);
     });
-  }, [limit, query, collectionHandle]);
+  }, [limit, query, collectionHandle, sortKey, reverse]);
 
   return (
     <section id="shop" className="py-24 bg-background">

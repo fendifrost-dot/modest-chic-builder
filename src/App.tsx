@@ -19,6 +19,7 @@ const AppContent = () => {
       <Route path="/mens" element={<Collection collection="mens" />} />
       <Route path="/womens" element={<Collection collection="womens" />} />
       <Route path="/accessories" element={<Collection collection="accessories" />} />
+      <Route path="/new-arrivals" element={<Collection collection="new-arrivals" />} />
       <Route path="/product/:handle" element={<ProductDetail />} />
       {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
       <Route path="*" element={<NotFound />} />

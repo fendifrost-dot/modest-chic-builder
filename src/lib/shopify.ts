@@ -83,8 +83,8 @@ export async function storefrontApiRequest(query: string, variables: Record<stri
 }
 
 const PRODUCTS_QUERY = `
-  query GetProducts($first: Int!, $query: String) {
-    products(first: $first, query: $query) {
+  query GetProducts($first: Int!, $query: String, $sortKey: ProductSortKeys, $reverse: Boolean) {
+    products(first: $first, query: $query, sortKey: $sortKey, reverse: $reverse) {
       edges {
         node {
           id
@@ -182,8 +182,8 @@ const PRODUCT_BY_HANDLE_QUERY = `
   }
 `;
 
-export async function fetchProducts(first = 20, query?: string): Promise<ShopifyProduct[]> {
-  const data = await storefrontApiRequest(PRODUCTS_QUERY, { first, query: query || null });
+export async function fetchProducts(first = 20, query?: string, sortKey?: string, reverse?: boolean): Promise<ShopifyProduct[]> {
+  const data = await storefrontApiRequest(PRODUCTS_QUERY, { first, query: query || null, sortKey: sortKey || null, reverse: reverse || null });
   return data?.data?.products?.edges || [];
 }
 
