@@ -15,7 +15,7 @@ const HeroSection = () => {
       </div>
 
       {/* Content */}
-      <div className="relative z-10 h-full flex flex-col items-center justify-end pb-32 px-6">
+      <div className="relative z-10 h-full flex flex-col items-center justify-end pb-24 md:pb-32 pt-32 md:pt-0 px-6">
         <div className="text-center max-w-4xl mx-auto">
           <p 
             className="text-gold text-sm tracking-[0.4em] uppercase mb-6 opacity-0 animate-fade-in"
@@ -25,7 +25,7 @@ const HeroSection = () => {
           </p>
           
           <h1 
-            className="font-display text-6xl md:text-8xl lg:text-9xl text-cream mb-6 opacity-0 animate-fade-in"
+            className="font-display text-5xl md:text-8xl lg:text-9xl text-cream mb-6 opacity-0 animate-fade-in"
             style={{ animationDelay: '0.5s' }}
           >
             BE MORE
