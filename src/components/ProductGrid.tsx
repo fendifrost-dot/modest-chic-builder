@@ -40,6 +40,8 @@ const ProductCard = ({ product }: ProductCardProps) => {
             src={image.url}
             alt={image.altText || node.title}
             className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.02]"
+            loading="lazy"
+            decoding="async"
           />
         ) : (
           <div className="w-full h-full flex items-center justify-center text-muted-foreground bg-muted">

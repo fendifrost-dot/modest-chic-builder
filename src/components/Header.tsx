@@ -87,7 +87,7 @@ const Header = () => {
           {/* Mobile Menu Button */}
           <button
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            className="lg:hidden text-cream hover:text-gold transition-colors"
+            className="lg:hidden text-cream hover:text-gold transition-colors p-2 min-w-11 min-h-11 flex items-center justify-center"
             aria-label="Toggle menu"
           >
             {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
@@ -133,7 +133,7 @@ const Header = () => {
           <div className="flex items-center gap-4">
             <button
               onClick={handleSearchClick}
-              className="text-cream hover:text-gold transition-colors"
+              className="text-cream hover:text-gold transition-colors p-2 min-w-11 min-h-11 flex items-center justify-center"
               aria-label="Search products"
             >
               <Search size={20} />

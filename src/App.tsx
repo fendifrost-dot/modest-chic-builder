@@ -9,6 +9,7 @@ import ProductDetail from "./pages/ProductDetail";
 import Collection from "./pages/Collection";
 import InfoPage from "./pages/InfoPage";
 import NotFound from "./pages/NotFound";
+import AnalyticsProvider from "@/components/AnalyticsProvider";
 
 const queryClient = new QueryClient();
 
@@ -42,7 +43,9 @@ const App = () => (
       <Toaster />
       <Sonner />
       <BrowserRouter>
-        <AppContent />
+        <AnalyticsProvider>
+          <AppContent />
+        </AnalyticsProvider>
       </BrowserRouter>
     </TooltipProvider>
   </QueryClientProvider>

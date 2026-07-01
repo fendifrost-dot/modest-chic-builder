@@ -6,6 +6,8 @@ import { useCartStore } from '@/stores/cartStore';
 import { toast } from 'sonner';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
+import { ProductJsonLd, BreadcrumbJsonLd } from '@/components/JsonLd';
+import { trackViewItem } from '@/lib/analytics';
 import { Loader2, ChevronLeft } from 'lucide-react';
 
 const ProductDetail = () => {
@@ -40,6 +42,16 @@ const ProductDetail = () => {
       setSelectedImage(matchIndex);
     }
   }, [selectedVariant, currentVariant, images, selectedImage]);
+
+  useEffect(() => {
+    if (!product || !currentVariant) return;
+    trackViewItem({
+      id: product.id,
+      name: product.title,
+      price: currentVariant.price.amount,
+      currency: currentVariant.price.currencyCode,
+    });
+  }, [product?.id, currentVariant?.id]);
 
   const handleAddToCart = async () => {
     if (!product || !currentVariant) return;
@@ -81,6 +93,21 @@ const ProductDetail = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      <ProductJsonLd
+        name={product.title}
+        description={product.description || product.title}
+        images={images.map((img) => img.node.url)}
+        price={currentVariant?.price?.amount || product.priceRange.minVariantPrice.amount}
+        currency={currentVariant?.price?.currencyCode || product.priceRange.minVariantPrice.currencyCode}
+        availability={Boolean(currentVariant?.availableForSale)}
+        url={`https://bemoremodest.com/product/${product.handle}`}
+      />
+      <BreadcrumbJsonLd
+        items={[
+          { name: 'Home', url: 'https://bemoremodest.com/' },
+          { name: product.title, url: `https://bemoremodest.com/product/${product.handle}` },
+        ]}
+      />
       <Header />
       <main className="pt-32 pb-24">
         <div className="container mx-auto px-6 lg:px-12">
@@ -98,6 +125,7 @@ const ProductDetail = () => {
                     src={images[selectedImage].node.url}
                     alt={images[selectedImage].node.altText || product.title}
                     className="w-full h-full object-cover"
+                    decoding="async"
                   />
                 )}
               </div>
@@ -111,7 +139,13 @@ const ProductDetail = () => {
                         i === selectedImage ? 'border-gold' : 'border-transparent'
                       }`}
                     >
-                      <img src={img.node.url} alt={img.node.altText || ''} className="w-full h-full object-cover" />
+                      <img
+                        src={img.node.url}
+                        alt={img.node.altText || ''}
+                        className="w-full h-full object-cover"
+                        loading="lazy"
+                        decoding="async"
+                      />
                     </button>
                   ))}
                 </div>
