@@ -72,7 +72,4 @@ After the report, tell me explicitly:
 
 ## After Lovable responds
 
-Paste Lovable's reply back into Cursor so we can:
-- Update `docs/SHOPIFY_HANDOFF.md` with confirmed env var names
-- Fix any code/docs that assumed wrong variable names
-- Give a definitive go-live directive (no guessing)
+Paste Lovable's reply back into Cursor. **Confirmed status is now in `docs/GO_LIVE_STATUS.md`** (updated 2026-07-01 from Lovable report + live DNS verification).

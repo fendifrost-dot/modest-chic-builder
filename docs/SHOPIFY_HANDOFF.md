@@ -7,7 +7,8 @@ Handoff document for an AI agent (Claude) or engineer picking up Shopify work on
 ## 1. Project Context
 
 - **Brand:** BeMoreModest — luxury streetwear (aesthetic target: KITH / Fear of God).
-- **Live site:** https://bemoremodest.com (currently served by Shopify template; migration to this Lovable-hosted storefront is in progress).
+- **Live site:** https://bemoremodest.com — Lovable-hosted React storefront (DNS → `185.158.133.1`). Domain cutover completed 2026-06-30. See `docs/GO_LIVE_STATUS.md` for confirmed state.
+- **Shopify store:** `modest-streetwear-apparel.myshopify.com` (primary domain; checkout host). **Not** `bemoremodest.myshopify.com`.
 - **Repo/preview:** Lovable project — preview at `https://id-preview--cefe4b7a-fc5f-4e5d-8d7c-ae311fa00064.lovable.app`, published at `https://modest-chic-builder.lovable.app`.
 - **Backend:** Lovable Cloud (Supabase) is enabled. One public edge function: `project-stats`.
 - **Shopify plan:** Paid (user confirmed). Checkout + Affirm + Printify remain on Shopify.
