@@ -52,6 +52,14 @@ const Header = () => {
     requestAnimationFrame(() => navigate(href));
   }, [closeMenu, navigate]);
 
+  const handleSearchClick = () => {
+    if (location.pathname === '/') {
+      document.getElementById('shop')?.scrollIntoView({ behavior: 'smooth' });
+    } else {
+      navigate('/#shop');
+    }
+  };
+
   const navLinks = [
     { name: 'Home', href: '/' },
     { name: 'Mens', href: '/mens' },
@@ -69,8 +77,9 @@ const Header = () => {
       }`}
     >
       {/* Announcement Bar */}
-      <div className="bg-gold text-obsidian text-center py-2 text-xs tracking-[0.2em] uppercase font-medium">
-        Enjoy Incredible Savings up to 30% Off! Discover Our Exclusive Sale at Checkout
+      <div className="bg-gold text-obsidian text-center py-2 px-4 text-[10px] sm:text-xs tracking-[0.15em] sm:tracking-[0.2em] uppercase font-medium leading-snug">
+        <span className="hidden sm:inline">Enjoy Incredible Savings up to 30% Off! Discover Our Exclusive Sale at Checkout</span>
+        <span className="sm:hidden">Up to 30% Off — Exclusive Savings at Checkout</span>
       </div>
 
       <nav className="container mx-auto px-6 lg:px-12">
@@ -122,12 +131,20 @@ const Header = () => {
 
           {/* Icons */}
           <div className="flex items-center gap-4">
-            <button className="text-cream hover:text-gold transition-colors" aria-label="Search">
+            <button
+              onClick={handleSearchClick}
+              className="text-cream hover:text-gold transition-colors"
+              aria-label="Search products"
+            >
               <Search size={20} />
             </button>
-            <button className="hidden sm:block text-cream hover:text-gold transition-colors" aria-label="Account">
+            <a
+              href="https://modest-streetwear-apparel.myshopify.com/account"
+              className="hidden sm:block text-cream hover:text-gold transition-colors"
+              aria-label="Account"
+            >
               <User size={20} />
-            </button>
+            </a>
             <CartDrawer />
           </div>
         </div>

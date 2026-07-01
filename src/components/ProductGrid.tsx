@@ -103,7 +103,7 @@ const ProductGrid = ({
   }, [limit, query, collectionHandle, sortKey, reverse]);
 
   return (
-    <section id="shop" className="py-24 bg-background">
+    <section id="shop" className="py-24 bg-background scroll-mt-28">
       <div className="container mx-auto px-6 lg:px-12">
         <div className="text-center mb-16">
           <p className="text-gold text-sm tracking-[0.3em] uppercase mb-4">{subtitle}</p>

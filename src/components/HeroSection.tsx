@@ -10,27 +10,26 @@ const HeroSection = () => {
           alt="MOD#$T Brand Hero"
           className="absolute inset-0 w-full h-full object-cover object-top"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-obsidian via-obsidian/70 to-obsidian/30"></div>
+        <div className="absolute inset-0 bg-gradient-to-t from-obsidian via-obsidian/80 to-obsidian/40"></div>
         <div className="overlay-vignette absolute inset-0"></div>
       </div>
 
       {/* Content */}
-      <div className="relative z-10 h-full flex flex-col items-center justify-end pb-24 md:pb-32 pt-32 md:pt-0 px-6">
+      <div className="relative z-10 h-full flex flex-col items-center justify-end pb-28 md:pb-36 pt-28 md:pt-0 px-6">
         <div className="text-center max-w-4xl mx-auto">
           <p 
             className="text-gold text-sm tracking-[0.4em] uppercase mb-6 opacity-0 animate-fade-in"
             style={{ animationDelay: '0.3s' }}
           >
-            Winter 2025 Collection
+            Spring / Summer 2026
           </p>
           
           <h1 
-            className="font-display text-5xl md:text-8xl lg:text-9xl text-cream mb-6 opacity-0 animate-fade-in"
+            className="font-display text-5xl md:text-7xl lg:text-8xl text-cream mb-6 leading-[0.95] opacity-0 animate-fade-in"
             style={{ animationDelay: '0.5s' }}
           >
-            BE MORE
-            <br />
-            <span className="text-gradient-gold">MODEST</span>
+            <span className="block">BE MORE</span>
+            <span className="block text-gradient-gold mt-1 md:mt-2">MODEST</span>
           </h1>
           
           <p 

@@ -32,7 +32,7 @@ const BrandStory = () => {
           </p>
 
           <a href="#lookbook" className="btn-hero inline-block">
-            Discover Our Story
+            Explore Collections
           </a>
         </div>
       </div>

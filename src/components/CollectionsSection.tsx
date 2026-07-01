@@ -26,7 +26,7 @@ const collections = [
 
 const CollectionsSection = () => {
   return (
-    <section className="py-24 bg-background">
+    <section id="lookbook" className="py-24 bg-background scroll-mt-28">
       <div className="container mx-auto px-6 lg:px-12">
         {/* Section Header */}
         <div className="text-center mb-16">

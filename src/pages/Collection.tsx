@@ -20,6 +20,7 @@ const collectionConfig: Record<string, CollectionPageProps> = {
   womens: { collectionHandle: 'womens', title: "Women's Collection", subtitle: 'For Her' },
   accessories: { collectionHandle: 'accessories', title: 'Accessories', subtitle: 'Complete the Look' },
   'new-arrivals': { title: 'New Arrivals', subtitle: 'Just Dropped', sortKey: 'CREATED_AT', reverse: true },
+  sale: { title: 'Sale', subtitle: 'Limited Time', query: 'tag:sale OR tag:Sale', sortKey: 'CREATED_AT', reverse: true },
 };
 
 interface Props {

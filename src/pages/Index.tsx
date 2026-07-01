@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import Header from '@/components/Header';
 import HeroSection from '@/components/HeroSection';
 import MarqueeBanner from '@/components/MarqueeBanner';
@@ -9,6 +10,15 @@ import Footer from '@/components/Footer';
 import WelcomeOfferModal from '@/components/WelcomeOfferModal';
 
 const Index = () => {
+  useEffect(() => {
+    if (window.location.hash) {
+      const id = window.location.hash.slice(1);
+      requestAnimationFrame(() => {
+        document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
+      });
+    }
+  }, []);
+
   return (
     <div className="min-h-screen bg-background">
       <Header />
