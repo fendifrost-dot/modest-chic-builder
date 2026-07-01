@@ -1,7 +1,11 @@
 #!/usr/bin/env node
 /**
  * Generates public/sitemap.xml from static routes + Shopify product handles.
- * Uses env vars at build time — does not import application shopify module.
+ * Runs at Lovable/GitHub build time (npm prebuild). Does not import shopify.ts.
+ *
+ * Token resolution (first match wins):
+ *   1. SHOPIFY_STOREFRONT_ACCESS_TOKEN — Lovable Shopify integration secret
+ *   2. VITE_SHOPIFY_STOREFRONT_TOKEN   — Vite client env name / local dev
  */
 import { writeFileSync } from 'node:fs';
 import { resolve, dirname } from 'node:path';
@@ -27,12 +31,19 @@ const staticPaths = [
   '/terms',
 ];
 
-const STORE_DOMAIN = process.env.VITE_SHOPIFY_STORE_DOMAIN || 'modest-streetwear-apparel.myshopify.com';
-const TOKEN = process.env.VITE_SHOPIFY_STOREFRONT_TOKEN;
+const STORE_DOMAIN =
+  process.env.VITE_SHOPIFY_STORE_DOMAIN || 'modest-streetwear-apparel.myshopify.com';
+
+const TOKEN =
+  process.env.SHOPIFY_STOREFRONT_ACCESS_TOKEN ||
+  process.env.VITE_SHOPIFY_STOREFRONT_TOKEN;
 
 async function fetchProductHandles() {
   if (!TOKEN) {
-    console.warn('[sitemap] VITE_SHOPIFY_STOREFRONT_TOKEN not set — product URLs omitted');
+    console.warn(
+      '[sitemap] No Shopify Storefront token — product URLs omitted. ' +
+        'Set SHOPIFY_STOREFRONT_ACCESS_TOKEN in Lovable Project Settings.'
+    );
     return [];
   }
 
@@ -54,9 +65,10 @@ async function fetchProductHandles() {
       body: JSON.stringify({ query, variables: { first: 250 } }),
     });
     const json = await res.json();
-    return (json?.data?.products?.edges || []).map(
-      (edge) => ({ path: `/product/${edge.node.handle}`, lastmod: edge.node.updatedAt })
-    );
+    return (json?.data?.products?.edges || []).map((edge) => ({
+      path: `/product/${edge.node.handle}`,
+      lastmod: edge.node.updatedAt,
+    }));
   } catch (err) {
     console.warn('[sitemap] Failed to fetch products:', err.message);
     return [];
