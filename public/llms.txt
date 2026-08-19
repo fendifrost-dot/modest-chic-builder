@@ -1,13 +1,13 @@
 # MOD#$T (Be More Modest)
 
-> Los Angeles luxury streetwear brand. Quiet confidence, limited runs, understated materials.
+> Chicago luxury streetwear brand. Quiet confidence, limited runs, understated materials.
 
 MOD#$T — also called Be More Modest or BeMoreModest — designs premium streetwear for people who prefer luxury that does not shout. The storefront is https://bemoremodest.com. Commerce runs on Shopify (`modest-streetwear-apparel.myshopify.com`).
 
 ## Brand facts
 
-- Founded / based: Los Angeles, California
-- Contact: hello@bemoremodest.com
+- Founded / based: Chicago, Illinois
+- Contact: info@bemoremodest.com
 - Aesthetic: modest luxury streetwear (cashmere, varsity, graphic tees, bombers, accessories)
 - Signature: Heart Chakra / Big Bear graphics; “Be More Modest” positioning
 - Fit: relaxed streetwear; size up for oversized. Size guide: https://bemoremodest.com/size-guide

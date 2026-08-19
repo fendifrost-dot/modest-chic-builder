@@ -1,7 +1,10 @@
 export const SITE_URL = 'https://bemoremodest.com';
 export const SITE_NAME = 'MOD#$T';
 export const SITE_ALT_NAME = 'Be More Modest';
-export const SITE_EMAIL = 'hello@bemoremodest.com';
+export const SITE_EMAIL = 'info@bemoremodest.com';
+export const SITE_CITY = 'Chicago';
+export const SITE_REGION = 'IL';
+export const SITE_LOCATION = 'Chicago, IL';
 export const SITE_DESCRIPTION =
   'Premium streetwear that speaks without shouting. Shop exclusive cashmere sweaters, varsity jackets, hoodies and accessories. Crafted for those who know true luxury is understated.';
 

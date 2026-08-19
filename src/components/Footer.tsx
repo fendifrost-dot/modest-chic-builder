@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { Instagram, Twitter, Mail, MapPin } from 'lucide-react';
-import { SITE_EMAIL, SOCIAL_URLS } from '@/lib/site';
+import { SITE_EMAIL, SITE_LOCATION, SOCIAL_URLS } from '@/lib/site';
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
@@ -51,7 +51,7 @@ const Footer = () => {
               </a>
               <div className="flex items-center gap-3 text-cream/50">
                 <MapPin size={16} />
-                Los Angeles, CA
+                {SITE_LOCATION}
               </div>
             </div>
           </div>

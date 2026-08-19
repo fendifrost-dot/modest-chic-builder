@@ -3,7 +3,7 @@ import Footer from '@/components/Footer';
 import { Link } from 'react-router-dom';
 import SeoHead from '@/components/SeoHead';
 import { FaqJsonLd } from '@/components/JsonLd';
-import { pageTitle, SITE_DESCRIPTION, SITE_EMAIL } from '@/lib/site';
+import { pageTitle, SITE_DESCRIPTION, SITE_EMAIL, SITE_LOCATION } from '@/lib/site';
 
 interface PageContent {
   title: string;
@@ -42,7 +42,7 @@ const pages: Record<string, PageContent> = {
       },
       {
         heading: 'Location',
-        body: 'Los Angeles, CA',
+        body: SITE_LOCATION,
       },
       {
         heading: 'Response Time',
@@ -76,7 +76,7 @@ const pages: Record<string, PageContent> = {
       },
       {
         heading: 'How to Start a Return',
-        body: 'Email hello@bemoremodest.com with your order number and reason for return. We will send you a prepaid return label when eligible.',
+        body: 'Email info@bemoremodest.com with your order number and reason for return. We will send you a prepaid return label when eligible.',
       },
       {
         heading: 'Exchanges',
@@ -97,7 +97,7 @@ const pages: Record<string, PageContent> = {
       },
       {
         heading: 'Approximate unisex tee fit',
-        body: 'XS extra fitted • S fitted • M regular streetwear • L relaxed • XL oversized • 2XL–5XL extended. Jackets and cashmere follow standard US sizing. If you prefer an oversized look, size up. Email hello@bemoremodest.com with height, weight, and preferred fit for a recommendation.',
+        body: 'XS extra fitted • S fitted • M regular streetwear • L relaxed • XL oversized • 2XL–5XL extended. Jackets and cashmere follow standard US sizing. If you prefer an oversized look, size up. Email info@bemoremodest.com with height, weight, and preferred fit for a recommendation.',
       },
     ],
   },
@@ -136,7 +136,7 @@ const pages: Record<string, PageContent> = {
       },
       {
         heading: 'Your Rights',
-        body: 'You may request access to or deletion of your personal data by contacting hello@bemoremodest.com.',
+        body: 'You may request access to or deletion of your personal data by contacting info@bemoremodest.com.',
       },
     ],
   },
@@ -162,11 +162,11 @@ const pages: Record<string, PageContent> = {
     subtitle: 'Join the Team',
     sections: [
       {
-        body: 'We are a growing brand based in Los Angeles. While we do not have open roles listed right now, we are always interested in connecting with creative talent.',
+        body: 'We are a growing brand based in Chicago. While we do not have open roles listed right now, we are always interested in connecting with creative talent.',
       },
       {
         heading: 'Get in Touch',
-        body: 'Send your portfolio and a brief introduction to hello@bemoremodest.com with the subject line "Careers".',
+        body: 'Send your portfolio and a brief introduction to info@bemoremodest.com with the subject line "Careers".',
       },
     ],
   },
@@ -179,7 +179,7 @@ const pages: Record<string, PageContent> = {
       },
       {
         heading: 'Contact',
-        body: 'hello@bemoremodest.com — subject line "Press"',
+        body: 'info@bemoremodest.com — subject line "Press"',
       },
     ],
   },

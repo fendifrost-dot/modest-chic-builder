@@ -20,15 +20,15 @@ export const SiteJsonLd = () => (
         url: 'https://bemoremodest.com',
         logo: 'https://bemoremodest.com/favicon.svg',
         image: 'https://bemoremodest.com/og-image.jpg',
-        email: 'hello@bemoremodest.com',
+        email: 'info@bemoremodest.com',
         description:
-          'MOD#$T (Be More Modest) is a Los Angeles luxury streetwear brand crafting limited-run cashmere, varsity jackets, tees, and accessories for understated confidence.',
+          'MOD#$T (Be More Modest) is a Chicago luxury streetwear brand crafting limited-run cashmere, varsity jackets, tees, and accessories for understated confidence.',
         foundingLocation: {
           '@type': 'Place',
           address: {
             '@type': 'PostalAddress',
-            addressLocality: 'Los Angeles',
-            addressRegion: 'CA',
+            addressLocality: 'Chicago',
+            addressRegion: 'IL',
             addressCountry: 'US',
           },
         },

@@ -27,7 +27,7 @@ const collectionConfig: Record<string, CollectionPageProps> = {
     title: "Men's Collection",
     subtitle: 'For Him',
     path: '/mens',
-    description: "Shop men's MOD#$T luxury streetwear — cashmere sweaters, varsity jackets, tees, and limited drops crafted in Los Angeles.",
+    description: "Shop men's MOD#$T luxury streetwear — cashmere sweaters, varsity jackets, tees, and limited drops crafted in Chicago.",
   },
   womens: {
     collectionHandle: 'womens',
