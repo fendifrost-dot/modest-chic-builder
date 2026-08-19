@@ -57,7 +57,7 @@ const EmailPreferences = () => {
       heading="Email Preferences"
     >
       <p className="text-cream/60 leading-relaxed mb-10">
-        Choose how you hear from {SITE_NAME}. You can unsubscribe from promotional email or update your marketing preferences at any time. You do not need an account. You do not need to give a reason.
+        Choose how you hear from {SITE_NAME}. You can unsubscribe from promotional email or update your marketing preferences at any time. You do not need an account. You do not need to give a reason. Modest does not send SMS.
       </p>
 
       {status === 'unsubscribed' ? (

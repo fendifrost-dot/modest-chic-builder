@@ -1,6 +1,8 @@
 import {
   ENTITY_ID,
   ENTITY_NAME,
+  LEGAL_ENTITY_NAME,
+  LEGAL_STREET,
   SITE_ALT_NAME,
   SITE_CITY,
   SITE_EMAIL,
@@ -30,6 +32,7 @@ export const SiteJsonLd = () => (
         '@id': ENTITY_ID,
         '@type': ['Organization', 'Brand', 'ClothingStore'],
         name: ENTITY_NAME,
+        legalName: LEGAL_ENTITY_NAME,
         alternateName: [SITE_NAME, SITE_ALT_NAME, 'BeMoreModest'],
         url: SITE_URL,
         logo: `${SITE_URL}/favicon.svg`,
@@ -38,6 +41,13 @@ export const SiteJsonLd = () => (
         description:
           `${ENTITY_NAME} (${SITE_NAME}) is a Chicago luxury streetwear brand founded in ${SITE_FOUNDED}, known for outerwear, cashmere, sweatshirts, T-shirts, and accessories.`,
         foundingDate: '2017-09',
+        address: {
+          '@type': 'PostalAddress',
+          streetAddress: LEGAL_STREET,
+          addressLocality: SITE_CITY,
+          addressRegion: SITE_REGION,
+          addressCountry: 'US',
+        },
         foundingLocation: {
           '@type': 'Place',
           address: {

@@ -8,7 +8,7 @@ const marketingFocus = [
   'Content',
   'Creator / influencer research',
   'Campaign planning',
-  'Email / SMS support',
+  'Email support',
   'Fashion / culture research',
   'Analytics',
   'Community / event support',

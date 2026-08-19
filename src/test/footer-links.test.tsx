@@ -46,5 +46,6 @@ describe("Footer company and support links", () => {
     const hrefs = screen.getAllByRole("link").map((link) => link.getAttribute("href"));
     expect(hrefs.every((href) => href && href !== "#")).toBe(true);
     expect(screen.getByText(/© \d{4} MOD#\$T\. All rights reserved\./)).toBeInTheDocument();
+    expect(screen.getByText(/8402 S Burley Ave/)).toBeInTheDocument();
   });
 });

@@ -21,7 +21,11 @@ describe("Legal and email preference pages", () => {
     expect(screen.getByText(/Effective date: August 19, 2026/)).toBeInTheDocument();
     expect(screen.getAllByText(/Shopify checkout/i).length).toBeGreaterThan(0);
     expect(screen.getAllByText(/Mailchimp/i).length).toBeGreaterThan(0);
-    expect(screen.getByText(/legal business entity name is not published/i)).toBeInTheDocument();
+    expect(screen.getAllByText(/Modest Streetwear Apparel Inc\./).length).toBeGreaterThan(0);
+    expect(screen.getAllByText(/8402 S Burley Ave/).length).toBeGreaterThan(0);
+    expect(screen.getAllByText(/Stripe/).length).toBeGreaterThan(0);
+    expect(screen.getAllByText(/Meta Pixel/i).length).toBeGreaterThan(0);
+    expect(screen.getAllByText(/does not send SMS/i).length).toBeGreaterThan(0);
     expect(screen.getByText(/We therefore do not state/i)).toBeInTheDocument();
     expect(screen.getByText(/do not sell personal information/i)).toBeInTheDocument();
   });
@@ -30,10 +34,12 @@ describe("Legal and email preference pages", () => {
     wrap(<Terms />);
     expect(screen.getByRole("heading", { name: "Terms of Use" })).toBeInTheDocument();
     expect(screen.getByText(/Draft for legal review/i)).toBeInTheDocument();
+    expect(screen.getAllByText(/Modest Streetwear Apparel Inc\./).length).toBeGreaterThan(0);
+    expect(screen.getAllByText(/8402 S Burley Ave/).length).toBeGreaterThan(0);
     expect(screen.getByText(/governing jurisdiction/i)).toBeInTheDocument();
   });
 
-  it("renders functional privacy choices without a fake Do Not Sell toggle", () => {
+  it("renders a working Meta Pixel opt-out, not a decorative Do Not Sell label", () => {
     wrap(<PrivacyChoices />);
     expect(screen.getByRole("heading", { name: "Your Privacy Choices" })).toBeInTheDocument();
     expect(screen.getByRole("heading", { name: "Access My Information" })).toBeInTheDocument();
@@ -41,6 +47,7 @@ describe("Legal and email preference pages", () => {
     expect(screen.getByRole("heading", { name: "Delete My Information" })).toBeInTheDocument();
     expect(screen.getByRole("link", { name: "Email Preferences" })).toHaveAttribute("href", "/email-preferences");
     expect(screen.getByText(/Shopify Storefront API/i)).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: /Turn off Meta Pixel on this browser/i })).toBeInTheDocument();
     expect(screen.queryByRole("button", { name: /do not sell/i })).not.toBeInTheDocument();
   });
 

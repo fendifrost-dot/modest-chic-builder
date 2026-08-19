@@ -1,13 +1,14 @@
 import { Link } from 'react-router-dom';
 import PageShell from '@/components/info/PageShell';
 import InquiryForm from '@/components/info/InquiryForm';
+import MetaPixelChoice from '@/components/info/MetaPixelChoice';
 import { PRIVACY_CONTACT_EMAIL, TRACKERS } from '@/lib/privacy';
 import { SITE_NAME } from '@/lib/site';
 
 const PrivacyChoices = () => (
   <PageShell
     title={`Your Privacy Choices | ${SITE_NAME}`}
-    description="Submit access, correction, or deletion requests, manage marketing email, and read how tracking works on Modest (MOD#$T)."
+    description="Submit access, correction, or deletion requests, manage marketing email, and turn off the Meta Pixel on Modest (MOD#$T)."
     path="/privacy-choices"
     eyebrow="Privacy"
     heading="Your Privacy Choices"
@@ -16,7 +17,7 @@ const PrivacyChoices = () => (
     <p className="text-cream/60 leading-relaxed mb-10">
       Use these controls for Modest ({SITE_NAME}). Access, correction, and deletion requests
       email {PRIVACY_CONTACT_EMAIL}. Marketing opt-out runs through Mailchimp on Email Preferences.
-      This page is not a cookie-consent banner — the site does not currently ship one.
+      The Meta Pixel control below is honored on this site for this browser.
     </p>
 
     <section className="space-y-3 mb-8">
@@ -33,7 +34,7 @@ const PrivacyChoices = () => (
       <h2 className="font-display text-2xl text-cream tracking-wider">Delete My Information</h2>
       <p className="text-cream/60 text-sm leading-relaxed mb-6">
         Request deletion where applicable. Depending on where you live and applicable law, we may
-        be able to access, correct, or delete personal information we hold. Shopify and Mailchimp
+        be able to access, correct, or delete personal information we hold. Shopify, Stripe, and Mailchimp
         hold much of the order and list data — we will use your request to work through those
         systems where we can.
       </p>
@@ -66,16 +67,16 @@ const PrivacyChoices = () => (
       <h2 className="font-display text-2xl text-cream tracking-wider">Marketing Preferences</h2>
       <p className="text-cream/60 leading-relaxed">
         <Link to="/email-preferences" className="text-gold hover:underline">Email Preferences</Link>
-        {' '}— stay on the list or unsubscribe from promotional email. No login required. No reason required.
+        {' '}— stay on the list or unsubscribe from promotional email. No login required. No reason required. Modest does not send SMS.
       </p>
     </section>
 
     <section className="space-y-3 mb-10">
       <h2 className="font-display text-2xl text-cream tracking-wider">Cookie / Tracking Choices</h2>
       <p className="text-cream/60 leading-relaxed mb-6">
-        Modest does not currently ship a consent-management platform. There is no on-site switch to
-        disable analytics or advertising categories. Browser settings can block or delete cookies.
-        Cart data lives in your browser’s local storage so checkout can work.
+        Modest does not currently ship a full consent-management platform. Necessary cart and checkout
+        storage cannot be turned off if you want to buy. Google Analytics, if configured, has no on-site
+        category switch. Meta Pixel can be turned off below.
       </p>
       <div className="overflow-x-auto border border-border">
         <table className="w-full text-left text-xs text-cream/60">
@@ -106,14 +107,14 @@ const PrivacyChoices = () => (
     </section>
 
     <section className="space-y-3">
-      <h2 className="font-display text-2xl text-cream tracking-wider">Sale / sharing</h2>
-      <p className="text-cream/60 leading-relaxed">
-        We do not display a “Do Not Sell or Share” toggle that would silently disable pixels,
-        because this site has no such wired control and California applicability has not been
-        assessed in this project. Displaying that control would imply a legal-right mechanism
-        that is not implemented. If a Meta Pixel or Google tag is configured, you can still send
-        an advertising/sharing request above, and you can use your browser or industry opt-out tools.
+      <h2 className="font-display text-2xl text-cream tracking-wider">Opt Out of Targeted Advertising</h2>
+      <p className="text-cream/60 leading-relaxed mb-6">
+        Modest uses Meta Pixel for advertising measurement. Some privacy laws treat that as a “sale”
+        or “share” of personal information. California’s applicability to this business has not been
+        separately assessed. The control below turns the Meta Pixel off on bemoremodest.com for this
+        browser. It is not a claim that every California right applies to every visitor.
       </p>
+      <MetaPixelChoice />
     </section>
   </PageShell>
 );

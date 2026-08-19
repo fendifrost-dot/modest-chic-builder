@@ -1,3 +1,5 @@
+import { isMetaAdvertisingOptedOut } from '@/lib/ad-choices';
+
 declare global {
   interface Window {
     dataLayer?: unknown[];
@@ -11,6 +13,10 @@ const GA_ID = import.meta.env.VITE_GA_MEASUREMENT_ID as string | undefined;
 const META_PIXEL_ID = import.meta.env.VITE_META_PIXEL_ID as string | undefined;
 
 let initialized = false;
+
+function shouldLoadMetaPixel(): boolean {
+  return Boolean(META_PIXEL_ID) && !isMetaAdvertisingOptedOut();
+}
 
 export function initAnalytics() {
   if (initialized || typeof window === 'undefined') return;
@@ -30,7 +36,7 @@ export function initAnalytics() {
     document.head.appendChild(gaScript);
   }
 
-  if (META_PIXEL_ID) {
+  if (shouldLoadMetaPixel()) {
     const fbq = function fbq(...args: unknown[]) {
       if ((fbq as typeof fbq & { callMethod?: (...a: unknown[]) => void }).callMethod) {
         (fbq as typeof fbq & { callMethod: (...a: unknown[]) => void }).callMethod(...args);
@@ -63,7 +69,7 @@ export function trackPageView(path: string) {
       page_title: document.title,
     });
   }
-  if (META_PIXEL_ID && window.fbq) {
+  if (shouldLoadMetaPixel() && window.fbq) {
     window.fbq('track', 'PageView');
   }
 }
@@ -86,7 +92,7 @@ export function trackViewItem({
       items: [{ item_id: id, item_name: name, price: parseFloat(price) }],
     });
   }
-  if (META_PIXEL_ID && window.fbq) {
+  if (shouldLoadMetaPixel() && window.fbq) {
     window.fbq('track', 'ViewContent', {
       content_ids: [id],
       content_name: name,

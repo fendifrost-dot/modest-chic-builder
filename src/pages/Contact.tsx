@@ -1,6 +1,6 @@
 import PageShell from '@/components/info/PageShell';
 import InquiryForm from '@/components/info/InquiryForm';
-import { SITE_EMAIL, SITE_LOCATION, SITE_NAME } from '@/lib/site';
+import { LEGAL_ADDRESS, SITE_EMAIL, SITE_NAME } from '@/lib/site';
 
 const Contact = () => (
   <PageShell
@@ -11,7 +11,7 @@ const Contact = () => (
     heading="Contact Us"
   >
     <p className="text-cream/60 leading-relaxed mb-8">
-      {SITE_LOCATION}. Write {SITE_EMAIL} or use the form — it opens a message to the same inbox.
+      {LEGAL_ADDRESS}. Write {SITE_EMAIL} — that is the only public inbox — or use the form. It opens a message to the same address.
     </p>
 
     <InquiryForm

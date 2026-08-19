@@ -1,21 +1,30 @@
 /**
- * Privacy facts derived from this repo — not a generic template.
+ * Privacy facts derived from this repo plus owner-confirmed operators.
  * Update this file when trackers or processors change.
  */
 export const PRIVACY_EFFECTIVE_DATE = 'August 19, 2026';
 
-/** Confirmed contact used on the site. Legal entity name is not in the repo. */
+/** Only public inbox. Casing in copy is info@bemoremodest.com. */
 export const PRIVACY_CONTACT_EMAIL = 'info@bemoremodest.com';
 
 export const TRACKERS = [
   {
     service: 'Shopify Storefront API + Shopify Checkout',
-    purpose: 'Catalog, cart, checkout, payments, shipping rates, order email, customer accounts',
-    data: 'Cart contents, product views via API, checkout identity, shipping/billing, payment tokens (to Shopify/processors — not to this React app)',
+    purpose: 'Catalog, cart, checkout, shipping rates, order email, customer accounts',
+    data: 'Cart contents, product views via API, checkout identity, shipping/billing',
     loadsBeforeConsent: true,
     storage: 'localStorage key `shopify-cart`; Shopify checkout cookies on the Shopify domain',
     disclosure: true,
     control: 'Necessary for purchasing. Account: modest-streetwear-apparel.myshopify.com/account',
+  },
+  {
+    service: 'Stripe',
+    purpose: 'Payment processing at Shopify checkout',
+    data: 'Payment-card details and related transaction data — handled by Stripe, not by the Modest React storefront',
+    loadsBeforeConsent: true,
+    storage: 'Stripe / Shopify checkout cookies on the checkout domain',
+    disclosure: true,
+    control: 'Necessary to pay for an order',
   },
   {
     service: 'Mailchimp (audience signup)',
@@ -33,16 +42,16 @@ export const TRACKERS = [
     loadsBeforeConsent: true,
     storage: 'Google cookies (_ga and related) only if VITE_GA_MEASUREMENT_ID is set',
     disclosure: true,
-    control: 'No on-site category toggle. Browser cookie controls. Script does not load if the ID is unset.',
+    control: 'No on-site analytics toggle. Browser cookie controls. Script does not load if the ID is unset.',
   },
   {
-    service: 'Meta Pixel (optional)',
-    purpose: 'Advertising measurement / retargeting if enabled',
-    data: 'PageView, ViewContent, browser identifiers',
+    service: 'Meta Pixel (active)',
+    purpose: 'Advertising measurement and retargeting',
+    data: 'PageView, ViewContent, browser identifiers, IP / device data as collected by Meta',
     loadsBeforeConsent: true,
-    storage: '_fbp / Meta cookies only if VITE_META_PIXEL_ID is set',
+    storage: '_fbp / Meta cookies unless the visitor has opted out or sent Global Privacy Control',
     disclosure: true,
-    control: 'No on-site Do Not Sell toggle. Script does not load if the ID is unset.',
+    control: '/privacy-choices Meta Pixel opt-out (this browser) and Global Privacy Control',
   },
   {
     service: 'Google Fonts',

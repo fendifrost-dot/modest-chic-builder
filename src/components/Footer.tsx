@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { Instagram, Twitter, Mail, MapPin } from 'lucide-react';
-import { SITE_EMAIL, SITE_LOCATION, SOCIAL_URLS } from '@/lib/site';
+import { SITE_EMAIL, LEGAL_ADDRESS, SOCIAL_URLS } from '@/lib/site';
 
 const footerLinks = {
   shop: [
@@ -59,9 +59,9 @@ const Footer = () => {
                 <Mail size={16} />
                 {SITE_EMAIL}
               </a>
-              <div className="flex items-center gap-3 text-cream/50">
-                <MapPin size={16} />
-                {SITE_LOCATION}
+              <div className="flex items-start gap-3 text-cream/50">
+                <MapPin size={16} className="mt-0.5 shrink-0" />
+                <span>{LEGAL_ADDRESS}</span>
               </div>
             </div>
           </div>
