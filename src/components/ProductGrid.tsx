@@ -98,6 +98,7 @@ interface ProductGridProps {
   reverse?: boolean;
   jsonLdPath?: string;
   jsonLdDescription?: string;
+  emptyMessage?: string;
 }
 
 const ProductGrid = ({
@@ -110,6 +111,7 @@ const ProductGrid = ({
   reverse,
   jsonLdPath,
   jsonLdDescription,
+  emptyMessage = 'No products found',
 }: ProductGridProps) => {
   const [products, setProducts] = useState<ShopifyProduct[]>([]);
   const [loading, setLoading] = useState(true);
@@ -160,8 +162,8 @@ const ProductGrid = ({
             <Loader2 className="w-8 h-8 animate-spin text-gold" />
           </div>
         ) : products.length === 0 ? (
-          <div className="text-center py-20">
-            <p className="text-muted-foreground text-lg">No products found</p>
+          <div className="text-center py-20 max-w-lg mx-auto">
+            <p className="text-muted-foreground text-lg leading-relaxed">{emptyMessage}</p>
           </div>
         ) : (
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-4 gap-y-10 lg:gap-x-6 lg:gap-y-14 stagger-children">

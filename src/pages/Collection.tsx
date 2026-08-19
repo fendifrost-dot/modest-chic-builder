@@ -18,6 +18,7 @@ interface CollectionPageProps {
   sortKey?: string;
   /** Reverse sort order. */
   reverse?: boolean;
+  emptyMessage?: string;
 }
 
 const collectionConfig: Record<string, CollectionPageProps> = {
@@ -58,6 +59,7 @@ const collectionConfig: Record<string, CollectionPageProps> = {
     sortKey: 'CREATED_AT',
     reverse: true,
     description: 'Shop the MOD#$T sale — limited-time savings on luxury streetwear at checkout.',
+    emptyMessage: 'Exclusive savings of up to 30% are applied at checkout. Add pieces to your cart to see the offer on eligible items.',
   },
 };
 
@@ -93,6 +95,7 @@ const Collection = ({ collection }: Props) => {
           reverse={config.reverse}
           jsonLdPath={config.path}
           jsonLdDescription={config.description}
+          emptyMessage={config.emptyMessage}
         />
       </main>
       <Footer />
