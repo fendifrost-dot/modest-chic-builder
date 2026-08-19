@@ -18,7 +18,7 @@ interface CartStore {
   checkoutUrl: string | null;
   isLoading: boolean;
   isSyncing: boolean;
-  addItem: (item: Omit<CartItem, 'lineId'>) => Promise<void>;
+  addItem: (item: Omit<CartItem, 'lineId'>) => Promise<boolean>;
   updateQuantity: (variantId: string, quantity: number) => Promise<void>;
   removeItem: (variantId: string) => Promise<void>;
   clearCart: () => void;
@@ -49,28 +49,37 @@ export const useCartStore = create<CartStore>()(
                 checkoutUrl: result.checkoutUrl,
                 items: [{ ...item, lineId: result.lineId }],
               });
+              return true;
             }
-          } else if (existingItem) {
+            return false;
+          }
+          if (existingItem) {
             const newQuantity = existingItem.quantity + item.quantity;
-            if (!existingItem.lineId) return;
+            if (!existingItem.lineId) return false;
             const result = await updateShopifyCartLine(cartId, existingItem.lineId, newQuantity);
             if (result.success) {
               const currentItems = get().items;
               set({ items: currentItems.map(i => i.variantId === item.variantId ? { ...i, quantity: newQuantity } : i) });
-            } else if (result.cartNotFound) {
+              return true;
+            }
+            if (result.cartNotFound) {
               clearCart();
             }
-          } else {
-            const result = await addLineToShopifyCart(cartId, { ...item, lineId: null });
-            if (result.success) {
-              const currentItems = get().items;
-              set({ items: [...currentItems, { ...item, lineId: result.lineId ?? null }] });
-            } else if (result.cartNotFound) {
-              clearCart();
-            }
+            return false;
           }
+          const result = await addLineToShopifyCart(cartId, { ...item, lineId: null });
+          if (result.success) {
+            const currentItems = get().items;
+            set({ items: [...currentItems, { ...item, lineId: result.lineId ?? null }] });
+            return true;
+          }
+          if (result.cartNotFound) {
+            clearCart();
+          }
+          return false;
         } catch (error) {
           console.error('Failed to add item:', error);
+          return false;
         } finally {
           set({ isLoading: false });
         }

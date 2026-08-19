@@ -1,13 +1,10 @@
 import { useState, useEffect, useCallback } from 'react';
 import { X, Check, Copy } from 'lucide-react';
 
+import { DISCOUNT_CODE, isValidEmail, subscribeMailchimp } from '@/lib/mailchimp';
+
 const STORAGE_KEY = 'modest_welcome_dismissed';
 const DISMISS_DAYS = 14;
-const DISCOUNT_CODE = 'WELCOME10';
-
-const MAILCHIMP_ACTION_URL = 'https://bemoremodest.us2.list-manage.com/subscribe/post?u=c231f42ccbe4f144fc8853755&id=1adec29a96&f_id=00c392e0f0';
-const HONEYPOT_NAME = 'b_c231f42ccbe4f144fc8853755_1adec29a96';
-const TAG_VALUE = '1544412';
 
 const WelcomeOfferModal = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -76,56 +73,24 @@ const WelcomeOfferModal = () => {
     return () => window.removeEventListener('keydown', handleKey);
   }, [isOpen, dismiss]);
 
-  const validateEmail = (v: string) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);
-
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setErrorMsg('');
 
-    if (!validateEmail(email)) {
+    if (!isValidEmail(email)) {
       setErrorMsg('Please enter a valid email address.');
       return;
     }
 
     setStatus('submitting');
-
-    // Submit via hidden iframe to avoid navigation
-    const iframe = document.createElement('iframe');
-    iframe.name = 'mc_hidden_frame';
-    iframe.style.display = 'none';
-    document.body.appendChild(iframe);
-
-    const form = document.createElement('form');
-    form.action = MAILCHIMP_ACTION_URL;
-    form.method = 'POST';
-    form.target = 'mc_hidden_frame';
-    form.style.display = 'none';
-
-    const emailInput = document.createElement('input');
-    emailInput.name = 'EMAIL';
-    emailInput.value = email;
-    form.appendChild(emailInput);
-
-    const tagsInput = document.createElement('input');
-    tagsInput.name = 'tags';
-    tagsInput.value = TAG_VALUE;
-    form.appendChild(tagsInput);
-
-    const honeypot = document.createElement('input');
-    honeypot.name = HONEYPOT_NAME;
-    honeypot.value = '';
-    form.appendChild(honeypot);
-
-    document.body.appendChild(form);
-    form.submit();
-
-    // Clean up and show success after brief delay
-    setTimeout(() => {
-      form.remove();
-      iframe.remove();
+    try {
+      await subscribeMailchimp(email);
       setStatus('success');
       try { localStorage.setItem(STORAGE_KEY, String(Date.now())); } catch {}
-    }, 1500);
+    } catch {
+      setStatus('error');
+      setErrorMsg('Something went wrong. Please try again.');
+    }
   };
 
   const handleCopy = () => {

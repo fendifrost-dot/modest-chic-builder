@@ -8,6 +8,8 @@ import BrandStory from '@/components/BrandStory';
 import Newsletter from '@/components/Newsletter';
 import Footer from '@/components/Footer';
 import WelcomeOfferModal from '@/components/WelcomeOfferModal';
+import SeoHead from '@/components/SeoHead';
+import { pageTitle, SITE_DESCRIPTION } from '@/lib/site';
 
 const Index = () => {
   useEffect(() => {
@@ -21,6 +23,7 @@ const Index = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      <SeoHead title={pageTitle()} description={SITE_DESCRIPTION} path="/" />
       <Header />
       <main>
         <HeroSection />

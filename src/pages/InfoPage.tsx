@@ -1,6 +1,9 @@
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import { Link } from 'react-router-dom';
+import SeoHead from '@/components/SeoHead';
+import { FaqJsonLd } from '@/components/JsonLd';
+import { pageTitle, SITE_DESCRIPTION, SITE_EMAIL } from '@/lib/site';
 
 interface PageContent {
   title: string;
@@ -35,7 +38,7 @@ const pages: Record<string, PageContent> = {
       },
       {
         heading: 'Email',
-        body: 'hello@bemoremodest.com',
+        body: SITE_EMAIL,
       },
       {
         heading: 'Location',
@@ -90,11 +93,11 @@ const pages: Record<string, PageContent> = {
       },
       {
         heading: 'Tops & Hoodies',
-        body: 'Measure chest at the fullest point. Compare to the size chart on each product page for the most accurate fit.',
+        body: 'Measure chest at the fullest point. Compare available sizes on each product page — click any size even if it is crossed out for the current color, and we will switch you to a matching pair.',
       },
       {
-        heading: 'Need Help?',
-        body: 'Email hello@bemoremodest.com with your height, weight, and preferred fit — we are happy to recommend a size.',
+        heading: 'Approximate unisex tee fit',
+        body: 'XS extra fitted • S fitted • M regular streetwear • L relaxed • XL oversized • 2XL–5XL extended. Jackets and cashmere follow standard US sizing. If you prefer an oversized look, size up. Email hello@bemoremodest.com with height, weight, and preferred fit for a recommendation.',
       },
     ],
   },
@@ -116,7 +119,7 @@ const pages: Record<string, PageContent> = {
       },
       {
         heading: 'How do I use a discount code?',
-        body: 'Enter your code at Shopify checkout after adding items to your cart.',
+        body: 'Enter your code at Shopify checkout after adding items to your cart. New subscribers can use WELCOME10 for 10% off the first order.',
       },
     ],
   },
@@ -206,8 +209,21 @@ const InfoPage = ({ slug }: Props) => {
     return null;
   }
 
+  const description = page.sections[0]?.body || SITE_DESCRIPTION;
+  const faqs = slug === 'faq'
+    ? page.sections
+        .filter((section) => section.heading)
+        .map((section) => ({ question: section.heading as string, answer: section.body }))
+    : [];
+
   return (
     <div className="min-h-screen bg-background">
+      <SeoHead
+        title={pageTitle(page.title)}
+        description={description.slice(0, 160)}
+        path={`/${slug}`}
+      />
+      {faqs.length > 0 && <FaqJsonLd faqs={faqs} />}
       <Header />
       <main className="pt-36 pb-24">
         <div className="container mx-auto px-6 lg:px-12 max-w-3xl">

@@ -4,6 +4,9 @@ import { fetchProducts, fetchCollectionProducts, ShopifyProduct } from '@/lib/sh
 import { useCartStore } from '@/stores/cartStore';
 import { toast } from 'sonner';
 import { Loader2 } from 'lucide-react';
+import { hasSelectableOptions } from '@/lib/variants';
+import { CollectionJsonLd } from '@/components/JsonLd';
+import { absoluteUrl } from '@/lib/site';
 
 interface ProductCardProps {
   product: ShopifyProduct;
@@ -21,7 +24,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
     e.preventDefault();
     e.stopPropagation();
     if (!firstVariant) return;
-    await addItem({
+    const ok = await addItem({
       product,
       variantId: firstVariant.id,
       variantTitle: firstVariant.title,
@@ -29,8 +32,14 @@ const ProductCard = ({ product }: ProductCardProps) => {
       quantity: 1,
       selectedOptions: firstVariant.selectedOptions || [],
     });
-    toast.success('Added to cart', { position: 'top-center' });
+    if (ok) {
+      toast.success('Added to cart', { position: 'top-center' });
+    } else {
+      toast.error('Could not add to cart. Please try again.', { position: 'top-center' });
+    }
   };
+
+  const needsOptions = hasSelectableOptions(node.options);
 
   return (
     <Link to={`/product/${node.handle}`} className="group block">
@@ -50,13 +59,20 @@ const ProductCard = ({ product }: ProductCardProps) => {
         )}
 
         <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-background/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-end justify-center pb-4">
-          <button
-            onClick={handleAddToCart}
-            disabled={isLoading || !firstVariant?.availableForSale}
-            className="text-cream text-xs tracking-[0.2em] uppercase border border-cream/40 px-6 py-2.5 bg-background/60 backdrop-blur-sm hover:bg-cream hover:text-obsidian transition-all duration-300"
-          >
-            {isLoading ? <Loader2 className="w-4 h-4 animate-spin" /> : 'Add to Cart'}
-          </button>
+          {needsOptions ? (
+            <span className="text-cream text-xs tracking-[0.2em] uppercase border border-cream/40 px-6 py-2.5 bg-background/60 backdrop-blur-sm group-hover:bg-cream group-hover:text-obsidian transition-all duration-300">
+              Select Options
+            </span>
+          ) : (
+            <button
+              type="button"
+              onClick={handleAddToCart}
+              disabled={isLoading || !firstVariant?.availableForSale}
+              className="text-cream text-xs tracking-[0.2em] uppercase border border-cream/40 px-6 py-2.5 bg-background/60 backdrop-blur-sm hover:bg-cream hover:text-obsidian transition-all duration-300"
+            >
+              {isLoading ? <Loader2 className="w-4 h-4 animate-spin" /> : firstVariant?.availableForSale ? 'Add to Cart' : 'Sold Out'}
+            </button>
+          )}
         </div>
       </div>
 
@@ -80,6 +96,8 @@ interface ProductGridProps {
   collectionHandle?: string;
   sortKey?: string;
   reverse?: boolean;
+  jsonLdPath?: string;
+  jsonLdDescription?: string;
 }
 
 const ProductGrid = ({
@@ -90,22 +108,47 @@ const ProductGrid = ({
   collectionHandle,
   sortKey,
   reverse,
+  jsonLdPath,
+  jsonLdDescription,
 }: ProductGridProps) => {
   const [products, setProducts] = useState<ShopifyProduct[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    let cancelled = false;
+    setLoading(true);
     const load = collectionHandle
       ? fetchCollectionProducts(collectionHandle, limit)
       : fetchProducts(limit, query, sortKey, reverse);
-    load.then((p) => {
-      setProducts(p);
-      setLoading(false);
-    });
+    load
+      .then((p) => {
+        if (!cancelled) setProducts(p || []);
+      })
+      .catch(() => {
+        if (!cancelled) setProducts([]);
+      })
+      .finally(() => {
+        if (!cancelled) setLoading(false);
+      });
+    return () => {
+      cancelled = true;
+    };
   }, [limit, query, collectionHandle, sortKey, reverse]);
 
   return (
     <section id="shop" className="py-24 bg-background scroll-mt-28">
+      {jsonLdPath && !loading && (
+        <CollectionJsonLd
+          name={title}
+          description={jsonLdDescription || `${title} from MOD#$T.`}
+          url={absoluteUrl(jsonLdPath)}
+          items={products.map((product) => ({
+            name: product.node.title,
+            url: absoluteUrl(`/product/${product.node.handle}`),
+            image: product.node.images?.edges?.[0]?.node.url,
+          }))}
+        />
+      )}
       <div className="container mx-auto px-6 lg:px-12">
         <div className="text-center mb-16">
           <p className="text-gold text-sm tracking-[0.3em] uppercase mb-4">{subtitle}</p>

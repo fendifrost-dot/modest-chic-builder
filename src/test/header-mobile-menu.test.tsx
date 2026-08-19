@@ -94,4 +94,11 @@ describe("Header – mobile hamburger menu", () => {
     const drawer = screen.getByLabelText("Close menu").closest(".fixed.inset-0");
     expect(drawer?.className).toContain("z-[71]");
   });
+
+  it("opens product search from the search icon", () => {
+    renderHeader();
+    fireEvent.click(screen.getByLabelText("Search products"));
+    expect(screen.getByRole("dialog", { name: "Search products" })).toBeInTheDocument();
+    expect(screen.getByLabelText("Close search")).toBeInTheDocument();
+  });
 });

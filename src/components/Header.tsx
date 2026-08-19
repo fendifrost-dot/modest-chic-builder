@@ -2,10 +2,12 @@ import { useState, useEffect, useCallback } from 'react';
 import { Menu, X, Search, User } from 'lucide-react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { CartDrawer } from '@/components/CartDrawer';
+import SearchDialog from '@/components/SearchDialog';
 
 const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -53,11 +55,8 @@ const Header = () => {
   }, [closeMenu, navigate]);
 
   const handleSearchClick = () => {
-    if (location.pathname === '/') {
-      document.getElementById('shop')?.scrollIntoView({ behavior: 'smooth' });
-    } else {
-      navigate('/#shop');
-    }
+    closeMenu();
+    setIsSearchOpen(true);
   };
 
   const navLinks = [
@@ -140,7 +139,7 @@ const Header = () => {
             </button>
             <a
               href="https://modest-streetwear-apparel.myshopify.com/account"
-              className="hidden sm:block text-cream hover:text-gold transition-colors"
+              className="hidden sm:flex text-cream hover:text-gold transition-colors p-2 min-w-11 min-h-11 items-center justify-center"
               aria-label="Account"
             >
               <User size={20} />
@@ -185,6 +184,7 @@ const Header = () => {
           </div>
         </>
       )}
+      <SearchDialog open={isSearchOpen} onClose={() => setIsSearchOpen(false)} />
     </header>
   );
 };

@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { toast } from "sonner";
 import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import { ShoppingBag, Minus, Plus, Trash2, ExternalLink, Loader2 } from "lucide-react";
 import { useCartStore } from "@/stores/cartStore";
@@ -15,15 +16,17 @@ export const CartDrawer = () => {
   const handleCheckout = () => {
     const checkoutUrl = getCheckoutUrl();
     if (checkoutUrl) {
-      window.open(checkoutUrl, '_blank');
+      window.open(checkoutUrl, '_blank', 'noopener,noreferrer');
       setIsOpen(false);
+      return;
     }
+    toast.error('Checkout is not ready yet. Please try again.', { position: 'top-center' });
   };
 
   return (
     <Sheet open={isOpen} onOpenChange={setIsOpen}>
       <SheetTrigger asChild>
-        <button className="relative text-cream hover:text-gold transition-colors" aria-label="Cart">
+        <button type="button" className="relative text-cream hover:text-gold transition-colors p-2 min-w-11 min-h-11 flex items-center justify-center" aria-label="Cart">
           <ShoppingBag size={20} />
           <span className="absolute -top-1 -right-1 w-4 h-4 bg-gold text-obsidian text-[10px] rounded-full flex items-center justify-center font-medium">
             {totalItems}
@@ -62,15 +65,15 @@ export const CartDrawer = () => {
                         <p className="text-gold font-medium mt-1">${parseFloat(item.price.amount).toFixed(2)}</p>
                       </div>
                       <div className="flex flex-col items-end gap-2 flex-shrink-0">
-                        <button className="text-muted-foreground hover:text-destructive transition-colors" onClick={() => removeItem(item.variantId)}>
+                        <button type="button" className="text-muted-foreground hover:text-destructive transition-colors" onClick={() => removeItem(item.variantId)} aria-label={`Remove ${item.product.node.title}`}>
                           <Trash2 className="h-4 w-4" />
                         </button>
                         <div className="flex items-center gap-1">
-                          <button className="w-6 h-6 border border-border flex items-center justify-center text-cream hover:border-gold transition-colors" onClick={() => updateQuantity(item.variantId, item.quantity - 1)}>
+                          <button type="button" aria-label="Decrease quantity" className="w-6 h-6 border border-border flex items-center justify-center text-cream hover:border-gold transition-colors" onClick={() => updateQuantity(item.variantId, item.quantity - 1)}>
                             <Minus className="h-3 w-3" />
                           </button>
                           <span className="w-8 text-center text-sm text-cream">{item.quantity}</span>
-                          <button className="w-6 h-6 border border-border flex items-center justify-center text-cream hover:border-gold transition-colors" onClick={() => updateQuantity(item.variantId, item.quantity + 1)}>
+                          <button type="button" aria-label="Increase quantity" className="w-6 h-6 border border-border flex items-center justify-center text-cream hover:border-gold transition-colors" onClick={() => updateQuantity(item.variantId, item.quantity + 1)}>
                             <Plus className="h-3 w-3" />
                           </button>
                         </div>
@@ -85,6 +88,7 @@ export const CartDrawer = () => {
                   <span className="text-gold text-xl font-medium">${totalPrice.toFixed(2)} {currency}</span>
                 </div>
                 <button
+                  type="button"
                   onClick={handleCheckout}
                   className="btn-hero-primary w-full flex items-center justify-center gap-2"
                   disabled={items.length === 0 || isLoading || isSyncing}

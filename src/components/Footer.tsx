@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
-import { Instagram, Twitter, Mail, MapPin, Phone } from 'lucide-react';
+import { Instagram, Twitter, Mail, MapPin } from 'lucide-react';
+import { SITE_EMAIL, SOCIAL_URLS } from '@/lib/site';
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
@@ -44,13 +45,9 @@ const Footer = () => {
             
             {/* Contact Info */}
             <div className="space-y-3 text-sm">
-              <a href="mailto:hello@bemoremodest.com" className="flex items-center gap-3 text-cream/50 hover:text-gold transition-colors">
+              <a href={`mailto:${SITE_EMAIL}`} className="flex items-center gap-3 text-cream/50 hover:text-gold transition-colors">
                 <Mail size={16} />
-                hello@bemoremodest.com
-              </a>
-              <a href="tel:+1234567890" className="flex items-center gap-3 text-cream/50 hover:text-gold transition-colors">
-                <Phone size={16} />
-                (123) 456-7890
+                {SITE_EMAIL}
               </a>
               <div className="flex items-center gap-3 text-cream/50">
                 <MapPin size={16} />
@@ -123,7 +120,7 @@ const Footer = () => {
             {/* Social Links */}
             <div className="flex items-center gap-4">
               <a
-                href="https://instagram.com"
+                href={SOCIAL_URLS.instagram}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-cream/40 hover:text-gold transition-colors"
@@ -132,11 +129,11 @@ const Footer = () => {
                 <Instagram size={18} />
               </a>
               <a
-                href="https://twitter.com"
+                href={SOCIAL_URLS.twitter}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-cream/40 hover:text-gold transition-colors"
-                aria-label="Twitter"
+                aria-label="X (Twitter)"
               >
                 <Twitter size={18} />
               </a>

@@ -1,15 +1,29 @@
 import { useState } from 'react';
 import { Instagram, Twitter } from 'lucide-react';
+import { DISCOUNT_CODE, isValidEmail, subscribeMailchimp } from '@/lib/mailchimp';
+import { SOCIAL_URLS } from '@/lib/site';
 
 const Newsletter = () => {
   const [email, setEmail] = useState('');
-  const [isSubscribed, setIsSubscribed] = useState(false);
+  const [status, setStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle');
+  const [errorMsg, setErrorMsg] = useState('');
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (email) {
-      setIsSubscribed(true);
+    setErrorMsg('');
+    if (!isValidEmail(email)) {
+      setErrorMsg('Please enter a valid email address.');
+      setStatus('error');
+      return;
+    }
+    setStatus('submitting');
+    try {
+      await subscribeMailchimp(email);
+      setStatus('success');
       setEmail('');
+    } catch {
+      setStatus('error');
+      setErrorMsg('Something went wrong. Please try again.');
     }
   };
 
@@ -31,11 +45,11 @@ const Newsletter = () => {
             your first order.
           </p>
 
-          {isSubscribed ? (
+          {status === 'success' ? (
             <div className="space-y-4">
               <p className="text-gold text-lg">✓ Welcome to the MOD#$T family</p>
               <div className="inline-flex items-center gap-3 px-6 py-3 border border-gold/40 text-gold font-display text-xl tracking-[0.2em]">
-                WELCOME10
+                {DISCOUNT_CODE}
               </div>
               <p className="text-cream/40 text-xs">Use this code at checkout for 10% off</p>
             </div>
@@ -44,21 +58,24 @@ const Newsletter = () => {
               <input
                 type="email"
                 value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                onChange={(e) => { setEmail(e.target.value); setErrorMsg(''); }}
                 placeholder="Enter your email"
                 className="flex-1 bg-transparent border border-border px-6 py-4 text-cream placeholder:text-muted-foreground focus:outline-none focus:border-gold transition-colors"
                 required
               />
-              <button type="submit" className="btn-hero-primary whitespace-nowrap">
-                Subscribe
+              <button type="submit" disabled={status === 'submitting'} className="btn-hero-primary whitespace-nowrap disabled:opacity-50">
+                {status === 'submitting' ? 'Joining…' : 'Subscribe'}
               </button>
             </form>
           )}
 
-          {/* Social Links */}
+          {errorMsg && (
+            <p className="text-destructive text-xs mt-3">{errorMsg}</p>
+          )}
+
           <div className="flex items-center justify-center gap-6 mt-12">
             <a
-              href="https://instagram.com"
+              href={SOCIAL_URLS.instagram}
               target="_blank"
               rel="noopener noreferrer"
               className="text-cream/50 hover:text-gold transition-colors"
@@ -67,16 +84,16 @@ const Newsletter = () => {
               <Instagram size={24} />
             </a>
             <a
-              href="https://twitter.com"
+              href={SOCIAL_URLS.twitter}
               target="_blank"
               rel="noopener noreferrer"
               className="text-cream/50 hover:text-gold transition-colors"
-              aria-label="Twitter"
+              aria-label="X (Twitter)"
             >
               <Twitter size={24} />
             </a>
             <a
-              href="https://tiktok.com"
+              href={SOCIAL_URLS.tiktok}
               target="_blank"
               rel="noopener noreferrer"
               className="text-cream/50 hover:text-gold transition-colors"

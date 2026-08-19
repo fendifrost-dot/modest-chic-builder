@@ -6,6 +6,7 @@
  * Token resolution (first match wins):
  *   1. SHOPIFY_STOREFRONT_ACCESS_TOKEN — Lovable Shopify integration secret
  *   2. VITE_SHOPIFY_STOREFRONT_TOKEN   — Vite client env name / local dev
+ *   3. Public Storefront fallback (same token the client already ships)
  */
 import { writeFileSync } from 'node:fs';
 import { resolve, dirname } from 'node:path';
@@ -29,6 +30,9 @@ const staticPaths = [
   '/faq',
   '/privacy',
   '/terms',
+  '/careers',
+  '/press',
+  '/sustainability',
 ];
 
 const STORE_DOMAIN =
@@ -36,7 +40,8 @@ const STORE_DOMAIN =
 
 const TOKEN =
   process.env.SHOPIFY_STOREFRONT_ACCESS_TOKEN ||
-  process.env.VITE_SHOPIFY_STOREFRONT_TOKEN;
+  process.env.VITE_SHOPIFY_STOREFRONT_TOKEN ||
+  'a2c0b8ea61ed91424a63a92e2135e275';
 
 async function fetchProductHandles() {
   if (!TOKEN) {
