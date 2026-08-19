@@ -8,15 +8,19 @@ import Index from "./pages/Index";
 import ProductDetail from "./pages/ProductDetail";
 import Collection from "./pages/Collection";
 import InfoPage from "./pages/InfoPage";
+import About from "./pages/About";
+import Careers from "./pages/Careers";
+import Press from "./pages/Press";
+import Sustainability from "./pages/Sustainability";
+import Contact from "./pages/Contact";
+import Shipping from "./pages/Shipping";
+import Returns from "./pages/Returns";
+import SizeGuide from "./pages/SizeGuide";
+import Faq from "./pages/Faq";
 import NotFound from "./pages/NotFound";
 import AnalyticsProvider from "@/components/AnalyticsProvider";
 
 const queryClient = new QueryClient();
-
-const infoRoutes = [
-  'about', 'contact', 'shipping', 'returns', 'size-guide', 'faq',
-  'privacy', 'terms', 'careers', 'press', 'sustainability',
-] as const;
 
 const AppContent = () => {
   useCartSync();
@@ -29,9 +33,17 @@ const AppContent = () => {
       <Route path="/new-arrivals" element={<Collection collection="new-arrivals" />} />
       <Route path="/sale" element={<Collection collection="sale" />} />
       <Route path="/product/:handle" element={<ProductDetail />} />
-      {infoRoutes.map((slug) => (
-        <Route key={slug} path={`/${slug}`} element={<InfoPage slug={slug} />} />
-      ))}
+      <Route path="/about" element={<About />} />
+      <Route path="/careers" element={<Careers />} />
+      <Route path="/press" element={<Press />} />
+      <Route path="/sustainability" element={<Sustainability />} />
+      <Route path="/contact" element={<Contact />} />
+      <Route path="/shipping" element={<Shipping />} />
+      <Route path="/returns" element={<Returns />} />
+      <Route path="/size-guide" element={<SizeGuide />} />
+      <Route path="/faq" element={<Faq />} />
+      <Route path="/privacy" element={<InfoPage slug="privacy" />} />
+      <Route path="/terms" element={<InfoPage slug="terms" />} />
       <Route path="*" element={<NotFound />} />
     </Routes>
   );

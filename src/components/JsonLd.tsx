@@ -1,8 +1,21 @@
+import {
+  ENTITY_ID,
+  ENTITY_NAME,
+  SITE_ALT_NAME,
+  SITE_CITY,
+  SITE_EMAIL,
+  SITE_FOUNDED,
+  SITE_NAME,
+  SITE_REGION,
+  SITE_URL,
+  SOCIAL_URLS,
+} from '@/lib/site';
+
 interface JsonLdProps {
   data: Record<string, unknown> | Record<string, unknown>[];
 }
 
-const JsonLd = ({ data }: JsonLdProps) => (
+export const JsonLd = ({ data }: JsonLdProps) => (
   <script
     type="application/ld+json"
     dangerouslySetInnerHTML={{ __html: JSON.stringify(data) }}
@@ -14,43 +27,42 @@ export const SiteJsonLd = () => (
     data={[
       {
         '@context': 'https://schema.org',
-        '@type': ['Organization', 'ClothingStore'],
-        name: 'MOD#$T',
-        alternateName: ['Be More Modest', 'BeMoreModest', 'Modest'],
-        url: 'https://bemoremodest.com',
-        logo: 'https://bemoremodest.com/favicon.svg',
-        image: 'https://bemoremodest.com/og-image.jpg',
-        email: 'info@bemoremodest.com',
+        '@id': ENTITY_ID,
+        '@type': ['Organization', 'Brand', 'ClothingStore'],
+        name: ENTITY_NAME,
+        alternateName: [SITE_NAME, SITE_ALT_NAME, 'BeMoreModest'],
+        url: SITE_URL,
+        logo: `${SITE_URL}/favicon.svg`,
+        image: `${SITE_URL}/og-image.jpg`,
+        email: SITE_EMAIL,
         description:
-          'MOD#$T (Be More Modest) is a Chicago luxury streetwear brand crafting limited-run cashmere, varsity jackets, tees, and accessories for understated confidence.',
+          `${ENTITY_NAME} (${SITE_NAME}) is a Chicago luxury streetwear brand founded in ${SITE_FOUNDED}, known for outerwear, cashmere, sweatshirts, T-shirts, and accessories.`,
+        foundingDate: '2017-09',
         foundingLocation: {
           '@type': 'Place',
           address: {
             '@type': 'PostalAddress',
-            addressLocality: 'Chicago',
-            addressRegion: 'IL',
+            addressLocality: SITE_CITY,
+            addressRegion: SITE_REGION,
             addressCountry: 'US',
           },
         },
         areaServed: 'US',
         priceRange: '$$',
         sameAs: [
-          'https://instagram.com/bemoremodest',
-          'https://twitter.com/bemoremodest',
-          'https://www.tiktok.com/@bemoremodest',
+          SOCIAL_URLS.instagram,
+          SOCIAL_URLS.twitter,
+          SOCIAL_URLS.tiktok,
         ],
       },
       {
         '@context': 'https://schema.org',
         '@type': 'WebSite',
-        name: 'MOD#$T',
-        alternateName: 'Be More Modest',
-        url: 'https://bemoremodest.com',
+        name: SITE_NAME,
+        alternateName: [ENTITY_NAME, SITE_ALT_NAME],
+        url: SITE_URL,
         inLanguage: 'en-US',
-        publisher: {
-          '@type': 'Organization',
-          name: 'MOD#$T',
-        },
+        publisher: { '@id': ENTITY_ID },
       },
     ]}
   />
