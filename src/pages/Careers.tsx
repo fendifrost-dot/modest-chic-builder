@@ -4,16 +4,14 @@ import { CAREERS_COPY } from '@/lib/policies';
 import { SITE_CITY, SITE_EMAIL, SITE_NAME } from '@/lib/site';
 
 const marketingFocus = [
-  'Social media strategy',
-  'Content planning',
-  'Influencer / creator research',
-  'Fashion and culture research',
-  'Email / SMS marketing support',
-  'Campaign concepts',
-  'Product-launch planning',
-  'Competitive research',
-  'Event / community outreach',
-  'Analytics and reporting',
+  'Social media',
+  'Content',
+  'Creator / influencer research',
+  'Campaign planning',
+  'Email / SMS support',
+  'Fashion / culture research',
+  'Analytics',
+  'Community / event support',
 ];
 
 const marketingFit = [
@@ -77,7 +75,7 @@ const Careers = () => (
 
     <article className="border border-border p-6 md:p-8 mb-8" id="marketing-intern">
       <p className="text-gold text-xs tracking-[0.25em] uppercase mb-2">{CAREERS_COPY.marketingEmploymentLabel}</p>
-      <h2 className="font-display text-3xl text-cream tracking-wider mb-4">Marketing Intern</h2>
+      <h2 className="font-display text-3xl text-cream tracking-wider mb-4">Marketing Internship</h2>
       <p className="text-cream/60 leading-relaxed mb-6">
         An educational, portfolio-building role supporting how Modest shows up in culture —
         from content and research to launch planning. You will work alongside the brand, not

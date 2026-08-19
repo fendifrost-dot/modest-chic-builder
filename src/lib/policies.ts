@@ -43,5 +43,5 @@ export const CAREERS_COPY = {
   marketingEmploymentLabel: 'Internship',
   techPackEmploymentLabel: 'Contract, freelance, or part-time — confirmed with selected candidates',
   internCompensationCallout:
-    'Internship structure and compensation: Details are discussed with selected candidates based on the scope, educational objectives, school-credit requirements where applicable, and applicable employment rules.',
+    'Internship structure: Educational objectives, schedule, school-credit considerations where applicable, responsibilities, and compensation structure are discussed with selected candidates.',
 };

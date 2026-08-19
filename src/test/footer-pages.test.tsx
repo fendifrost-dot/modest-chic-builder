@@ -21,18 +21,23 @@ const wrap = (ui) => render(<MemoryRouter>{ui}</MemoryRouter>);
 describe("Footer destination pages", () => {
   it("renders About with confirmed brand facts", () => {
     wrap(<About />);
-    expect(screen.getByRole("heading", { level: 1 })).toHaveTextContent("Luxury Streetwear Without the Noise");
-    expect(screen.getByText(/founded in Chicago in September 2017/i)).toBeInTheDocument();
-    expect(screen.getByText(/Terrence Cleveland \/ Fendi Frost/i)).toBeInTheDocument();
-    expect(screen.getByRole("link", { name: /Shop MOD#\$T/i })).toHaveAttribute("href", "/#shop");
+    expect(screen.getByRole("heading", { level: 1 })).toHaveTextContent("MOD#$T");
+    expect(screen.getByText(/Premium streetwear that speaks without shouting/i)).toBeInTheDocument();
+    expect(screen.getByText(/Founded in September 2017, the brand creates elevated streetwear/i)).toBeInTheDocument();
+    expect(screen.getByText("Terrence Cleveland")).toBeInTheDocument();
+    expect(screen.getAllByText(/Fendi Frost/).length).toBeGreaterThan(0);
+    expect(screen.queryByRole("link", { name: /Discover Fendi Frost/i })).not.toBeInTheDocument();
+    expect(screen.getAllByRole("link", { name: /Shop MOD#\$T/i })[0]).toHaveAttribute("href", "/#shop");
   });
 
   it("renders both career openings and an application form", () => {
     wrap(<Careers />);
-    expect(screen.getByRole("heading", { name: "Marketing Intern" })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "Marketing Internship" })).toBeInTheDocument();
     expect(screen.getByRole("heading", { name: /Fashion Tech Pack \/ Production Design Assistant/i })).toBeInTheDocument();
     expect(screen.queryByText(/unpaid internship/i)).not.toBeInTheDocument();
-    expect(screen.getByText(/Internship structure and compensation/i)).toBeInTheDocument();
+    expect(
+      screen.getByText(/Internship structure: Educational objectives, schedule, school-credit considerations where applicable/)
+    ).toBeInTheDocument();
     expect(screen.getByLabelText(/Full Name/i)).toBeInTheDocument();
     expect(screen.getByLabelText(/Position Interested In/i)).toBeInTheDocument();
   });

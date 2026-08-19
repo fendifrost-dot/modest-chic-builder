@@ -30,6 +30,8 @@ const staticPaths = [
   '/faq',
   '/privacy',
   '/terms',
+  '/privacy-choices',
+  '/email-preferences',
   '/careers',
   '/press',
   '/sustainability',
