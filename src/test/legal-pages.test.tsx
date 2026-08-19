@@ -22,7 +22,8 @@ describe("Legal and email preference pages", () => {
     expect(screen.getAllByText(/Shopify checkout/i).length).toBeGreaterThan(0);
     expect(screen.getAllByText(/Mailchimp/i).length).toBeGreaterThan(0);
     expect(screen.getByText(/legal business entity name is not published/i)).toBeInTheDocument();
-    expect(screen.getByText(/we do not state “we do not sell personal information”/i)).toBeInTheDocument();
+    expect(screen.getByText(/We therefore do not state/i)).toBeInTheDocument();
+    expect(screen.getByText(/do not sell personal information/i)).toBeInTheDocument();
   });
 
   it("renders terms as a draft pending legal review", () => {
