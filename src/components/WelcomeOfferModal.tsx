@@ -2,6 +2,7 @@ import { useState, useEffect, useCallback } from 'react';
 import { X, Check, Copy } from 'lucide-react';
 
 import { DISCOUNT_CODE, isValidEmail, subscribeMailchimp } from '@/lib/mailchimp';
+import NewsletterConsent from '@/components/info/NewsletterConsent';
 
 const STORAGE_KEY = 'modest_welcome_dismissed';
 const DISMISS_DAYS = 14;
@@ -157,7 +158,7 @@ const WelcomeOfferModal = () => {
                 Get 10% Off<br />Your First Order
               </h3>
               <p className="text-muted-foreground text-sm leading-relaxed max-w-xs mx-auto">
-                Join the MOD#$T family for early access to drops, exclusive offers, and your welcome discount.
+                Join the MOD#$T list. New releases, private drops, restocks and brand updates — plus 10% off your first order.
               </p>
 
               <form onSubmit={handleSubmit} className="space-y-4">
@@ -180,8 +181,9 @@ const WelcomeOfferModal = () => {
                   disabled={status === 'submitting'}
                   className="btn-hero-primary w-full disabled:opacity-50"
                 >
-                  {status === 'submitting' ? 'Joining…' : 'Claim My 10% Off'}
+                  {status === 'submitting' ? 'Signing up…' : 'Sign Up'}
                 </button>
+                <NewsletterConsent />
               </form>
 
               <button

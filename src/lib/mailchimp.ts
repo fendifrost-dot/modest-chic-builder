@@ -5,12 +5,25 @@ const TAG_VALUE = '1544412';
 
 export const DISCOUNT_CODE = 'WELCOME10';
 
+export const MAILCHIMP_UNSUBSCRIBE_URL =
+  'https://bemoremodest.us2.list-manage.com/unsubscribe/post?u=c231f42ccbe4f144fc8853755&id=1adec29a96';
+
+export const MAILCHIMP_UNSUBSCRIBE_PAGE =
+  'https://bemoremodest.us2.list-manage.com/unsubscribe?u=c231f42ccbe4f144fc8853755&id=1adec29a96';
+
 export function isValidEmail(value: string): boolean {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value.trim());
 }
 
 /** Posts to Mailchimp via a hidden iframe so the shopper never leaves the site. */
 export function subscribeMailchimp(email: string): Promise<void> {
+  return postMailchimpForm(MAILCHIMP_ACTION_URL, email, [
+    { name: 'tags', value: TAG_VALUE },
+    { name: HONEYPOT_NAME, value: '' },
+  ]);
+}
+
+function postMailchimpForm(action: string, email: string, extra: Array<{ name: string; value: string }> = []): Promise<void> {
   return new Promise((resolve) => {
     const iframe = document.createElement('iframe');
     iframe.name = 'mc_hidden_frame';
@@ -18,7 +31,7 @@ export function subscribeMailchimp(email: string): Promise<void> {
     document.body.appendChild(iframe);
 
     const form = document.createElement('form');
-    form.action = MAILCHIMP_ACTION_URL;
+    form.action = action;
     form.method = 'POST';
     form.target = 'mc_hidden_frame';
     form.style.display = 'none';
@@ -28,15 +41,12 @@ export function subscribeMailchimp(email: string): Promise<void> {
     emailInput.value = email.trim();
     form.appendChild(emailInput);
 
-    const tagsInput = document.createElement('input');
-    tagsInput.name = 'tags';
-    tagsInput.value = TAG_VALUE;
-    form.appendChild(tagsInput);
-
-    const honeypot = document.createElement('input');
-    honeypot.name = HONEYPOT_NAME;
-    honeypot.value = '';
-    form.appendChild(honeypot);
+    extra.forEach((field) => {
+      const input = document.createElement('input');
+      input.name = field.name;
+      input.value = field.value;
+      form.appendChild(input);
+    });
 
     document.body.appendChild(form);
     form.submit();
@@ -47,4 +57,9 @@ export function subscribeMailchimp(email: string): Promise<void> {
       resolve();
     }, 1500);
   });
+}
+
+/** Asks Mailchimp to suppress the address for this audience. */
+export function unsubscribeMailchimp(email: string): Promise<void> {
+  return postMailchimpForm(MAILCHIMP_UNSUBSCRIBE_URL, email);
 }
