@@ -1,1 +1,26 @@
+# URL normalization — see docs/seo/URL_NORMALIZATION.md
+#
+# Authoritative namespaces on bemoremodest.com:
+#   products    -> /product/<handle>   (singular)
+#   categories  -> /<category>         (top level, e.g. /mens)
+#
+# Shopify's own namespaces (/products/, /collections/) are consolidated onto them
+# with 301s so no competing canonical URL is ever served.
+
+/products/*                          /product/:splat   301
+/products                            /new-arrivals     301
+
+/collections/frontpage               /mens             301
+/collections/mens                    /mens             301
+/collections/womens                  /womens           301
+/collections/accessories             /accessories      301
+/collections/new-arrivals            /new-arrivals     301
+/collections/sale                    /sale             301
+/collections/all                     /                 301
+/collections/heart-chakra-collection /                 301
+/collections/*                       /                 301
+/collections                         /                 301
+
+# SPA fallback. Prerendered route files are real files on disk and are served
+# ahead of this rule; this only catches URLs with no prerendered page.
 /*    /index.html   200

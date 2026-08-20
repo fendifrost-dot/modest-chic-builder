@@ -10,6 +10,9 @@ import SeoHead from '@/components/SeoHead';
 import { ProductJsonLd, BreadcrumbJsonLd } from '@/components/JsonLd';
 import { trackViewItem } from '@/lib/analytics';
 import { pageTitle, SITE_DESCRIPTION } from '@/lib/site';
+import { productPath } from '@/seo/routes.js';
+import { materialFromTags } from '@/seo/schema.js';
+import { machineDescription, clampDescription } from '@/seo/product-meta.js';
 import {
   findVariantForOptionChange,
   isExactCombinationAvailable,
@@ -103,20 +106,27 @@ const ProductDetail = () => {
     }
   };
 
-  const seoDescription =
-    product?.seo?.description ||
-    product?.description ||
-    SITE_DESCRIPTION;
+  // Same derivation the prerenderer uses, so the rendered head matches the raw HTML.
+  const seoDescription = product
+    ? machineDescription({
+        title: product.title,
+        productType: product.productType,
+        price: product.priceRange?.minVariantPrice?.amount,
+        currency: product.priceRange?.minVariantPrice?.currencyCode,
+        description: product.description,
+        seoDescription: product.seo?.description,
+      }).text
+    : SITE_DESCRIPTION;
   const seoTitle = product
     ? pageTitle(product.seo?.title || product.title)
     : pageTitle('Product');
-  const productPath = `/product/${product?.handle || handle || ''}`;
+  const path = productPath(product?.handle || handle || '');
   const productImage = images[0]?.node.url;
 
   if (loading) {
     return (
       <div className="min-h-screen bg-background">
-        <SeoHead title={pageTitle('Loading')} description={SITE_DESCRIPTION} path={productPath} />
+        <SeoHead title={pageTitle('Loading')} description={SITE_DESCRIPTION} path={path} />
         <Header />
         <div className="flex items-center justify-center min-h-[60vh] pt-32">
           <Loader2 className="w-8 h-8 animate-spin text-gold" />
@@ -132,7 +142,7 @@ const ProductDetail = () => {
         <SeoHead
           title={pageTitle('Product Not Found')}
           description="This product is unavailable or the link may have changed."
-          path={productPath}
+          path={path}
           noindex
         />
         <Header />
@@ -151,24 +161,24 @@ const ProductDetail = () => {
     <div className="min-h-screen bg-background">
       <SeoHead
         title={seoTitle}
-        description={seoDescription.slice(0, 160)}
-        path={productPath}
+        description={clampDescription(seoDescription)}
+        path={path}
         image={productImage}
         type="product"
       />
       <ProductJsonLd
+        path={path}
         name={product.title}
-        description={product.description || product.title}
+        description={seoDescription}
         images={images.map((img) => img.node.url)}
         price={currentVariant?.price?.amount || product.priceRange.minVariantPrice.amount}
         currency={currentVariant?.price?.currencyCode || product.priceRange.minVariantPrice.currencyCode}
         availability={Boolean(currentVariant?.availableForSale)}
-        url={`https://bemoremodest.com/product/${product.handle}`}
-        sku={currentVariant?.sku || currentVariant?.id}
-        brand="MOD#$T"
+        sku={currentVariant?.sku || undefined}
+        material={materialFromTags(product.tags)}
         variants={variants.map((variant) => ({
           name: `${product.title} — ${variant.title}`,
-          sku: variant.sku || variant.id,
+          sku: variant.sku || undefined,
           price: variant.price.amount,
           currency: variant.price.currencyCode,
           availability: variant.availableForSale,
@@ -179,9 +189,8 @@ const ProductDetail = () => {
       />
       <BreadcrumbJsonLd
         items={[
-          { name: 'Home', url: 'https://bemoremodest.com/' },
-          { name: 'Shop', url: 'https://bemoremodest.com/#shop' },
-          { name: product.title, url: `https://bemoremodest.com/product/${product.handle}` },
+          { name: 'Home', path: '/' },
+          { name: product.title, path },
         ]}
       />
       <Header />

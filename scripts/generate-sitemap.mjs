@@ -1,100 +1,57 @@
 #!/usr/bin/env node
 /**
- * Generates public/sitemap.xml from static routes + Shopify product handles.
- * Runs at Lovable/GitHub build time (npm prebuild). Does not import shopify.ts.
+ * Generates public/sitemap.xml from the shared route manifest plus live Shopify
+ * product handles. Runs at build time (npm prebuild).
  *
- * Token resolution (first match wins):
- *   1. SHOPIFY_STOREFRONT_ACCESS_TOKEN — Lovable Shopify integration secret
- *   2. VITE_SHOPIFY_STOREFRONT_TOKEN   — Vite client env name / local dev
- *   3. Public Storefront fallback (same token the client already ships)
+ * Routes come from src/seo/routes.js — the same manifest the app and the
+ * prerenderer read — so the sitemap can never drift from what is actually served.
+ * Product URLs use the authoritative singular `/product/<handle>` namespace.
  */
 import { writeFileSync } from 'node:fs';
 import { resolve, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
+import { absoluteUrl } from '../src/seo/brand.js';
+import { STATIC_PATHS, productPath } from '../src/seo/routes.js';
+import { fetchAllProducts } from './shopify-build.mjs';
+
 const __dirname = dirname(fileURLToPath(import.meta.url));
-const SITE = 'https://bemoremodest.com';
 
-const staticPaths = [
-  '/',
-  '/mens',
-  '/womens',
-  '/accessories',
-  '/new-arrivals',
-  '/sale',
-  '/about',
-  '/contact',
-  '/shipping',
-  '/returns',
-  '/size-guide',
-  '/faq',
-  '/privacy',
-  '/terms',
-  '/careers',
-  '/press',
-  '/sustainability',
-];
+/** Rough crawl-priority hints. Absent entries fall back to the default. */
+const PRIORITY = {
+  '/': '1.0',
+  '/mens': '0.9',
+  '/womens': '0.9',
+  '/accessories': '0.8',
+  '/new-arrivals': '0.8',
+  '/about': '0.7',
+};
 
-const STORE_DOMAIN =
-  process.env.VITE_SHOPIFY_STORE_DOMAIN || 'modest-streetwear-apparel.myshopify.com';
-
-const TOKEN =
-  process.env.SHOPIFY_STOREFRONT_ACCESS_TOKEN ||
-  process.env.VITE_SHOPIFY_STOREFRONT_TOKEN ||
-  'a2c0b8ea61ed91424a63a92e2135e275';
-
-async function fetchProductHandles() {
-  if (!TOKEN) {
-    console.warn(
-      '[sitemap] No Shopify Storefront token — product URLs omitted. ' +
-        'Set SHOPIFY_STOREFRONT_ACCESS_TOKEN in Lovable Project Settings.'
-    );
-    return [];
-  }
-
-  const query = `
-    query SitemapProducts($first: Int!) {
-      products(first: $first) {
-        edges { node { handle updatedAt } }
-      }
-    }
-  `;
-
-  try {
-    const res = await fetch(`https://${STORE_DOMAIN}/api/2025-07/graphql.json`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'X-Shopify-Storefront-Access-Token': TOKEN,
-      },
-      body: JSON.stringify({ query, variables: { first: 250 } }),
-    });
-    const json = await res.json();
-    return (json?.data?.products?.edges || []).map((edge) => ({
-      path: `/product/${edge.node.handle}`,
-      lastmod: edge.node.updatedAt,
-    }));
-  } catch (err) {
-    console.warn('[sitemap] Failed to fetch products:', err.message);
-    return [];
-  }
+function urlEntry(loc, lastmod, priority) {
+  const parts = [`    <loc>${absoluteUrl(loc)}</loc>`];
+  if (lastmod) parts.push(`    <lastmod>${lastmod.split('T')[0]}</lastmod>`);
+  if (priority) parts.push(`    <priority>${priority}</priority>`);
+  return `  <url>\n${parts.join('\n')}\n  </url>`;
 }
 
-function urlEntry(loc, lastmod) {
-  const lastmodTag = lastmod ? `\n    <lastmod>${lastmod.split('T')[0]}</lastmod>` : '';
-  return `  <url>\n    <loc>${SITE}${loc}</loc>${lastmodTag}\n  </url>`;
+let products = [];
+try {
+  products = await fetchAllProducts();
+} catch (err) {
+  console.warn(`[sitemap] Shopify read failed (${err.message}) — product URLs omitted.`);
 }
 
-const productEntries = await fetchProductHandles();
 const today = new Date().toISOString().split('T')[0];
 
 const urls = [
-  ...staticPaths.map((path) => urlEntry(path, today)),
-  ...productEntries.map((p) => urlEntry(p.path, p.lastmod)),
+  ...STATIC_PATHS.map((path) => urlEntry(path, today, PRIORITY[path] || '0.6')),
+  ...products.map((p) => urlEntry(productPath(p.handle), p.updatedAt, '0.8')),
 ].join('\n');
 
 const xml = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls}\n</urlset>\n`;
 
-const outPath = resolve(__dirname, '../public/sitemap.xml');
-writeFileSync(outPath, xml);
-console.log(`[sitemap] Wrote ${staticPaths.length + productEntries.length} URLs to public/sitemap.xml`);
+writeFileSync(resolve(__dirname, '../public/sitemap.xml'), xml);
+console.log(
+  `[sitemap] Wrote ${STATIC_PATHS.length + products.length} URLs ` +
+    `(${STATIC_PATHS.length} static + ${products.length} product) to public/sitemap.xml`,
+);
