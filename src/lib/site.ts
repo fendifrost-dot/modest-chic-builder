@@ -11,7 +11,6 @@ export const SITE_DESCRIPTION =
 export const SOCIAL_URLS = {
   instagram: 'https://instagram.com/bemoremodest',
   twitter: 'https://twitter.com/bemoremodest',
-  tiktok: 'https://www.tiktok.com/@bemoremodest',
 } as const;
 
 export const DEFAULT_OG_IMAGE = `${SITE_URL}/og-image.jpg`;
