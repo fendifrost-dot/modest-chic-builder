@@ -37,7 +37,6 @@ export const SiteJsonLd = () => (
         sameAs: [
           'https://instagram.com/bemoremodest',
           'https://twitter.com/bemoremodest',
-          'https://www.tiktok.com/@bemoremodest',
         ],
       },
       {
