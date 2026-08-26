@@ -35,11 +35,14 @@ export const SITE_LOCATION = 'Chicago, IL';
 /**
  * Official Modest social properties only.
  * Fendi Frost properties must never appear here.
+ *
+ * No TikTok: the founder never created one, and the @bemoremodest handle on
+ * TikTok belongs to someone else. Claiming it in `sameAs` would assert an
+ * ownership that is not ours. Do not re-add it.
  */
 export const SOCIAL_URLS = {
   instagram: 'https://instagram.com/bemoremodest',
   twitter: 'https://twitter.com/bemoremodest',
-  tiktok: 'https://www.tiktok.com/@bemoremodest',
 };
 
 export const SAME_AS = Object.values(SOCIAL_URLS);

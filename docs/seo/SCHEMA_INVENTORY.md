@@ -40,7 +40,7 @@ and the raw HTML emit the same graph.
 | `areaServed` | `US` | carried forward from the pre-existing graph |
 | `priceRange` | `$$` | carried forward from the pre-existing graph |
 | `contactPoint` | customer support, email only | derived from the published email |
-| `sameAs` | Instagram, X/Twitter, TikTok `@bemoremodest` | carried forward — **see caveat below** |
+| `sameAs` | Instagram, X/Twitter `@bemoremodest` | carried forward — **see caveat below** |
 | `telephone` | **absent by design** | directive: no public phone number |
 
 Not present anywhere in the graph: any telephone property, `support@bemoremodest.com`, the 773
@@ -48,11 +48,20 @@ number found in third-party data, or any reference to Fendi Frost. All four are 
 automated test (`src/test/seo-entity.test.ts`) and re-checked on every route by
 `scripts/verify-seo.mjs`.
 
-**`sameAs` caveat.** These three URLs were already published in production before this phase and
+**`sameAs` caveat.** These two URLs were already published in production before this phase and
 are carried forward unchanged — Phase 1A asserts nothing new about them. They could not be
 independently re-verified from this environment (Instagram returns a login wall to datacenter IPs;
-TikTok and X return generic shells). They should be confirmed as officially owned Modest accounts
-before the next round.
+X returns a generic shell). They should be confirmed as officially owned Modest accounts before
+the next round.
+
+**2026-08-26 — TikTok removed.** The caveat above was originally written against three URLs,
+including `tiktok.com/@bemoremodest`. Ownership was subsequently checked on `main` (PR #4,
+commit `d08a1d0`): the founder never created a TikTok, and that handle belongs to someone else.
+It is now absent from `SOCIAL_URLS` in `src/seo/brand.js` — and therefore from `sameAs`, the
+newsletter icons and every prerendered route — and asserted absent by
+`src/test/seo-entity.test.ts`. Do not re-add it. The 2026-08-20 capture files under
+`docs/seo/captures/` still contain it; they are dated evidence of that build and are left
+unedited by design.
 
 ## 3. Product node — field by field
 

@@ -55,6 +55,11 @@ describe('Modest entity graph', () => {
     expect(org.sameAs.every((url) => !/fendi/i.test(url))).toBe(true);
   });
 
+  it('claims no TikTok account — the @bemoremodest handle is not ours', () => {
+    expect(JSON.stringify(graph)).not.toMatch(/tiktok/i);
+    expect(org.sameAs.every((url) => !/tiktok/i.test(url))).toBe(true);
+  });
+
   it('links Organization, Brand and WebSite through stable @ids', () => {
     expect(org.brand['@id']).toBe(BRAND_ID);
     expect(node(graph, 'WebSite').publisher['@id']).toBe(org['@id']);
