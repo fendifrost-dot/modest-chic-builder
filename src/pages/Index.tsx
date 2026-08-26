@@ -9,7 +9,8 @@ import Newsletter from '@/components/Newsletter';
 import Footer from '@/components/Footer';
 import WelcomeOfferModal from '@/components/WelcomeOfferModal';
 import SeoHead from '@/components/SeoHead';
-import { pageTitle, SITE_DESCRIPTION } from '@/lib/site';
+import { WebPageJsonLd, BreadcrumbJsonLd } from '@/components/JsonLd';
+import { HOME_ROUTE } from '@/seo/routes.js';
 
 const Index = () => {
   useEffect(() => {
@@ -23,7 +24,14 @@ const Index = () => {
 
   return (
     <div className="min-h-screen bg-background">
-      <SeoHead title={pageTitle()} description={SITE_DESCRIPTION} path="/" />
+      <SeoHead title={HOME_ROUTE.title} description={HOME_ROUTE.description} path="/" />
+      <WebPageJsonLd
+        path="/"
+        name={HOME_ROUTE.title}
+        description={HOME_ROUTE.description}
+        type="WebPage"
+      />
+      <BreadcrumbJsonLd items={[{ name: 'Home', path: '/' }]} />
       <Header />
       <main>
         <HeroSection />

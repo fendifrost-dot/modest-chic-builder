@@ -1,16 +1,18 @@
 import { useEffect } from 'react';
-import { SITE_NAME, SITE_URL, DEFAULT_OG_IMAGE, absoluteUrl } from '@/lib/site';
+import { SITE_NAME, DEFAULT_OG_IMAGE, absoluteUrl, canonicalPath } from '@/lib/site';
 
 interface SeoHeadProps {
   title: string;
   description: string;
+  /** Route path. The canonical is always self-referencing to this path. */
   path: string;
   image?: string;
   type?: 'website' | 'product' | 'article';
   noindex?: boolean;
 }
 
-function upsertMeta(selector: string, attr: 'name' | 'property', key: string, content: string) {
+function upsertMeta(attr: 'name' | 'property', key: string, content: string) {
+  const selector = `meta[${attr}="${key}"]`;
   let el = document.head.querySelector(selector) as HTMLMetaElement | null;
   if (!el) {
     el = document.createElement('meta');
@@ -30,6 +32,26 @@ function upsertLink(rel: string, href: string) {
   el.setAttribute('href', href);
 }
 
+/**
+ * Per-route head management.
+ *
+ * The prerenderer writes the same tags into the raw HTML for the initial request;
+ * this keeps them correct across client-side navigation. Both read the same route
+ * manifest, so the rendered DOM and the raw HTML agree.
+ */
+/**
+ * The prerenderer writes the route's JSON-LD into <head> so non-JS retrievers see
+ * it. Once React mounts it renders its own, always-current graph, so the
+ * prerendered copies are retired here — otherwise every page would carry the graph
+ * twice, and after a client-side navigation the head copy would describe the
+ * previous route.
+ */
+function retirePrerenderedJsonLd() {
+  document.head
+    .querySelectorAll('script[type="application/ld+json"][data-prerendered-ld]')
+    .forEach((el) => el.remove());
+}
+
 const SeoHead = ({
   title,
   description,
@@ -39,32 +61,36 @@ const SeoHead = ({
   noindex = false,
 }: SeoHeadProps) => {
   useEffect(() => {
-    const url = absoluteUrl(path);
-    const ogImage = image || DEFAULT_OG_IMAGE;
+    retirePrerenderedJsonLd();
+
+    const url = absoluteUrl(canonicalPath(path));
+    const ogImage = image ? absoluteUrl(image) : DEFAULT_OG_IMAGE;
 
     document.title = title;
-    upsertMeta('meta[name="description"]', 'name', 'description', description);
-    upsertMeta('meta[name="robots"]', 'name', 'robots', noindex ? 'noindex, nofollow' : 'index, follow');
+    upsertMeta('name', 'description', description);
+    upsertMeta(
+      'name',
+      'robots',
+      noindex ? 'noindex, follow' : 'index, follow, max-image-preview:large',
+    );
     upsertLink('canonical', url);
 
-    upsertMeta('meta[property="og:title"]', 'property', 'og:title', title);
-    upsertMeta('meta[property="og:description"]', 'property', 'og:description', description);
-    upsertMeta('meta[property="og:type"]', 'property', 'og:type', type === 'product' ? 'product' : 'website');
-    upsertMeta('meta[property="og:url"]', 'property', 'og:url', url);
-    upsertMeta('meta[property="og:image"]', 'property', 'og:image', ogImage);
-    upsertMeta('meta[property="og:site_name"]', 'property', 'og:site_name', SITE_NAME);
-    upsertMeta('meta[property="og:locale"]', 'property', 'og:locale', 'en_US');
+    upsertMeta('property', 'og:title', title);
+    upsertMeta('property', 'og:description', description);
+    upsertMeta('property', 'og:type', type === 'product' ? 'product' : 'website');
+    upsertMeta('property', 'og:url', url);
+    upsertMeta('property', 'og:image', ogImage);
+    upsertMeta('property', 'og:site_name', SITE_NAME);
+    upsertMeta('property', 'og:locale', 'en_US');
 
-    upsertMeta('meta[name="twitter:card"]', 'name', 'twitter:card', 'summary_large_image');
-    upsertMeta('meta[name="twitter:title"]', 'name', 'twitter:title', title);
-    upsertMeta('meta[name="twitter:description"]', 'name', 'twitter:description', description);
-    upsertMeta('meta[name="twitter:image"]', 'name', 'twitter:image', ogImage);
-    upsertMeta('meta[name="twitter:site"]', 'name', 'twitter:site', '@bemoremodest');
+    upsertMeta('name', 'twitter:card', 'summary_large_image');
+    upsertMeta('name', 'twitter:title', title);
+    upsertMeta('name', 'twitter:description', description);
+    upsertMeta('name', 'twitter:image', ogImage);
+    upsertMeta('name', 'twitter:site', '@bemoremodest');
   }, [title, description, path, image, type, noindex]);
 
   return null;
 };
 
 export default SeoHead;
-
-export { SITE_URL };
