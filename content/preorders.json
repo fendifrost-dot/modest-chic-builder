@@ -1,0 +1,129 @@
+{
+  "_comment": "What's to Come. These pieces are not in the Printify catalog and are not in production. title, expectedShip, and priceCents stay empty until the Founder sets them. Set enabled to true only after all three are filled in. priceCents is an integer count of cents. expectedShip is the exact customer-facing ship message. Do not guess either field. The optional bear pin is part of the cap description, not a second price.",
+  "items": [
+    {
+      "id": "concept-cap-grey-white",
+      "handle": "concept-cap-grey-white",
+      "title": "",
+      "colorway": "Grey / white",
+      "concept": "Snakeskin-textured 6-panel cap in grey and white. Perforated side panels, suede-like brim, brass-buckle strap. The bear enamel pin is optional.",
+      "summary": "Snakeskin-textured 6-panel cap in grey and white. Perforated side panels, suede-like brim, brass-buckle strap. The bear enamel pin is optional.",
+      "expectedShip": "",
+      "priceCents": null,
+      "currency": "USD",
+      "images": [
+        {
+          "src": "/images/preorders/cap-grey-white-side.webp",
+          "alt": "Snakeskin-textured 6-panel cap in grey and white, side view",
+          "width": 1200,
+          "height": 1600
+        },
+        {
+          "src": "/images/preorders/cap-grey-white-back.webp",
+          "alt": "Snakeskin-textured 6-panel cap in grey and white, back view with brass buckle and optional bear enamel pin",
+          "width": 1200,
+          "height": 1600
+        }
+      ],
+      "enabled": false
+    },
+    {
+      "id": "concept-cap-tan",
+      "handle": "concept-cap-tan",
+      "title": "",
+      "colorway": "Tan",
+      "concept": "Snakeskin-textured 6-panel cap in tan. Perforated side panels, suede-like brim, brass-buckle strap. The bear enamel pin is optional.",
+      "summary": "Snakeskin-textured 6-panel cap in tan. Perforated side panels, suede-like brim, brass-buckle strap. The bear enamel pin is optional.",
+      "expectedShip": "",
+      "priceCents": null,
+      "currency": "USD",
+      "images": [
+        {
+          "src": "/images/preorders/cap-tan-side.webp",
+          "alt": "Snakeskin-textured 6-panel cap in tan, side view",
+          "width": 1200,
+          "height": 1600
+        },
+        {
+          "src": "/images/preorders/cap-tan-back.webp",
+          "alt": "Snakeskin-textured 6-panel cap in tan, back view with brass buckle and optional bear enamel pin",
+          "width": 1200,
+          "height": 1600
+        }
+      ],
+      "enabled": false
+    },
+    {
+      "id": "concept-cap-golden",
+      "handle": "concept-cap-golden",
+      "title": "",
+      "colorway": "Golden",
+      "concept": "Snakeskin-textured 6-panel cap in golden. Perforated side panels, suede-like brim, brass-buckle strap. The bear enamel pin is optional.",
+      "summary": "Snakeskin-textured 6-panel cap in golden. Perforated side panels, suede-like brim, brass-buckle strap. The bear enamel pin is optional.",
+      "expectedShip": "",
+      "priceCents": null,
+      "currency": "USD",
+      "images": [
+        {
+          "src": "/images/preorders/cap-golden-side.webp",
+          "alt": "Snakeskin-textured 6-panel cap in golden, side view",
+          "width": 1200,
+          "height": 1600
+        },
+        {
+          "src": "/images/preorders/cap-golden-back.webp",
+          "alt": "Snakeskin-textured 6-panel cap in golden, back view with brass buckle and optional bear enamel pin",
+          "width": 1200,
+          "height": 1600
+        }
+      ],
+      "enabled": false
+    },
+    {
+      "id": "concept-cap-brown-black",
+      "handle": "concept-cap-brown-black",
+      "title": "",
+      "colorway": "Brown / black",
+      "concept": "Snakeskin-textured 6-panel cap in brown and black. Perforated side panels, suede-like brim, brass-buckle strap. The bear enamel pin is optional.",
+      "summary": "Snakeskin-textured 6-panel cap in brown and black. Perforated side panels, suede-like brim, brass-buckle strap. The bear enamel pin is optional.",
+      "expectedShip": "",
+      "priceCents": null,
+      "currency": "USD",
+      "images": [
+        {
+          "src": "/images/preorders/cap-brown-black-side.webp",
+          "alt": "Snakeskin-textured 6-panel cap in brown and black, side view",
+          "width": 1200,
+          "height": 1600
+        },
+        {
+          "src": "/images/preorders/cap-brown-black-back.webp",
+          "alt": "Snakeskin-textured 6-panel cap in brown and black, back view with brass buckle and optional bear enamel pin",
+          "width": 1200,
+          "height": 1600
+        }
+      ],
+      "enabled": false
+    },
+    {
+      "id": "concept-bear-pin-set",
+      "handle": "concept-bear-pin-set",
+      "title": "",
+      "colorway": "Six finishes",
+      "concept": "Six-finish bear mascot pin set. The same standing bear appears in six enamel finishes: red jacket, silver, crystal gold, solid gold, crystal silver, and pearl.",
+      "summary": "Six-finish bear mascot pin set. The same standing bear appears in six enamel finishes: red jacket, silver, crystal gold, solid gold, crystal silver, and pearl.",
+      "expectedShip": "",
+      "priceCents": null,
+      "currency": "USD",
+      "images": [
+        {
+          "src": "/images/preorders/bear-pin-set.webp",
+          "alt": "Six bear mascot enamel pins in red jacket, silver, crystal gold, solid gold, crystal silver, and pearl finishes",
+          "width": 1200,
+          "height": 1600
+        }
+      ],
+      "enabled": false
+    }
+  ]
+}

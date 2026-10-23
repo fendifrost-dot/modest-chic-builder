@@ -4,6 +4,8 @@ import HeroSection from '@/components/HeroSection';
 import MarqueeBanner from '@/components/MarqueeBanner';
 import CollectionsSection from '@/components/CollectionsSection';
 import ProductGrid from '@/components/ProductGrid';
+import Signature from '@/components/Signature';
+import PreorderSection from '@/components/PreorderSection';
 import BrandStory from '@/components/BrandStory';
 import Newsletter from '@/components/Newsletter';
 import Footer from '@/components/Footer';
@@ -28,8 +30,10 @@ const Index = () => {
       <main>
         <HeroSection />
         <MarqueeBanner />
-        <ProductGrid title="Heart Chakra Collection" subtitle="Essentials" limit={10} query="id:8965877104817 OR id:8965878087857 OR id:8965883068593 OR id:8966533677233" />
+        <ProductGrid title="Heart Chakra Collection" subtitle="Essentials" limit={8} collection="featured" />
+        <Signature />
         <CollectionsSection />
+        <PreorderSection />
         <BrandStory />
         <Newsletter />
       </main>

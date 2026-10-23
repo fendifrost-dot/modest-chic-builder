@@ -1,161 +1,101 @@
-import { create } from 'zustand';
-import { persist, createJSONStorage } from 'zustand/middleware';
-import {
-  CartItem,
-  createShopifyCart,
-  addLineToShopifyCart,
-  updateShopifyCartLine,
-  removeLineFromShopifyCart,
-  storefrontApiRequest,
-  CART_QUERY,
-} from '@/lib/shopify';
+import { create } from "zustand";
+import { persist, createJSONStorage } from "zustand/middleware";
 
-export type { CartItem };
+export interface CartItem {
+  productId: string;
+  handle: string;
+  title: string;
+  image?: string;
+  variantId: string;
+  variantTitle: string;
+  printifyProductId: string;
+  printifyVariantId: number;
+  price: { amount: string; currencyCode: string };
+  quantity: number;
+  selectedOptions: Array<{ name: string; value: string }>;
+}
 
 interface CartStore {
   items: CartItem[];
-  cartId: string | null;
-  checkoutUrl: string | null;
   isLoading: boolean;
-  isSyncing: boolean;
-  addItem: (item: Omit<CartItem, 'lineId'>) => Promise<boolean>;
-  updateQuantity: (variantId: string, quantity: number) => Promise<void>;
-  removeItem: (variantId: string) => Promise<void>;
+  addItem: (item: Omit<CartItem, "quantity"> & { quantity?: number }) => boolean;
+  updateQuantity: (variantId: string, quantity: number) => void;
+  removeItem: (variantId: string) => void;
   clearCart: () => void;
-  syncCart: () => Promise<void>;
-  getCheckoutUrl: () => string | null;
+  checkout: () => Promise<{ ok: boolean; error?: string }>;
 }
 
 export const useCartStore = create<CartStore>()(
   persist(
     (set, get) => ({
       items: [],
-      cartId: null,
-      checkoutUrl: null,
       isLoading: false,
-      isSyncing: false,
 
-      addItem: async (item) => {
-        const { items, cartId, clearCart } = get();
-        const existingItem = items.find(i => i.variantId === item.variantId);
-
-        set({ isLoading: true });
-        try {
-          if (!cartId) {
-            const result = await createShopifyCart({ ...item, lineId: null });
-            if (result) {
-              set({
-                cartId: result.cartId,
-                checkoutUrl: result.checkoutUrl,
-                items: [{ ...item, lineId: result.lineId }],
-              });
-              return true;
-            }
-            return false;
-          }
-          if (existingItem) {
-            const newQuantity = existingItem.quantity + item.quantity;
-            if (!existingItem.lineId) return false;
-            const result = await updateShopifyCartLine(cartId, existingItem.lineId, newQuantity);
-            if (result.success) {
-              const currentItems = get().items;
-              set({ items: currentItems.map(i => i.variantId === item.variantId ? { ...i, quantity: newQuantity } : i) });
-              return true;
-            }
-            if (result.cartNotFound) {
-              clearCart();
-            }
-            return false;
-          }
-          const result = await addLineToShopifyCart(cartId, { ...item, lineId: null });
-          if (result.success) {
-            const currentItems = get().items;
-            set({ items: [...currentItems, { ...item, lineId: result.lineId ?? null }] });
-            return true;
-          }
-          if (result.cartNotFound) {
-            clearCart();
-          }
-          return false;
-        } catch (error) {
-          console.error('Failed to add item:', error);
-          return false;
-        } finally {
-          set({ isLoading: false });
+      addItem: (item) => {
+        const quantity = item.quantity ?? 1;
+        const existing = get().items.find((entry) => entry.variantId === item.variantId);
+        if (existing) {
+          set({
+            items: get().items.map((entry) =>
+              entry.variantId === item.variantId ? { ...entry, quantity: entry.quantity + quantity } : entry,
+            ),
+          });
+          return true;
         }
+        set({ items: [...get().items, { ...item, quantity }] });
+        return true;
       },
 
-      updateQuantity: async (variantId, quantity) => {
+      updateQuantity: (variantId, quantity) => {
         if (quantity <= 0) {
-          await get().removeItem(variantId);
+          get().removeItem(variantId);
           return;
         }
-        const { items, cartId, clearCart } = get();
-        const item = items.find(i => i.variantId === variantId);
-        if (!item?.lineId || !cartId) return;
-
-        set({ isLoading: true });
-        try {
-          const result = await updateShopifyCartLine(cartId, item.lineId, quantity);
-          if (result.success) {
-            const currentItems = get().items;
-            set({ items: currentItems.map(i => i.variantId === variantId ? { ...i, quantity } : i) });
-          } else if (result.cartNotFound) {
-            clearCart();
-          }
-        } catch (error) {
-          console.error('Failed to update quantity:', error);
-        } finally {
-          set({ isLoading: false });
-        }
+        set({
+          items: get().items.map((item) => (item.variantId === variantId ? { ...item, quantity } : item)),
+        });
       },
 
-      removeItem: async (variantId) => {
-        const { items, cartId, clearCart } = get();
-        const item = items.find(i => i.variantId === variantId);
-        if (!item?.lineId || !cartId) return;
-
-        set({ isLoading: true });
-        try {
-          const result = await removeLineFromShopifyCart(cartId, item.lineId);
-          if (result.success) {
-            const currentItems = get().items;
-            const newItems = currentItems.filter(i => i.variantId !== variantId);
-            newItems.length === 0 ? clearCart() : set({ items: newItems });
-          } else if (result.cartNotFound) {
-            clearCart();
-          }
-        } catch (error) {
-          console.error('Failed to remove item:', error);
-        } finally {
-          set({ isLoading: false });
-        }
+      removeItem: (variantId) => {
+        set({ items: get().items.filter((item) => item.variantId !== variantId) });
       },
 
-      clearCart: () => set({ items: [], cartId: null, checkoutUrl: null }),
-      getCheckoutUrl: () => get().checkoutUrl,
+      clearCart: () => set({ items: [] }),
 
-      syncCart: async () => {
-        const { cartId, isSyncing, clearCart } = get();
-        if (!cartId || isSyncing) return;
-
-        set({ isSyncing: true });
+      checkout: async () => {
+        const items = get().items;
+        if (items.length === 0) return { ok: false, error: "Your cart is empty." };
+        set({ isLoading: true });
         try {
-          const data = await storefrontApiRequest(CART_QUERY, { id: cartId });
-          if (!data) return;
-          const cart = data?.data?.cart;
-          if (!cart || cart.totalQuantity === 0) clearCart();
-        } catch (error) {
-          console.error('Failed to sync cart:', error);
+          const response = await fetch("/api/checkout", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              items: items.map((item) => ({
+                productId: item.productId,
+                handle: item.handle,
+                variantId: item.variantId,
+                quantity: item.quantity,
+              })),
+            }),
+          });
+          const body = await response.json();
+          if (!response.ok || !body.url) {
+            return { ok: false, error: body.error || "Checkout is unavailable." };
+          }
+          window.location.assign(body.url);
+          return { ok: true };
+        } catch {
+          return { ok: false, error: "Checkout is unavailable." };
         } finally {
-          set({ isSyncing: false });
+          set({ isLoading: false });
         }
       },
     }),
     {
-      name: 'shopify-cart',
+      name: "modest-cart",
       storage: createJSONStorage(() => localStorage),
-      partialize: (state) => ({ items: state.items, cartId: state.cartId, checkoutUrl: state.checkoutUrl }),
-    }
-  )
+      partialize: (state) => ({ items: state.items }),
+    },
+  ),
 );

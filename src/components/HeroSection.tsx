@@ -25,7 +25,7 @@ const HeroSection = () => {
             className="text-gold text-sm tracking-[0.4em] uppercase mb-6 opacity-0 animate-fade-in"
             style={{ animationDelay: '0.3s' }}
           >
-            Spring / Summer 2026
+            Chicago · September 2017
           </p>
 
           <h1
@@ -41,8 +41,8 @@ const HeroSection = () => {
             className="text-cream/70 text-lg md:text-xl max-w-xl mx-auto mb-12 font-light opacity-0 animate-fade-in"
             style={{ animationDelay: '0.7s' }}
           >
-            Premium streetwear that speaks without shouting.
-            Crafted for those who know true luxury is understated.
+            High-end luxury streetwear that speaks without shouting.
+            Crafted in Chicago for people who know true luxury is understated.
           </p>
 
           <div

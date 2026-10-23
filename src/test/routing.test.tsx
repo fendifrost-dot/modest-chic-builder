@@ -1,29 +1,22 @@
 // @ts-nocheck
-import { describe, it, expect, vi } from "vitest";
+import { describe, it, expect, vi, beforeEach } from "vitest";
 import { render, screen } from "@testing-library/react";
 import { MemoryRouter, Routes, Route } from "react-router-dom";
 
-const mockFetchProducts = vi.fn().mockResolvedValue([]);
-const mockFetchCollectionProducts = vi.fn().mockResolvedValue([]);
+const mockFetchCatalog = vi.fn().mockResolvedValue({ mode: "printify", products: [] });
 
-vi.mock("@/lib/shopify", () => ({
-  fetchProducts: (...args) => mockFetchProducts(...args),
-  fetchCollectionProducts: (...args) => mockFetchCollectionProducts(...args),
-}));
-
-vi.mock("@/hooks/useCartSync", () => ({
-  useCartSync: vi.fn(),
+vi.mock("@/lib/catalog", () => ({
+  fetchCatalog: (...args) => mockFetchCatalog(...args),
 }));
 
 import Collection from "@/pages/Collection";
 
 describe("Collection routing", () => {
   beforeEach(() => {
-    mockFetchProducts.mockClear();
-    mockFetchCollectionProducts.mockClear();
+    mockFetchCatalog.mockClear();
   });
 
-  it("renders mens collection page at /mens using collectionByHandle('frontpage')", () => {
+  it("renders mens collection page at /mens from the Printify mens tag", () => {
     render(
       <MemoryRouter initialEntries={["/mens"]}>
         <Routes>
@@ -33,12 +26,10 @@ describe("Collection routing", () => {
     );
     expect(screen.getByText("Men's Collection")).toBeInTheDocument();
     expect(screen.getByText("For Him")).toBeInTheDocument();
-    // Mens must use collectionByHandle("frontpage") for exact Shopify parity
-    expect(mockFetchCollectionProducts).toHaveBeenCalledWith("frontpage", 50);
-    expect(mockFetchProducts).not.toHaveBeenCalled();
+    expect(mockFetchCatalog).toHaveBeenCalledWith({ collection: "mens", limit: 50, sort: undefined });
   });
 
-  it("renders womens collection page at /womens using collectionByHandle('womens')", () => {
+  it("renders womens collection page at /womens", () => {
     render(
       <MemoryRouter initialEntries={["/womens"]}>
         <Routes>
@@ -48,11 +39,10 @@ describe("Collection routing", () => {
     );
     expect(screen.getByText("Women's Collection")).toBeInTheDocument();
     expect(screen.getByText("For Her")).toBeInTheDocument();
-    expect(mockFetchCollectionProducts).toHaveBeenCalledWith("womens", 50);
-    expect(mockFetchProducts).not.toHaveBeenCalled();
+    expect(mockFetchCatalog).toHaveBeenCalledWith({ collection: "womens", limit: 50, sort: undefined });
   });
 
-  it("renders accessories collection page at /accessories using collectionByHandle('accessories')", () => {
+  it("renders accessories collection page at /accessories", () => {
     render(
       <MemoryRouter initialEntries={["/accessories"]}>
         <Routes>
@@ -62,7 +52,6 @@ describe("Collection routing", () => {
     );
     expect(screen.getByRole("heading", { name: "Accessories" })).toBeInTheDocument();
     expect(screen.getByText("Complete the Look")).toBeInTheDocument();
-    expect(mockFetchCollectionProducts).toHaveBeenCalledWith("accessories", 50);
-    expect(mockFetchProducts).not.toHaveBeenCalled();
+    expect(mockFetchCatalog).toHaveBeenCalledWith({ collection: "accessories", limit: 50, sort: undefined });
   });
 });

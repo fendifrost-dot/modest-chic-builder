@@ -1,3 +1,7 @@
+# SUPERSEDED — do not follow
+
+This document describes the old Shopify storefront. Commerce in this branch is Printify + Stripe. Read `docs/PRINTIFY_STRIPE_CUTOVER.md`. Do not reintroduce the Storefront API, cart mutations, or a Shopify checkout URL. Do not merge or publish until the Founder closes the open SEO/GEO test.
+
 # Shopify Handoff — BeMoreModest
 
 Handoff document for an AI agent (Claude) or engineer picking up Shopify work on this project. Read this **before** touching commerce code or Shopify data.

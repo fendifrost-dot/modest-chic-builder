@@ -15,14 +15,26 @@ export const SiteJsonLd = () => (
       {
         '@context': 'https://schema.org',
         '@type': ['Organization', 'ClothingStore'],
-        name: 'MOD#$T',
-        alternateName: ['Be More Modest', 'BeMoreModest', 'Modest'],
+        name: 'Modest',
+        legalName: 'Modest Streetwear Apparel Inc.',
+        alternateName: ['MOD#$T', 'Be More Modest', 'BeMoreModest'],
         url: 'https://bemoremodest.com',
         logo: 'https://bemoremodest.com/favicon.svg',
         image: 'https://bemoremodest.com/og-image.jpg',
         email: 'info@bemoremodest.com',
         description:
-          'MOD#$T (Be More Modest) is a Chicago luxury streetwear brand crafting limited-run cashmere, varsity jackets, tees, and accessories for understated confidence.',
+          'Modest (displayed as MOD#$T) is Modest Streetwear Apparel Inc., a high-end luxury streetwear brand founded in Chicago in September 2017 by Terrence Cleveland. The signature detail is the rabbit-fur patch. There is no public phone.',
+        foundingDate: '2017-09',
+        founder: {
+          '@type': 'Person',
+          name: 'Terrence Cleveland',
+          jobTitle: 'Founder, CEO, Lead Designer',
+        },
+        brand: {
+          '@type': 'Brand',
+          name: 'Modest',
+          alternateName: 'MOD#$T',
+        },
         foundingLocation: {
           '@type': 'Place',
           address: {
@@ -32,8 +44,14 @@ export const SiteJsonLd = () => (
             addressCountry: 'US',
           },
         },
+        address: {
+          '@type': 'PostalAddress',
+          addressLocality: 'Chicago',
+          addressRegion: 'IL',
+          addressCountry: 'US',
+        },
         areaServed: 'US',
-        priceRange: '$$',
+        priceRange: '$$$',
         sameAs: [
           'https://instagram.com/bemoremodest',
           'https://twitter.com/bemoremodest',
@@ -43,12 +61,12 @@ export const SiteJsonLd = () => (
         '@context': 'https://schema.org',
         '@type': 'WebSite',
         name: 'MOD#$T',
-        alternateName: 'Be More Modest',
+        alternateName: ['Modest', 'Be More Modest'],
         url: 'https://bemoremodest.com',
         inLanguage: 'en-US',
         publisher: {
           '@type': 'Organization',
-          name: 'MOD#$T',
+          name: 'Modest Streetwear Apparel Inc.',
         },
       },
     ]}

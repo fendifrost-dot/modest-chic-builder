@@ -62,7 +62,7 @@ describe('availability helpers', () => {
     expect(isOptionValueInStock(heartChakra, 'Color', 'Ivory')).toBe(true);
   });
 
-  it('hides the Shopify Title option from pickers', () => {
+  it('hides the default Title option from pickers', () => {
     const visible = visibleProductOptions([
       { name: 'Size', values: ['S'] },
       { name: 'Title', values: ['Default Title'] },
@@ -78,9 +78,9 @@ describe('availability helpers', () => {
 });
 
 describe('image and color helpers', () => {
-  it('compares Shopify CDN images by pathname, ignoring query params', () => {
-    const a = 'https://cdn.shopify.com/s/files/1/foo.jpg?v=1';
-    const b = 'https://cdn.shopify.com/s/files/1/foo.jpg?v=99';
+  it('compares image URLs by pathname, ignoring query params', () => {
+    const a = 'https://images.printify.com/tee.jpg?v=1';
+    const b = 'https://images.printify.com/tee.jpg?v=99';
     expect(imagePathKey(a)).toBe(imagePathKey(b));
   });
 

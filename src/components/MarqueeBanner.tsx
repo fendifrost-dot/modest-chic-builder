@@ -8,7 +8,7 @@ const MarqueeBanner = () => {
     '★',
     'Limited Edition Drops',
     '★',
-    'Affirm Available',
+    'Rabbit-Fur Patches',
     '★',
     'Premium Materials',
     '★',
@@ -18,7 +18,7 @@ const MarqueeBanner = () => {
     '★',
     'Limited Edition Drops',
     '★',
-    'Affirm Available',
+    'Rabbit-Fur Patches',
     '★',
   ];
 

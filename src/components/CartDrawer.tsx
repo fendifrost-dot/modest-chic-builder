@@ -1,26 +1,23 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { toast } from "sonner";
 import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
-import { ShoppingBag, Minus, Plus, Trash2, ExternalLink, Loader2 } from "lucide-react";
+import { ShoppingBag, Minus, Plus, Trash2, Loader2 } from "lucide-react";
 import { useCartStore } from "@/stores/cartStore";
 
 export const CartDrawer = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const { items, isLoading, isSyncing, updateQuantity, removeItem, getCheckoutUrl, syncCart } = useCartStore();
+  const { items, isLoading, updateQuantity, removeItem, checkout } = useCartStore();
   const totalItems = items.reduce((sum, item) => sum + item.quantity, 0);
-  const totalPrice = items.reduce((sum, item) => sum + (parseFloat(item.price.amount) * item.quantity), 0);
-  const currency = items[0]?.price.currencyCode || 'USD';
+  const totalPrice = items.reduce((sum, item) => sum + parseFloat(item.price.amount) * item.quantity, 0);
+  const currency = items[0]?.price.currencyCode || "USD";
 
-  useEffect(() => { if (isOpen) syncCart(); }, [isOpen, syncCart]);
-
-  const handleCheckout = () => {
-    const checkoutUrl = getCheckoutUrl();
-    if (checkoutUrl) {
-      window.open(checkoutUrl, '_blank', 'noopener,noreferrer');
+  const handleCheckout = async () => {
+    const result = await checkout();
+    if (result.ok) {
       setIsOpen(false);
       return;
     }
-    toast.error('Checkout is not ready yet. Please try again.', { position: 'top-center' });
+    toast.error(result.error || "Checkout is not ready yet. Please try again.", { position: "top-center" });
   };
 
   return (
@@ -37,7 +34,7 @@ export const CartDrawer = () => {
         <SheetHeader className="flex-shrink-0">
           <SheetTitle className="text-cream font-display text-2xl tracking-wider">Shopping Cart</SheetTitle>
           <SheetDescription className="text-muted-foreground">
-            {totalItems === 0 ? "Your cart is empty" : `${totalItems} item${totalItems !== 1 ? 's' : ''} in your cart`}
+            {totalItems === 0 ? "Your cart is empty" : `${totalItems} item${totalItems !== 1 ? "s" : ""} in your cart`}
           </SheetDescription>
         </SheetHeader>
         <div className="flex flex-col flex-1 pt-6 min-h-0">
@@ -55,17 +52,17 @@ export const CartDrawer = () => {
                   {items.map((item) => (
                     <div key={item.variantId} className="flex gap-4 p-3 border border-border">
                       <div className="w-20 h-24 bg-secondary overflow-hidden flex-shrink-0">
-                        {item.product.node.images?.edges?.[0]?.node && (
-                          <img src={item.product.node.images.edges[0].node.url} alt={item.product.node.title} className="w-full h-full object-cover" />
+                        {item.image && (
+                          <img src={item.image} alt={item.title} width={160} height={192} className="w-full h-full object-cover" />
                         )}
                       </div>
                       <div className="flex-1 min-w-0">
-                        <h4 className="text-cream text-sm font-medium truncate">{item.product.node.title}</h4>
-                        <p className="text-muted-foreground text-xs mt-1">{item.selectedOptions.map(o => o.value).join(' • ')}</p>
+                        <h4 className="text-cream text-sm font-medium truncate">{item.title}</h4>
+                        <p className="text-muted-foreground text-xs mt-1">{item.selectedOptions.map((option) => option.value).join(" • ")}</p>
                         <p className="text-gold font-medium mt-1">${parseFloat(item.price.amount).toFixed(2)}</p>
                       </div>
                       <div className="flex flex-col items-end gap-2 flex-shrink-0">
-                        <button type="button" className="text-muted-foreground hover:text-destructive transition-colors" onClick={() => removeItem(item.variantId)} aria-label={`Remove ${item.product.node.title}`}>
+                        <button type="button" className="text-muted-foreground hover:text-destructive transition-colors" onClick={() => removeItem(item.variantId)} aria-label={`Remove ${item.title}`}>
                           <Trash2 className="h-4 w-4" />
                         </button>
                         <div className="flex items-center gap-1">
@@ -91,17 +88,11 @@ export const CartDrawer = () => {
                   type="button"
                   onClick={handleCheckout}
                   className="btn-hero-primary w-full flex items-center justify-center gap-2"
-                  disabled={items.length === 0 || isLoading || isSyncing}
+                  disabled={items.length === 0 || isLoading}
                 >
-                  {isLoading || isSyncing ? (
-                    <Loader2 className="w-4 h-4 animate-spin" />
-                  ) : (
-                    <>
-                      <ExternalLink className="w-4 h-4" />
-                      Checkout
-                    </>
-                  )}
+                  {isLoading ? <Loader2 className="w-4 h-4 animate-spin" /> : "Checkout"}
                 </button>
+                <p className="text-muted-foreground text-xs text-center">Secure payment on Stripe. Free shipping over $200.</p>
               </div>
             </>
           )}

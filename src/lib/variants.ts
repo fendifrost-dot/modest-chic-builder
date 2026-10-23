@@ -60,7 +60,7 @@ function matchScore(
 /**
  * Resolve a variant after the shopper clicks a size/color (or any option).
  * Prefers an exact combo with the current selection; if that combo does not
- * exist (sparse Shopify matrices), falls back to the closest in-stock match
+ * exist (sparse variant matrices), falls back to the closest in-stock match
  * that includes the clicked value so the click always "takes".
  */
 export function findVariantForOptionChange<T extends MatchableVariant>(
@@ -170,9 +170,11 @@ export function guessColorHex(value: string): string | null {
 }
 
 export function isColorOption(name: string): boolean {
-  return optionKey(name) === 'color' || optionKey(name) === 'colour';
+  const key = optionKey(name);
+  return key === 'color' || key === 'colour' || key === 'colors' || key === 'colours';
 }
 
 export function isSizeOption(name: string): boolean {
-  return optionKey(name) === 'size';
+  const key = optionKey(name);
+  return key === 'size' || key === 'sizes';
 }

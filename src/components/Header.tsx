@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
-import { Menu, X, Search, User } from 'lucide-react';
+import { Menu, X, Search } from 'lucide-react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { CartDrawer } from '@/components/CartDrawer';
 import SearchDialog from '@/components/SearchDialog';
@@ -65,6 +65,7 @@ const Header = () => {
     { name: 'Womens', href: '/womens' },
     { name: 'Accessories', href: '/accessories' },
     { name: 'New Arrivals', href: '/new-arrivals' },
+    { name: "What's to Come", href: '/whats-to-come' },
   ];
 
   return (
@@ -77,8 +78,8 @@ const Header = () => {
     >
       {/* Announcement Bar */}
       <div className="bg-gold text-obsidian text-center py-2 px-4 text-[10px] sm:text-xs tracking-[0.15em] sm:tracking-[0.2em] uppercase font-medium leading-snug">
-        <span className="hidden sm:inline">Enjoy Incredible Savings up to 30% Off! Discover Our Exclusive Sale at Checkout</span>
-        <span className="sm:hidden">Up to 30% Off — Exclusive Savings at Checkout</span>
+        <span className="hidden sm:inline">Chicago · Est. September 2017 · Modest Streetwear Apparel Inc.</span>
+        <span className="sm:hidden">Chicago · Est. 2017</span>
       </div>
 
       <nav className="container mx-auto px-6 lg:px-12">
@@ -137,13 +138,6 @@ const Header = () => {
             >
               <Search size={20} />
             </button>
-            <a
-              href="https://modest-streetwear-apparel.myshopify.com/account"
-              className="hidden sm:flex text-cream hover:text-gold transition-colors p-2 min-w-11 min-h-11 items-center justify-center"
-              aria-label="Account"
-            >
-              <User size={20} />
-            </a>
             <CartDrawer />
           </div>
         </div>

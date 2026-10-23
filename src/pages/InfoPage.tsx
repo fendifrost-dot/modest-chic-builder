@@ -3,7 +3,7 @@ import Footer from '@/components/Footer';
 import { Link } from 'react-router-dom';
 import SeoHead from '@/components/SeoHead';
 import { FaqJsonLd } from '@/components/JsonLd';
-import { pageTitle, SITE_DESCRIPTION, SITE_EMAIL, SITE_LOCATION } from '@/lib/site';
+import { pageTitle, SITE_DESCRIPTION, SITE_EMAIL, SITE_LOCATION, LEGAL_NAME, FOUNDER_NAME, FOUNDER_ROLE, FOUNDED } from '@/lib/site';
 
 interface PageContent {
   title: string;
@@ -17,11 +17,15 @@ const pages: Record<string, PageContent> = {
     subtitle: 'Our Story',
     sections: [
       {
-        body: 'MOD#$T was born from a simple belief: true style does not need to scream. We craft premium streetwear for those who understand that real luxury is felt, not flaunted.',
+        body: `Modest, displayed as MOD#$T, is ${LEGAL_NAME}. ${FOUNDER_NAME} — ${FOUNDER_ROLE} — founded the house in Chicago in ${FOUNDED}. True style does not need to scream. High-end luxury streetwear is felt, not flaunted.`,
+      },
+      {
+        heading: 'Rabbit-fur patches',
+        body: 'The brand signature is the rabbit-fur patch: a small tactile emblem sewn where a logo would shout. It is the detail the Chicago studio is known for.',
       },
       {
         heading: 'Our Mission',
-        body: 'Every piece we release is designed with intention — from fabric selection to fit — so you can move through the world with quiet confidence. We believe modesty is not limitation; it is refinement.',
+        body: 'Every piece is designed with intention — from material to fit — so you can move through the world with quiet confidence. Modesty is not limitation; it is refinement.',
       },
       {
         heading: 'Craft & Quality',
@@ -34,7 +38,7 @@ const pages: Record<string, PageContent> = {
     subtitle: 'Get in Touch',
     sections: [
       {
-        body: 'We would love to hear from you. Whether you have a question about your order, sizing, or a collaboration inquiry, our team is here to help.',
+        body: 'Write to us about an order, a size, or a collaboration. Modest has no public phone number.',
       },
       {
         heading: 'Email',
@@ -110,8 +114,20 @@ const pages: Record<string, PageContent> = {
         body: 'Check your confirmation email for tracking. Orders ship within 1–3 business days.',
       },
       {
+        heading: 'Who founded Modest?',
+        body: 'Terrence Cleveland, Founder, CEO, and Lead Designer, founded Modest Streetwear Apparel Inc. in Chicago in September 2017. The brand is displayed as MOD#$T.',
+      },
+      {
+        heading: 'How do I contact the brand?',
+        body: 'Email info@bemoremodest.com. There is no public phone. Social profiles are Instagram @bemoremodest and X @bemoremodest.',
+      },
+      {
         heading: 'Do you offer payment plans?',
-        body: 'Yes — Affirm is available at checkout on eligible orders.',
+        body: 'Checkout is Stripe. Card wallets enabled on the Modest Stripe account appear there. A payment plan such as Affirm appears only if that method is turned on in Stripe.',
+      },
+      {
+        heading: 'What is a pre-order?',
+        body: 'What\'s to Come is separate from the shop. Those pieces are not in the Printify catalog and are not in production yet. The current concepts are four snakeskin-textured 6-panel caps (grey/white, tan, golden, and brown/black) with a brass-buckle strap and an optional bear enamel pin, plus a six-finish bear mascot pin set. Each one is labeled Pre-order. Name, price, and ship timing stay blank until the Founder sets them, and checkout stays closed until then. A paid pre-order is charged in Stripe and is not sent to Printify.',
       },
       {
         heading: 'Are your drops limited?',
@@ -119,7 +135,7 @@ const pages: Record<string, PageContent> = {
       },
       {
         heading: 'How do I use a discount code?',
-        body: 'Enter your code at Shopify checkout after adding items to your cart. New subscribers can use WELCOME10 for 10% off the first order.',
+        body: 'Enter your code on the Stripe Checkout page. New subscribers can use WELCOME10 for 10% off the first order once that promotion code exists in Stripe.',
       },
     ],
   },
@@ -132,7 +148,7 @@ const pages: Record<string, PageContent> = {
       },
       {
         heading: 'What We Collect',
-        body: 'Name, email, shipping address, and payment details (processed securely by Shopify). Newsletter signups are managed through our email provider.',
+        body: 'Name, email, shipping address, and phone if you choose to provide one at checkout. Card numbers are processed by Stripe and are not stored by Modest. Newsletter signups are managed through our email provider.',
       },
       {
         heading: 'Your Rights',
@@ -149,7 +165,7 @@ const pages: Record<string, PageContent> = {
       },
       {
         heading: 'Orders & Payment',
-        body: 'Orders are fulfilled through Shopify. Payment is charged at checkout. We reserve the right to cancel orders suspected of fraud.',
+        body: 'Payment is charged by Stripe Checkout. After payment, the order is handed to Printify for production. We reserve the right to cancel orders suspected of fraud.',
       },
       {
         heading: 'Intellectual Property',

@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Loader2, Search, X } from 'lucide-react';
-import { fetchProducts, type ShopifyProduct } from '@/lib/shopify';
+import { fetchProducts, type CatalogProduct } from '@/lib/catalog';
 
 interface SearchDialogProps {
   open: boolean;
@@ -10,7 +10,7 @@ interface SearchDialogProps {
 
 const SearchDialog = ({ open, onClose }: SearchDialogProps) => {
   const [query, setQuery] = useState('');
-  const [results, setResults] = useState<ShopifyProduct[]>([]);
+  const [results, setResults] = useState<CatalogProduct[]>([]);
   const [loading, setLoading] = useState(false);
   const [searched, setSearched] = useState(false);
 
@@ -90,7 +90,7 @@ const SearchDialog = ({ open, onClose }: SearchDialogProps) => {
               type="search"
               value={query}
               onChange={(e) => setQuery(e.target.value)}
-              placeholder="Search tees, jackets, colors…"
+              placeholder="Search tees, knits, colors…"
               className="flex-1 bg-transparent py-4 text-cream placeholder:text-muted-foreground focus:outline-none text-sm"
               aria-label="Search products"
             />
@@ -125,12 +125,12 @@ const SearchDialog = ({ open, onClose }: SearchDialogProps) => {
             {!loading && results.length > 0 && (
               <ul>
                 {results.map((product) => {
-                  const image = product.node.images?.edges?.[0]?.node;
-                  const price = product.node.priceRange.minVariantPrice;
+                  const image = product.images?.[0];
+                  const price = product.priceRange.minVariantPrice;
                   return (
-                    <li key={product.node.id}>
+                    <li key={product.id}>
                       <Link
-                        to={`/product/${product.node.handle}`}
+                        to={`/product/${product.handle}`}
                         onClick={onClose}
                         className="flex items-center gap-4 px-4 py-3 hover:bg-secondary transition-colors"
                       >
@@ -139,12 +139,14 @@ const SearchDialog = ({ open, onClose }: SearchDialogProps) => {
                             <img
                               src={image.url}
                               alt=""
+                              width={112}
+                              height={128}
                               className="w-full h-full object-cover"
                             />
                           )}
                         </div>
                         <div className="min-w-0 flex-1">
-                          <p className="text-cream text-sm truncate">{product.node.title}</p>
+                          <p className="text-cream text-sm truncate">{product.title}</p>
                           <p className="text-gold text-xs mt-1">
                             ${parseFloat(price.amount).toFixed(2)} {price.currencyCode}
                           </p>
