@@ -1,21 +1,95 @@
 import assert from "node:assert/strict";
 import test from "node:test";
+import { listProducts, resetCatalogCache } from "./catalog.mjs";
 import {
+  PRINTIFY_CATALOG_SHOP_ID,
+  VISIBLE_CATALOG_TITLES,
   filterCatalog,
   isLegacyJacket,
   isLegacyJacketPath,
+  isPrintifyVisible,
   normalizePrintifyProduct,
   previewProducts,
+  resolvePrintifyShopId,
 } from "./catalog-model.mjs";
+
+function rawProduct(id, title, visible) {
+  return {
+    id,
+    title,
+    visible,
+    tags: [],
+    options: [],
+    images: [],
+    variants: [{ id: 1, price: 3200, is_enabled: true, is_available: true, options: [] }],
+  };
+}
 
 test("preview catalog skips jackets and covers the live collections", () => {
   const products = previewProducts();
+  assert.deepEqual(products.map((product) => product.title), VISIBLE_CATALOG_TITLES);
   assert.equal(products.some((product) => isLegacyJacket(product)), false);
   assert.ok(filterCatalog(products, { collection: "featured" }).length >= 3);
   assert.ok(filterCatalog(products, { collection: "mens" }).length >= 1);
   assert.ok(filterCatalog(products, { collection: "womens" }).length >= 1);
-  assert.ok(filterCatalog(products, { collection: "accessories" }).length >= 1);
+  assert.equal(filterCatalog(products, { collection: "accessories" }).length, 0);
   assert.equal(filterCatalog(products, { collection: "sale" }).length, 0);
+});
+
+test("hidden Printify products never enter the catalog", () => {
+  assert.equal(isPrintifyVisible({ visible: true }), true);
+  assert.equal(isPrintifyVisible({ visible: false }), false);
+  assert.equal(isPrintifyVisible({ visible: "false" }), false);
+  assert.equal(isPrintifyVisible({}), false);
+  const visible = VISIBLE_CATALOG_TITLES.map((title, index) => rawProduct(`p${index}`, title, true));
+  const hidden = rawProduct("hidden-1", "Unpublished piece", false);
+  const products = [...visible, hidden].map((row) => normalizePrintifyProduct(row)).filter(Boolean);
+  assert.deepEqual(
+    products.map((product) => product.title),
+    VISIBLE_CATALOG_TITLES,
+  );
+  assert.equal(products.some((product) => product.title === "Unpublished piece"), false);
+});
+
+test("catalog fetch uses shop 8464572 and skips visible false", async () => {
+  const previousToken = process.env.PRINTIFY_API_TOKEN;
+  const previousShop = process.env.PRINTIFY_SHOP_ID;
+  process.env.PRINTIFY_API_TOKEN = "test-token";
+  delete process.env.PRINTIFY_SHOP_ID;
+  resetCatalogCache();
+  const urls = [];
+  try {
+    const listed = await listProducts({
+      force: true,
+      fetchImpl: async (url) => {
+        urls.push(String(url));
+        return {
+          ok: true,
+          text: async () => "",
+          json: async () => ({
+            last_page: 1,
+            data: [
+              rawProduct("care", "MOD#$T Care Bear", true),
+              rawProduct("hidden", "Unpublished piece", false),
+              { ...rawProduct("missing", "Missing visibility", true), visible: undefined },
+            ],
+          }),
+        };
+      },
+    });
+    assert.equal(listed.mode, "printify");
+    assert.match(urls[0], new RegExp(`/shops/${PRINTIFY_CATALOG_SHOP_ID}/products`));
+    assert.deepEqual(listed.products.map((product) => product.title), ["MOD#$T Care Bear"]);
+    process.env.PRINTIFY_SHOP_ID = "8464467";
+    await assert.rejects(() => listProducts({ force: true, fetchImpl: async () => { throw new Error("should not fetch"); } }), /empty shop/);
+    assert.throws(() => resolvePrintifyShopId("8464467"), /8464572/);
+  } finally {
+    if (previousToken == null) delete process.env.PRINTIFY_API_TOKEN;
+    else process.env.PRINTIFY_API_TOKEN = previousToken;
+    if (previousShop == null) delete process.env.PRINTIFY_SHOP_ID;
+    else process.env.PRINTIFY_SHOP_ID = previousShop;
+    resetCatalogCache();
+  }
 });
 
 test("Printify normalization drops legacy jackets and skipped SKUs", () => {

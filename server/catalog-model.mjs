@@ -7,6 +7,35 @@
 
 const JACKET_RE = /\b(jacket|bomber|varsity)\b/i;
 
+/** Shop that holds the live catalog. 8464467 is a second shop and it is empty. */
+export const PRINTIFY_CATALOG_SHOP_ID = "8464572";
+export const PRINTIFY_EMPTY_SHOP_ID = "8464467";
+
+export const VISIBLE_CATALOG_TITLES = [
+  "MOD#$T Care Bear",
+  "Heart Chakra Album Tee",
+  "Women's Chakra Bear Crop Tee",
+  "Heart Chakra Bear T-Shirt",
+  "Unisex Heavy Blend Hooded Sweatshirt",
+  "MOD#$T Bear Classic Logo Sweatshirt",
+];
+
+export function resolvePrintifyShopId(raw = process.env.PRINTIFY_SHOP_ID) {
+  const shopId = String(raw || "").trim() || PRINTIFY_CATALOG_SHOP_ID;
+  if (shopId === PRINTIFY_EMPTY_SHOP_ID) {
+    throw Object.assign(
+      new Error("PRINTIFY_SHOP_ID 8464467 is the empty shop. The catalog shop is 8464572."),
+      { status: 500, code: "empty_shop" },
+    );
+  }
+  return shopId;
+}
+
+/** Printify `visible: false` is hidden and must never be sold or listed. */
+export function isPrintifyVisible(raw) {
+  return raw?.visible === true;
+}
+
 export const FUTURE_DROPSHIP = [
   { id: "polos", status: "planned" },
   { id: "button-ups", status: "planned" },
@@ -66,7 +95,7 @@ function dollars(cents) {
 }
 
 export function normalizePrintifyProduct(raw, skipSkus = skipSkuSet()) {
-  if (!raw || raw.visible === false) return null;
+  if (!isPrintifyVisible(raw)) return null;
   if (isLegacyJacket({ title: raw.title, tags: raw.tags })) return null;
 
   const optionById = new Map();
@@ -230,160 +259,43 @@ function previewVariant(productId, id, title, cents, options, image) {
 
 const MENS = "/images/collection-mens-900.webp";
 const WOMENS = "/images/collection-womens-800.webp";
-const ACCESSORY = "/images/collection-accessories-800.webp";
 const HERO = "/images/hero-1600.webp";
 
 /**
- * Shown only when Printify credentials are absent.
- * Prices are placeholders. These are not a SKU migration.
+ * Shown only when the Printify token is absent.
+ * Titles match the six visible products in shop 8464572.
+ * Prices are placeholders. A hidden Printify product is not represented here.
  */
 export function previewProducts() {
-  const teeOptions = [
-    { name: "Color", values: ["Berry", "Ivory"] },
-    { name: "Size", values: ["S", "M", "L", "XL"] },
+  const note =
+    "Preview listing for a visible Printify product. This price is a placeholder until the catalog token is set. Hidden products are not shown.";
+  const pieces = [
+    ["preview-care-bear", "MOD#$T Care Bear", ["mens"], MENS],
+    ["preview-heart-chakra-album-tee", "Heart Chakra Album Tee", ["featured", "heart-chakra", "mens"], MENS],
+    ["preview-womens-chakra-crop", "Women's Chakra Bear Crop Tee", ["featured", "heart-chakra", "womens"], WOMENS],
+    ["preview-heart-chakra-bear-tee", "Heart Chakra Bear T-Shirt", ["featured", "heart-chakra", "mens"], MENS],
+    ["preview-heavy-blend-hoodie", "Unisex Heavy Blend Hooded Sweatshirt", ["unisex", "mens"], HERO],
+    ["preview-classic-logo-sweatshirt", "MOD#$T Bear Classic Logo Sweatshirt", ["mens"], HERO],
   ];
-  const heart = {
-    id: "preview-heart-chakra-tee",
-    handle: "heart-chakra-bear-tee",
-    title: "Heart Chakra Bear Tee",
-    description:
-      "Preview piece. Relaxed tee with the Heart Chakra bear graphic. Live price, photos, and sizes load from Printify.",
-    tags: ["featured", "heart-chakra", "mens", "tee"],
-    images: [{ url: MENS, alt: "Heart Chakra Bear Tee preview", variantIds: [] }],
-    options: teeOptions,
-    variants: [
-      previewVariant("preview-heart-chakra-tee", 101, "Berry / M", 4800, [
-        { name: "Color", value: "Berry" },
-        { name: "Size", value: "M" },
-      ], { url: MENS, alt: "Berry" }),
-      previewVariant("preview-heart-chakra-tee", 102, "Ivory / L", 4800, [
-        { name: "Color", value: "Ivory" },
-        { name: "Size", value: "L" },
-      ], { url: HERO, alt: "Ivory" }),
-    ],
-    priceRange: { minVariantPrice: { amount: "48.00", currencyCode: "USD" } },
-    createdAt: "2026-07-18T00:00:00.000Z",
-    updatedAt: "2026-07-18T00:00:00.000Z",
-    printifyProductId: "preview-heart-chakra-tee",
-    blueprintId: null,
-  };
-
-  return [
-    heart,
-    {
-      id: "preview-cashmere-bear",
-      handle: "big-bear-cashmere-sweater",
-      title: "Big Bear Cashmere Sweater",
-      description: "Preview knit. Cashmere-weight sweater from the Chicago edit. Not a live Printify price.",
-      tags: ["featured", "mens", "knit"],
-      images: [{ url: HERO, alt: "Big Bear Cashmere Sweater preview", variantIds: [] }],
-      options: [{ name: "Size", values: ["S", "M", "L", "XL"] }],
-      variants: ["S", "M", "L", "XL"].map((size, index) =>
-        previewVariant(
-          "preview-cashmere-bear",
-          200 + index,
-          size,
-          22000,
-          [{ name: "Size", value: size }],
-          { url: HERO, alt: size },
-        ),
-      ),
-      priceRange: { minVariantPrice: { amount: "220.00", currencyCode: "USD" } },
-      createdAt: "2026-07-15T00:00:00.000Z",
-      updatedAt: "2026-07-15T00:00:00.000Z",
-      printifyProductId: "preview-cashmere-bear",
-      blueprintId: null,
-    },
-    {
-      id: "preview-crop-tee",
-      handle: "chakra-bear-crop-tee",
-      title: "Chakra Bear Crop Tee",
-      description: "Preview women's tee. Cropped Heart Chakra graphic. Connect Printify for the live assortment.",
-      tags: ["womens", "featured", "tee"],
-      images: [{ url: WOMENS, alt: "Chakra Bear Crop Tee preview", variantIds: [] }],
-      options: [{ name: "Size", values: ["XS", "S", "M", "L"] }],
-      variants: ["XS", "S", "M", "L"].map((size, index) =>
-        previewVariant(
-          "preview-crop-tee",
-          300 + index,
-          size,
-          4200,
-          [{ name: "Size", value: size }],
-          { url: WOMENS, alt: size },
-        ),
-      ),
-      priceRange: { minVariantPrice: { amount: "42.00", currencyCode: "USD" } },
-      createdAt: "2026-07-18T00:00:00.000Z",
-      updatedAt: "2026-07-18T00:00:00.000Z",
-      printifyProductId: "preview-crop-tee",
-      blueprintId: null,
-    },
-    {
-      id: "preview-smoke-bear",
-      handle: "smoke-bear-tee",
-      title: "Smoke Bear Tee",
-      description: "Preview tee. Understated chest graphic, relaxed streetwear fit.",
-      tags: ["mens", "tee"],
-      images: [{ url: MENS, alt: "Smoke Bear Tee preview", variantIds: [] }],
-      options: [{ name: "Size", values: ["S", "M", "L", "XL"] }],
-      variants: ["S", "M", "L", "XL"].map((size, index) =>
-        previewVariant(
-          "preview-smoke-bear",
-          400 + index,
-          size,
-          4800,
-          [{ name: "Size", value: size }],
-          { url: MENS, alt: size },
-        ),
-      ),
-      priceRange: { minVariantPrice: { amount: "48.00", currencyCode: "USD" } },
-      createdAt: "2026-07-17T00:00:00.000Z",
-      updatedAt: "2026-07-17T00:00:00.000Z",
-      printifyProductId: "preview-smoke-bear",
-      blueprintId: null,
-    },
-    {
-      id: "preview-logo-sweatshirt",
-      handle: "bear-classic-logo-sweatshirt",
-      title: "Bear Classic Logo Sweatshirt",
-      description: "Preview sweatshirt. Heavy fleece, quiet logo, Chicago fit.",
-      tags: ["mens", "fleece"],
-      images: [{ url: HERO, alt: "Bear Classic Logo Sweatshirt preview", variantIds: [] }],
-      options: [{ name: "Size", values: ["S", "M", "L", "XL"] }],
-      variants: ["S", "M", "L", "XL"].map((size, index) =>
-        previewVariant(
-          "preview-logo-sweatshirt",
-          500 + index,
-          size,
-          8800,
-          [{ name: "Size", value: size }],
-          { url: HERO, alt: size },
-        ),
-      ),
-      priceRange: { minVariantPrice: { amount: "88.00", currencyCode: "USD" } },
-      createdAt: "2026-07-16T00:00:00.000Z",
-      updatedAt: "2026-07-16T00:00:00.000Z",
-      printifyProductId: "preview-logo-sweatshirt",
-      blueprintId: null,
-    },
-    {
-      id: "preview-bear-mask",
-      handle: "big-head-bear-mask",
-      title: "Big Head Bear Mask",
-      description: "Preview accessory. One size. Live stock comes from Printify.",
-      tags: ["accessories", "accessory"],
-      images: [{ url: ACCESSORY, alt: "Big Head Bear Mask preview", variantIds: [] }],
+  return pieces.map(([id, title, tags, url]) => {
+    const image = { url, alt: `${title} preview` };
+    const variant = previewVariant(id, 1, "Default", 4800, [], image);
+    return {
+      id,
+      handle: slugify(title, id),
+      title,
+      description: note,
+      tags,
+      images: [{ url, alt: image.alt, variantIds: [] }],
       options: [],
-      variants: [
-        previewVariant("preview-bear-mask", 601, "Default", 3600, [], { url: ACCESSORY, alt: "Mask" }),
-      ],
-      priceRange: { minVariantPrice: { amount: "36.00", currencyCode: "USD" } },
-      createdAt: "2026-07-08T00:00:00.000Z",
-      updatedAt: "2026-07-08T00:00:00.000Z",
-      printifyProductId: "preview-bear-mask",
+      variants: [variant],
+      priceRange: { minVariantPrice: { amount: "48.00", currencyCode: "USD" } },
+      createdAt: "2026-10-01T00:00:00.000Z",
+      updatedAt: "2026-10-01T00:00:00.000Z",
+      printifyProductId: id,
       blueprintId: null,
-    },
-  ];
+    };
+  });
 }
 
 export const LEGACY_JACKET_HANDLES = [

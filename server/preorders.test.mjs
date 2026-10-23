@@ -32,7 +32,9 @@ test("seeded concepts stay visible and are not for sale", () => {
     assert.match(item.summary, /cap|pin set/);
     assert.ok(item.images.length >= 1);
     for (const image of item.images) {
-      assert.equal(existsSync(join(process.cwd(), "public", image.src.replace(/^\//, ""))), true);
+      const file = join(process.cwd(), "public", image.src.replace(/^\//, ""));
+      assert.equal(existsSync(file), true);
+      assert.equal(existsSync(file.replace(/\.webp$/, "-720.webp")), true);
     }
     assert.throws(() => resolvePreorderItems([{ id: item.id, quantity: 1 }]), /not open/);
   }

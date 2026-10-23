@@ -1,25 +1,7 @@
-import OptimizedImage from '@/components/OptimizedImage';
-
 const HeroSection = () => {
   return (
-    <section className="relative h-screen w-full overflow-hidden">
-      <div className="absolute inset-0">
-        <OptimizedImage
-          src="/images/hero-800.webp"
-          srcSet="/images/hero-800.webp 800w, /images/hero-1600.webp 1600w"
-          sizes="100vw"
-          alt="MOD#$T brand hero — premium modest streetwear"
-          width={1600}
-          height={1066}
-          loading="eager"
-          fetchPriority="high"
-          className="absolute inset-0 w-full h-full object-cover object-top"
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-obsidian via-obsidian/80 to-obsidian/40"></div>
-        <div className="overlay-vignette absolute inset-0"></div>
-      </div>
-
-      <div className="relative z-10 h-full flex flex-col items-center justify-end pb-28 md:pb-36 pt-28 md:pt-0 px-6">
+    <section className="relative h-screen w-full overflow-hidden bg-transparent">
+      <div className="relative z-10 flex flex-col items-center justify-end h-full pb-28 md:pb-36 pt-28 md:pt-0 px-6 pointer-events-none">
         <div className="text-center max-w-4xl mx-auto">
           <p
             className="text-gold text-sm tracking-[0.4em] uppercase mb-6 opacity-0 animate-fade-in"
@@ -49,10 +31,10 @@ const HeroSection = () => {
             className="flex flex-col sm:flex-row gap-4 justify-center opacity-0 animate-fade-in"
             style={{ animationDelay: '0.9s' }}
           >
-            <a href="#shop" className="btn-hero-primary">
+            <a href="#shop" className="btn-hero-primary pointer-events-auto">
               Shop Collection
             </a>
-            <a href="#lookbook" className="btn-hero">
+            <a href="#lookbook" className="btn-hero pointer-events-auto">
               View Lookbook
             </a>
           </div>

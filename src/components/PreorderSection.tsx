@@ -117,18 +117,26 @@ const PreorderSection = ({ heading = "h2" }: { heading?: "h1" | "h2" }) => {
                 <li key={piece.id} className="border border-border">
                   {gallery.length > 0 ? (
                     <div className={gallery.length > 1 ? "grid grid-cols-2" : "grid grid-cols-1"}>
-                      {gallery.map((image) => (
+                      {gallery.map((image) => {
+                        const small = image.src.endsWith(".webp") ? image.src.replace(/\.webp$/, "-720.webp") : "";
+                        const sizes = gallery.length > 1
+                          ? "(max-width: 640px) 100vw, (max-width: 1024px) 45vw, 28vw"
+                          : "(max-width: 1024px) 100vw, 50vw";
+                        return (
                         <img
                           key={image.src}
-                          src={image.src}
+                          src={small || image.src}
+                          srcSet={small ? `${small} 720w, ${image.src} 1200w` : undefined}
+                          sizes={small ? sizes : undefined}
                           alt={image.alt}
-                          width={image.width}
-                          height={image.height}
+                          width={small ? 720 : image.width}
+                          height={small ? 960 : image.height}
                           className="w-full aspect-[3/4] object-cover bg-charcoal"
                           loading="lazy"
                           decoding="async"
                         />
-                      ))}
+                        );
+                      })}
                     </div>
                   ) : (
                     <div className="aspect-[3/4] bg-charcoal flex items-end p-6">

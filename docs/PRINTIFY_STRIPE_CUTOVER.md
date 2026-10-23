@@ -49,7 +49,7 @@ browser  →  Vite storefront
 
 Prices on both paths are taken from the server. A price sent by the browser is ignored.
 
-Without `PRINTIFY_API_TOKEN` and `PRINTIFY_SHOP_ID`, the shop shows a labeled preview assortment. Those preview handles are not written into the sitemap. Without `STRIPE_SECRET_KEY`, checkout returns `/checkout/success?session_id=cs_test_mock_…` and the page says no payment was captured.
+Without `PRINTIFY_API_TOKEN`, the shop shows a labeled preview of the six visible titles. Those preview handles are not written into the sitemap. The live fetch keeps a product only when Printify sets `visible` to `true`. `visible: false`, a missing flag, and any other value are dropped, including inside `normalizePrintifyProduct`. Shop `8464572` is the catalog. Shop `8464467` is empty and is refused. The token stays in the host environment and is not stored in the repo. Without `STRIPE_SECRET_KEY`, checkout returns `/checkout/success?session_id=cs_test_mock_…` and the page says no payment was captured.
 
 Homepage curation is the Printify tag `featured` or `heart-chakra`, not a list of Shopify ids.
 
@@ -66,7 +66,7 @@ Set these on the host that runs the Node server. Never prefix the secrets with `
 | Variable | Required for live commerce |
 |---|---|
 | `PRINTIFY_API_TOKEN` | Yes, catalog + order handoff |
-| `PRINTIFY_SHOP_ID` | Yes |
+| `PRINTIFY_SHOP_ID` | Defaults to `8464572` (the shop with the six visible products). Do not set `8464467`; that shop is empty |
 | `STRIPE_SECRET_KEY` | Yes, Checkout Sessions on Modest's Stripe account |
 | `STRIPE_WEBHOOK_SECRET` | Yes, `checkout.session.completed` |
 | `VITE_STRIPE_PUBLISHABLE_KEY` | No for this redirect flow. Reserved for a future Payment Element |

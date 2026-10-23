@@ -3,6 +3,8 @@
  * Orders stay in Printify as drafts unless PRINTIFY_AUTO_SUBMIT=true.
  */
 
+import { resolvePrintifyShopId } from "./catalog-model.mjs";
+
 function splitName(full) {
   const parts = String(full || "Customer").trim().split(/\s+/);
   return {
@@ -31,9 +33,14 @@ export function addressFromSession(session) {
 
 export async function createPrintifyOrder({ session, handoff, fetchImpl = fetch }) {
   const token = process.env.PRINTIFY_API_TOKEN;
-  const shopId = process.env.PRINTIFY_SHOP_ID;
-  if (!token || !shopId) {
+  if (!token) {
     return { status: "pending_printify", reason: "Printify credentials are not set" };
+  }
+  let shopId;
+  try {
+    shopId = resolvePrintifyShopId();
+  } catch (error) {
+    return { status: "pending_printify", reason: error.message };
   }
 
   const address_to = addressFromSession(session);

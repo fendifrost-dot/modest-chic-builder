@@ -1,11 +1,19 @@
-import { dedupeHandles, filterCatalog, normalizePrintifyProduct, previewProducts, skipSkuSet } from "./catalog-model.mjs";
+import {
+  dedupeHandles,
+  filterCatalog,
+  isPrintifyVisible,
+  normalizePrintifyProduct,
+  previewProducts,
+  resolvePrintifyShopId,
+  skipSkuSet,
+} from "./catalog-model.mjs";
 
 const DEFAULT_TTL_MS = 5 * 60 * 1000;
 
 let cache = { at: 0, key: "", products: null, mode: "preview" };
 
 export function printifyConfigured() {
-  return Boolean(process.env.PRINTIFY_API_TOKEN && process.env.PRINTIFY_SHOP_ID);
+  return Boolean(process.env.PRINTIFY_API_TOKEN);
 }
 
 export function resetCatalogCache() {
@@ -19,7 +27,7 @@ function cacheTtl() {
 
 async function fetchPrintifyProducts(fetchImpl) {
   const token = process.env.PRINTIFY_API_TOKEN;
-  const shopId = process.env.PRINTIFY_SHOP_ID;
+  const shopId = resolvePrintifyShopId();
   const base = (process.env.PRINTIFY_API_BASE || "https://api.printify.com/v1").replace(/\/$/, "");
   const headers = {
     Authorization: `Bearer ${token}`,
@@ -43,6 +51,7 @@ async function fetchPrintifyProducts(fetchImpl) {
     const rows = Array.isArray(body?.data) ? body.data : Array.isArray(body) ? body : [];
     lastPage = Number(body?.last_page || body?.meta?.last_page || 1);
     for (const row of rows) {
+      if (!isPrintifyVisible(row)) continue;
       const product = normalizePrintifyProduct(row, skip);
       if (product) collected.push(product);
     }
@@ -57,7 +66,7 @@ export async function listProducts({ fetchImpl = fetch, force = false } = {}) {
     return { mode: "preview", products: previewProducts() };
   }
 
-  const key = `${process.env.PRINTIFY_SHOP_ID}:${process.env.PRINTIFY_SKIP_SKUS || ""}`;
+  const key = `${resolvePrintifyShopId()}:${process.env.PRINTIFY_SKIP_SKUS || ""}`;
   const fresh = cache.products && cache.key === key && Date.now() - cache.at < cacheTtl();
   if (fresh && !force) {
     return { mode: "printify", products: cache.products };

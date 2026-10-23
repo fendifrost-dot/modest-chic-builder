@@ -27,6 +27,10 @@ const Header = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  useEffect(() => {
+    document.getElementById("lcp-mark")?.setAttribute("hidden", "");
+  }, [isMobileMenuOpen]);
+
   // Lock body scroll when mobile menu is open
   useEffect(() => {
     if (isMobileMenuOpen) {
