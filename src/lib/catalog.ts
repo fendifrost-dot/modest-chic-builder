@@ -1,3 +1,5 @@
+import { callFunction } from "./functions";
+
 export { FUTURE_DROPSHIP } from "./roadmap";
 
 export interface CatalogImage {
@@ -59,7 +61,7 @@ export async function fetchCatalog(params: CatalogParams = {}): Promise<CatalogR
   if (params.query) search.set("query", params.query);
   if (params.collection) search.set("collection", params.collection);
   if (params.sort) search.set("sort", params.sort);
-  const response = await fetch(`/api/catalog?${search.toString()}`);
+  const response = await callFunction(`catalog?${search.toString()}`);
   if (!response.ok) {
     throw new Error("Catalog unavailable");
   }
@@ -90,8 +92,13 @@ export async function fetchCollectionProducts(collection: string, first = 20): P
 }
 
 export async function fetchProductByHandle(handle: string): Promise<CatalogProduct | null> {
-  const response = await fetch(`/api/products/${encodeURIComponent(handle)}`);
+  const response = await callFunction(`products/${encodeURIComponent(handle)}`);
   if (response.status === 404) return null;
+  if (response.status === 410) {
+    const gone = new Error("This piece is no longer offered");
+    gone.name = "ProductGone";
+    throw gone;
+  }
   if (!response.ok) throw new Error("Product unavailable");
   const body = await response.json();
   return body.product as CatalogProduct;

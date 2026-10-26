@@ -170,7 +170,7 @@ const ProductGrid = ({
 
         {mode === "preview" && !loading && (
           <p className="text-center text-cream/50 text-sm max-w-xl mx-auto mb-12 leading-relaxed">
-            Preview assortment. Live products and prices load from Printify when the server has its catalog credentials. Checkout stays in test mode until Stripe is configured.
+            Preview assortment. Live products and prices load from Printify when the catalog function has its token. Checkout stays in test mode until Stripe is configured.
           </p>
         )}
 

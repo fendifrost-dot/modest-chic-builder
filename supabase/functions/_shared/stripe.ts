@@ -29,6 +29,16 @@ export function stripeConfigured(): boolean {
   return Boolean(env("STRIPE_SECRET_KEY"));
 }
 
+/**
+ * Automatic tax stays on unless STRIPE_AUTOMATIC_TAX is explicitly false.
+ * A missing head-office address has to be fixed in Stripe Tax settings.
+ * This flag is the only off switch, and it is never implied by an error.
+ */
+export function automaticTaxEnabled(): boolean {
+  const raw = (env("STRIPE_AUTOMATIC_TAX") ?? "true").trim().toLowerCase();
+  return raw !== "false" && raw !== "0" && raw !== "off" && raw !== "no";
+}
+
 export function formEncode(value: unknown, parent = ""): string {
   const parts: string[] = [];
   const append = (key: string, item: unknown) => {
@@ -76,7 +86,7 @@ export function buildCheckoutBody({ origin, handoffId, items, fulfillment = "cat
     customer_creation: "always",
     phone_number_collection: { enabled: true },
     shipping_address_collection: { allowed_countries: ["US", "CA"] },
-    automatic_tax: { enabled: true },
+    automatic_tax: { enabled: automaticTaxEnabled() },
     metadata: { handoff_id: handoffId, brand: "MODST", fulfillment },
     shipping_options: [
       {

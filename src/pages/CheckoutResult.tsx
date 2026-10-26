@@ -5,6 +5,7 @@ import Footer from "@/components/Footer";
 import SeoHead from "@/components/SeoHead";
 import { pageTitle } from "@/lib/site";
 import { useCartStore } from "@/stores/cartStore";
+import { callFunction } from "@/lib/functions";
 
 interface SessionBody {
   id?: string;
@@ -24,7 +25,7 @@ const CheckoutResult = ({ status }: { status: "success" | "cancelled" }) => {
   useEffect(() => {
     if (status !== "success" || !sessionId) return;
     let cancelled = false;
-    fetch(`/api/checkout/sessions/${encodeURIComponent(sessionId)}`)
+    callFunction(`checkout/sessions/${encodeURIComponent(sessionId)}`)
       .then((response) => (response.ok ? response.json() : null))
       .then((body) => {
         if (!cancelled) setSession(body);

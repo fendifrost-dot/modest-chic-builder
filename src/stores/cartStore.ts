@@ -1,5 +1,6 @@
 import { create } from "zustand";
 import { persist, createJSONStorage } from "zustand/middleware";
+import { callFunction } from "@/lib/functions";
 
 export interface CartItem {
   productId: string;
@@ -67,13 +68,11 @@ export const useCartStore = create<CartStore>()(
         if (items.length === 0) return { ok: false, error: "Your cart is empty." };
         set({ isLoading: true });
         try {
-          const response = await fetch("/api/checkout", {
+          const response = await callFunction("checkout", {
             method: "POST",
-            headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
+              source: "catalog",
               items: items.map((item) => ({
-                productId: item.productId,
-                handle: item.handle,
                 variantId: item.variantId,
                 quantity: item.quantity,
               })),

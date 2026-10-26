@@ -3,8 +3,6 @@ import { defineConfig, loadEnv } from "vite";
 import react from "@vitejs/plugin-react-swc";
 import path from "path";
 import { componentTagger } from "lovable-tagger";
-import { modestApi } from "./server/vite-plugin.mjs";
-
 function prioritizeLcp() {
   return {
     name: "prioritize-lcp",
@@ -43,7 +41,7 @@ export default defineConfig(({ mode }) => {
     host: "::",
     port: 8080,
   },
-  plugins: [react(), mode === "development" && componentTagger(), modestApi(), prioritizeLcp()].filter(Boolean),
+  plugins: [react(), mode === "development" && componentTagger(), prioritizeLcp()].filter(Boolean),
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"),

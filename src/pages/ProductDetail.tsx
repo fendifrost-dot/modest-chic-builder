@@ -26,6 +26,7 @@ const ProductDetail = () => {
   const [product, setProduct] = useState<CatalogProduct | null>(null);
   const [loading, setLoading] = useState(true);
   const [loadError, setLoadError] = useState(false);
+  const [gone, setGone] = useState(false);
   const [selectedVariant, setSelectedVariant] = useState<string | null>(null);
   const [selectedImage, setSelectedImage] = useState(0);
   const addItem = useCartStore((state) => state.addItem);
@@ -35,6 +36,7 @@ const ProductDetail = () => {
     if (!handle) return;
     setLoading(true);
     setLoadError(false);
+    setGone(false);
     setProduct(null);
     setSelectedVariant(null);
     setSelectedImage(0);
@@ -45,7 +47,10 @@ const ProductDetail = () => {
         const firstAvailable = variants.find((variant) => variant.availableForSale) || variants[0];
         if (firstAvailable) setSelectedVariant(firstAvailable.id);
       })
-      .catch(() => setLoadError(true))
+      .catch((error: unknown) => {
+        if (error instanceof Error && error.name === "ProductGone") setGone(true);
+        else setLoadError(true);
+      })
       .finally(() => setLoading(false));
   }, [handle]);
 
@@ -121,14 +126,15 @@ const ProductDetail = () => {
     return (
       <div className="min-h-screen bg-background">
         <SeoHead
-          title={pageTitle("Product Not Found")}
-          description="This product is unavailable or the link may have changed."
+          title={pageTitle(gone ? "No longer offered" : "Product Not Found")}
+          description={gone ? "This piece is no longer offered." : "This product is unavailable or the link may have changed."}
           path={productPath}
           noindex
         />
         <Header />
         <div className="flex flex-col items-center justify-center min-h-[60vh] pt-32 text-cream">
-          <h1 className="font-display text-4xl mb-4">Product Not Found</h1>
+          <h1 className="font-display text-4xl mb-4">{gone ? "No longer offered" : "Product Not Found"}</h1>
+          <p className="text-cream/60 mb-6">{gone ? "This piece is no longer offered." : "This product is unavailable or the link may have changed."}</p>
           <Link to="/" className="text-gold hover:underline">Back to shop</Link>
         </div>
         <Footer />

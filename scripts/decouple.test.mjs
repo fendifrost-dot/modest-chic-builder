@@ -3,7 +3,7 @@ import { readdirSync, readFileSync, statSync } from "node:fs";
 import { join } from "node:path";
 import test from "node:test";
 
-const ROOTS = ["src", "server", "scripts", "public"];
+const ROOTS = ["src", "supabase/functions", "scripts", "public"];
 const FORBIDDEN = [
   /myshopify\.com/i,
   /storefrontApiRequest/,
@@ -34,6 +34,17 @@ test("runtime source has no Shopify client, token, or checkout host", () => {
         if (pattern.test(text)) hits.push(`${path} matches ${pattern}`);
       }
     }
+  }
+  assert.deepEqual(hits, []);
+});
+
+test("the storefront does not call the removed Node /api routes", () => {
+  const hits = [];
+  for (const path of files("src")) {
+    if (!path.endsWith(".ts") && !path.endsWith(".tsx")) continue;
+    if (path.endsWith(".test.ts") || path.endsWith(".test.tsx")) continue;
+    const text = readFileSync(path, "utf8");
+    if (text.includes("/api/")) hits.push(path);
   }
   assert.deepEqual(hits, []);
 });

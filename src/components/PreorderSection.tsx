@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { Loader2 } from "lucide-react";
 import { toast } from "sonner";
+import { callFunction } from "@/lib/functions";
 
 export interface PreorderImage {
   src: string;
@@ -40,7 +41,7 @@ const PreorderSection = ({ heading = "h2" }: { heading?: "h1" | "h2" }) => {
 
   useEffect(() => {
     let cancelled = false;
-    fetch("/api/preorders")
+    callFunction("preorders")
       .then((response) => {
         if (!response.ok) throw new Error("unavailable");
         return response.json();
@@ -59,9 +60,8 @@ const PreorderSection = ({ heading = "h2" }: { heading?: "h1" | "h2" }) => {
   const preorder = async (id: string) => {
     setPendingId(id);
     try {
-      const response = await fetch("/api/checkout", {
+      const response = await callFunction("checkout", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ source: "preorder", items: [{ id, quantity: 1 }] }),
       });
       const body = await response.json();
@@ -113,6 +113,11 @@ const PreorderSection = ({ heading = "h2" }: { heading?: "h1" | "h2" }) => {
             {concepts.map((piece) => {
               const gallery = piece.images?.length ? piece.images : piece.image ? [{ src: piece.image, alt: piece.summary, width: 1200, height: 1600 }] : [];
               const noteId = `${piece.id}-preorder-note`;
+              const open = piece.purchasable
+                && Boolean(piece.title?.trim())
+                && Boolean(piece.expectedShip?.trim())
+                && piece.priceCents != null
+                && piece.priceCents > 0;
               return (
                 <li key={piece.id} className="border border-border">
                   {gallery.length > 0 ? (
@@ -158,11 +163,11 @@ const PreorderSection = ({ heading = "h2" }: { heading?: "h1" | "h2" }) => {
                       {piece.expectedShip ? `Expected ship: ${piece.expectedShip}` : "Ship date to be set"}
                     </p>
                     <p className="text-gold mb-6">
-                      {piece.purchasable && piece.priceCents != null && piece.priceCents > 0
+                      {open && piece.priceCents != null
                         ? money(piece.priceCents, piece.currency)
                         : "Price to be set"}
                     </p>
-                    {!piece.purchasable && (
+                    {!open && (
                       <p id={noteId} className="text-cream/45 text-xs leading-relaxed mb-4">
                         Name, price, and ship date are still placeholders.
                       </p>
@@ -171,10 +176,10 @@ const PreorderSection = ({ heading = "h2" }: { heading?: "h1" | "h2" }) => {
                       type="button"
                       className="btn-hero-primary disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:bg-gold disabled:hover:text-obsidian"
                       onClick={() => preorder(piece.id)}
-                      disabled={!piece.purchasable || pendingId === piece.id}
-                      aria-describedby={piece.purchasable ? undefined : noteId}
+                      disabled={!open || pendingId === piece.id}
+                      aria-describedby={open ? undefined : noteId}
                     >
-                      {piece.purchasable && pendingId === piece.id ? "Sending…" : "Pre-order"}
+                      {open && pendingId === piece.id ? "Sending…" : "Pre-order"}
                     </button>
                   </div>
                 </li>

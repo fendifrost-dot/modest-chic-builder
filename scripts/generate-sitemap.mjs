@@ -1,20 +1,27 @@
 #!/usr/bin/env node
 /**
  * Static routes match the live bemoremodest.com sitemap (lastmod 2026-08-31).
- * Product URLs are added only when Printify credentials are present.
- * Preview products are never written into the sitemap.
+ * Product URLs are added only when the public catalog edge function is in
+ * printify mode. Preview products are never written into the sitemap.
  */
-import { writeFileSync } from "node:fs";
+import { existsSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
-import { loadLocalEnv } from "../server/env.mjs";
-import { listProducts } from "../server/catalog.mjs";
-
-loadLocalEnv();
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const SITE = "https://bemoremodest.com";
 const STATIC_LASTMOD = "2026-08-31";
+
+function envValue(name) {
+  if (process.env[name]) return process.env[name];
+  const path = resolve(__dirname, "../.env");
+  if (!existsSync(path)) return "";
+  const line = readFileSync(path, "utf8")
+    .split("\n")
+    .find((entry) => entry.startsWith(`${name}=`));
+  if (!line) return "";
+  return line.slice(name.length + 1).trim().replace(/^["']|["']$/g, "");
+}
 
 const staticPaths = [
   "/",
@@ -43,18 +50,40 @@ function urlEntry(loc, lastmod) {
   return `  <url>\n    <loc>${SITE}${loc}</loc>${lastmodTag}\n  </url>`;
 }
 
-const catalog = await listProducts();
-const productEntries = catalog.mode === "printify"
-  ? catalog.products.map((product) => ({
+async function printifyProducts() {
+  const base = envValue("VITE_SUPABASE_URL").replace(/\/$/, "");
+  if (!base) {
+    console.log("[sitemap] VITE_SUPABASE_URL absent — static routes only.");
+    return [];
+  }
+  const headers = { Accept: "application/json" };
+  const key = envValue("VITE_SUPABASE_PUBLISHABLE_KEY");
+  if (key) {
+    headers.apikey = key;
+    headers.Authorization = `Bearer ${key}`;
+  }
+  try {
+    const response = await fetch(`${base}/functions/v1/catalog`, { headers });
+    if (!response.ok) {
+      console.log(`[sitemap] Catalog function returned ${response.status} — static routes only.`);
+      return [];
+    }
+    const body = await response.json();
+    if (body.mode !== "printify" || !Array.isArray(body.products)) {
+      console.log("[sitemap] Catalog is not in printify mode — static routes only.");
+      return [];
+    }
+    return body.products.map((product) => ({
       path: `/product/${product.handle}`,
       lastmod: product.updatedAt || STATIC_LASTMOD,
-    }))
-  : [];
-
-if (catalog.mode !== "printify") {
-  console.log("[sitemap] Printify credentials absent — static routes only, matching the live sitemap.");
+    }));
+  } catch (error) {
+    console.log(`[sitemap] Catalog function unreachable — static routes only. ${error instanceof Error ? error.message : ""}`);
+    return [];
+  }
 }
 
+const productEntries = await printifyProducts();
 const urls = [
   ...staticPaths.map((path) => urlEntry(path, STATIC_LASTMOD)),
   ...addedPaths.map((entry) => urlEntry(entry.path, entry.lastmod)),
