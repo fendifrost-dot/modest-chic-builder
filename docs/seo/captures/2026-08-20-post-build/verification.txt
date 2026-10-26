@@ -1,0 +1,18 @@
+PASS  /  (14/14)
+PASS  /about  (14/14)
+PASS  /mens  (14/14)
+PASS  /womens  (14/14)
+PASS  /accessories  (14/14)
+PASS  /product/big-bear-cashmere-sweater  (14/14)
+PASS  /product/ketchup-mustard-varsity-jacket  (14/14)
+PASS  /product/unisex-jersey-short-sleeve-tee  (14/14)
+PASS  /contact  (14/14)
+PASS  /faq  (14/14)
+PASS  /products/big-bear-cashmere-sweater  (1/1)
+PASS  /collections/mens  (1/1)
+PASS  /collections/all  (1/1)
+PASS  /robots.txt  (2/2)
+PASS  /sitemap.xml  (3/3)
+
+148/148 checks passed against http://127.0.0.1:4173
+Wrote docs/seo/captures/2026-08-20-post-build/verification.json

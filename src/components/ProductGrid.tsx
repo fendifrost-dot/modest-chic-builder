@@ -7,6 +7,7 @@ import { Loader2 } from 'lucide-react';
 import { hasSelectableOptions } from '@/lib/variants';
 import { CollectionJsonLd } from '@/components/JsonLd';
 import { absoluteUrl } from '@/lib/site';
+import { productPath } from '@/seo/routes.js';
 
 interface ProductCardProps {
   product: ShopifyProduct;
@@ -42,7 +43,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
   const needsOptions = hasSelectableOptions(node.options);
 
   return (
-    <Link to={`/product/${node.handle}`} className="group block">
+    <Link to={productPath(node.handle)} className="group block">
       <div className="relative overflow-hidden aspect-[3/4]">
         {image ? (
           <img
@@ -97,7 +98,10 @@ interface ProductGridProps {
   sortKey?: string;
   reverse?: boolean;
   jsonLdPath?: string;
+  jsonLdName?: string;
   jsonLdDescription?: string;
+  /** Short prose block rendered above the grid; also prerendered for non-JS retrieval. */
+  intro?: string;
   emptyMessage?: string;
 }
 
@@ -110,7 +114,9 @@ const ProductGrid = ({
   sortKey,
   reverse,
   jsonLdPath,
+  jsonLdName,
   jsonLdDescription,
+  intro,
   emptyMessage = 'No products found',
 }: ProductGridProps) => {
   const [products, setProducts] = useState<ShopifyProduct[]>([]);
@@ -141,13 +147,16 @@ const ProductGrid = ({
     <section id="shop" className="py-24 bg-background scroll-mt-28">
       {jsonLdPath && !loading && (
         <CollectionJsonLd
-          name={title}
+          path={jsonLdPath}
+          name={jsonLdName || title}
           description={jsonLdDescription || `${title} from MOD#$T.`}
-          url={absoluteUrl(jsonLdPath)}
           items={products.map((product) => ({
             name: product.node.title,
-            url: absoluteUrl(`/product/${product.node.handle}`),
+            url: absoluteUrl(productPath(product.node.handle)),
             image: product.node.images?.edges?.[0]?.node.url,
+            price: product.node.priceRange?.minVariantPrice?.amount,
+            currency: product.node.priceRange?.minVariantPrice?.currencyCode,
+            availability: product.node.variants?.edges?.some((v) => v.node.availableForSale),
           }))}
         />
       )}
@@ -155,6 +164,9 @@ const ProductGrid = ({
         <div className="text-center mb-16">
           <p className="text-gold text-sm tracking-[0.3em] uppercase mb-4">{subtitle}</p>
           <h2 className="font-display text-5xl md:text-6xl text-cream">{title}</h2>
+          {intro && (
+            <p className="text-cream/60 leading-relaxed max-w-2xl mx-auto mt-6">{intro}</p>
+          )}
         </div>
 
         {loading ? (

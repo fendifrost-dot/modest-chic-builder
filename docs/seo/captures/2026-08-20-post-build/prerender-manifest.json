@@ -1,0 +1,277 @@
+{
+  "generatedAt": "2026-08-20T13:18:11.179Z",
+  "routeCount": 38,
+  "staticRoutes": 17,
+  "productRoutes": 21,
+  "heldProducts": [
+    "nutrition-album-tee"
+  ],
+  "routes": [
+    {
+      "path": "/",
+      "title": "MOD#$T (Modest) | Chicago Streetwear — Cashmere, Varsity Jackets & Tees",
+      "description": "MOD#$T (Modest) is a Chicago streetwear label founded in September 2017 by Terrence Cleveland. Shop cashmere sweaters, varsity jackets, bombers, hoodies, tees and accessories.",
+      "canonical": "https://bemoremodest.com/",
+      "bytes": 10132
+    },
+    {
+      "path": "/mens",
+      "title": "Men's Streetwear | MOD#$T",
+      "description": "Men's MOD#$T (Modest) streetwear — cashmere sweaters, varsity jackets, bombers, hoodies and graphic tees from the Chicago label.",
+      "canonical": "https://bemoremodest.com/mens",
+      "bytes": 23939
+    },
+    {
+      "path": "/womens",
+      "title": "Women's Streetwear | MOD#$T",
+      "description": "Women's MOD#$T (Modest) streetwear — crop tees, bomber and varsity jackets, cashmere and everyday essentials from the Chicago label.",
+      "canonical": "https://bemoremodest.com/womens",
+      "bytes": 14770
+    },
+    {
+      "path": "/accessories",
+      "title": "Accessories | MOD#$T",
+      "description": "MOD#$T (Modest) accessories — the Big Bear Head ski mask, leather-patch hats and add-on pieces from the Chicago streetwear label.",
+      "canonical": "https://bemoremodest.com/accessories",
+      "bytes": 8844
+    },
+    {
+      "path": "/new-arrivals",
+      "title": "New Arrivals | MOD#$T",
+      "description": "The newest MOD#$T (Modest) releases, newest first — jackets, knitwear, tees and accessories as they drop.",
+      "canonical": "https://bemoremodest.com/new-arrivals",
+      "bytes": 29375
+    },
+    {
+      "path": "/sale",
+      "title": "Sale | MOD#$T",
+      "description": "MOD#$T (Modest) sale — current reductions on selected streetwear, applied at Shopify checkout.",
+      "canonical": "https://bemoremodest.com/sale",
+      "bytes": 6576
+    },
+    {
+      "path": "/about",
+      "title": "About Modest | MOD#$T",
+      "description": "MOD#$T (Modest) is a streetwear label founded in September 2017 by Terrence Cleveland and based in Chicago, Illinois. Legal entity: Modest Streetwear Apparel Inc.",
+      "canonical": "https://bemoremodest.com/about",
+      "bytes": 7698
+    },
+    {
+      "path": "/contact",
+      "title": "Contact Modest | MOD#$T",
+      "description": "Contact MOD#$T (Modest) at info@bemoremodest.com. The label is based in Chicago, IL. Typical response time is 1–2 business days.",
+      "canonical": "https://bemoremodest.com/contact",
+      "bytes": 6977
+    },
+    {
+      "path": "/shipping",
+      "title": "Shipping Information | MOD#$T",
+      "description": "MOD#$T (Modest) shipping: orders processed in 1–3 business days, US standard delivery 5–7 business days, free US shipping over $200.",
+      "canonical": "https://bemoremodest.com/shipping",
+      "bytes": 7093
+    },
+    {
+      "path": "/returns",
+      "title": "Returns & Exchanges | MOD#$T",
+      "description": "MOD#$T (Modest) accepts returns on unworn items with original tags within 14 days of delivery. Exchanges are subject to availability.",
+      "canonical": "https://bemoremodest.com/returns",
+      "bytes": 7166
+    },
+    {
+      "path": "/size-guide",
+      "title": "Size Guide | MOD#$T",
+      "description": "MOD#$T (Modest) sizing: relaxed streetwear fit. XS–5XL on unisex tees, standard US sizing on jackets and cashmere. Size up for an oversized look.",
+      "canonical": "https://bemoremodest.com/size-guide",
+      "bytes": 7403
+    },
+    {
+      "path": "/faq",
+      "title": "Frequently Asked Questions | MOD#$T",
+      "description": "Answers to common MOD#$T (Modest) questions: order tracking, Affirm payment plans, limited drops and how to redeem a discount code.",
+      "canonical": "https://bemoremodest.com/faq",
+      "bytes": 8528
+    },
+    {
+      "path": "/privacy",
+      "title": "Privacy Policy | MOD#$T",
+      "description": "How MOD#$T (Modest) collects and handles customer data. Orders and payments are processed by Shopify.",
+      "canonical": "https://bemoremodest.com/privacy",
+      "bytes": 6995
+    },
+    {
+      "path": "/terms",
+      "title": "Terms of Service | MOD#$T",
+      "description": "Terms governing use of bemoremodest.com and purchases from MOD#$T (Modest). Orders are fulfilled through Shopify.",
+      "canonical": "https://bemoremodest.com/terms",
+      "bytes": 7028
+    },
+    {
+      "path": "/careers",
+      "title": "Careers | MOD#$T",
+      "description": "MOD#$T (Modest) is based in Chicago, Illinois. No roles are listed at present; portfolios are welcome.",
+      "canonical": "https://bemoremodest.com/careers",
+      "bytes": 6765
+    },
+    {
+      "path": "/press",
+      "title": "Press & Media | MOD#$T",
+      "description": "Press and media contact for MOD#$T (Modest), the Chicago streetwear label founded by Terrence Cleveland in 2017.",
+      "canonical": "https://bemoremodest.com/press",
+      "bytes": 6933
+    },
+    {
+      "path": "/sustainability",
+      "title": "Sustainability | MOD#$T",
+      "description": "How MOD#$T (Modest) approaches production: limited runs and durable materials rather than volume.",
+      "canonical": "https://bemoremodest.com/sustainability",
+      "bytes": 6845
+    },
+    {
+      "path": "/product/big-bear-cashmere-sweater",
+      "title": "Big Bear Cashmere Sweater | MOD#$T",
+      "description": "Wrap yourself in luxury with the Big Bear Cashmere Sweater, a timeless unisex piece designed to elevate your style through the cooler seasons. Perfect for…",
+      "canonical": "https://bemoremodest.com/product/big-bear-cashmere-sweater",
+      "bytes": 15923
+    },
+    {
+      "path": "/product/ketchup-mustard-varsity-jacket",
+      "title": "KETCHUP & MUSTARD VARSITY JACKET | MOD#$T",
+      "description": "Turn heads and make an unforgettable statement with the Ketchup & Mustard Varsity Jacket—a luxurious blend of bold design and premium craftsmanship. The…",
+      "canonical": "https://bemoremodest.com/product/ketchup-mustard-varsity-jacket",
+      "bytes": 14143
+    },
+    {
+      "path": "/product/flamingo-fly-varsity-jacket",
+      "title": "Flamingo Fly Varsity Jacket | MOD#$T",
+      "description": "T Elevate your wardrobe with the Flamingo Fly Varsity Jacket, a luxurious blend of bold design and premium craftsmanship. Featuring a striking pink wool…",
+      "canonical": "https://bemoremodest.com/product/flamingo-fly-varsity-jacket",
+      "bytes": 12668
+    },
+    {
+      "path": "/product/bzo-bomber-jacket",
+      "title": "BZO BOMBER JACKET | MOD#$T",
+      "description": "100% Cordura Nylon Faux Fur bear head patch Male Model is 6\"2 175lbs wearing a size Medium",
+      "canonical": "https://bemoremodest.com/product/bzo-bomber-jacket",
+      "bytes": 11092
+    },
+    {
+      "path": "/product/big-head-bear-mask",
+      "title": "BIG BEAR HEAD SKI MASK | MOD#$T",
+      "description": "Introducing the \"BIG BEAR HEAD SKI MASK\" Cotton Blend, a bold and versatile accessory that will take your style to new heights. Crafted with a premium cotton…",
+      "canonical": "https://bemoremodest.com/product/big-head-bear-mask",
+      "bytes": 9735
+    },
+    {
+      "path": "/product/womens-bzo-bomber-jacket",
+      "title": "Womens BZO Bomber Jacket | MOD#$T",
+      "description": "Introducing our WOMEN'S BZO BOMBER JACKET, a must-have addition to your wardrobe. Made from 100% Cordura Nylon, this jacket combines durability and style…",
+      "canonical": "https://bemoremodest.com/product/womens-bzo-bomber-jacket",
+      "bytes": 12007
+    },
+    {
+      "path": "/product/mod-t-smoke-bear-tee",
+      "title": "MOD#$T Smoke Bear Tee | MOD#$T",
+      "description": "Introducing the MOD#$T Smoke Bear Tee, the perfect addition to any 4/20 inspired wardrobe. Made with the same high-quality materials as our Classic Logo Tee…",
+      "canonical": "https://bemoremodest.com/product/mod-t-smoke-bear-tee",
+      "bytes": 31140
+    },
+    {
+      "path": "/product/unisex-jersey-short-sleeve-tee",
+      "title": "MOD#$T Bear Classic Logo Tee | MOD#$T",
+      "description": "Introducing the MOD#$T Bear Classic Logo Tee, a must-have addition to your wardrobe. Made with 100% Airlume combed and ringspun cotton, this tee is…",
+      "canonical": "https://bemoremodest.com/product/unisex-jersey-short-sleeve-tee",
+      "bytes": 38454
+    },
+    {
+      "path": "/product/unisex-jersey-short-sleeve-tee-1",
+      "title": "MOD#$T Chiberia Bear Tee | MOD#$T",
+      "description": "Introducing the MOD#$T Bear Chiberia Tee shirt, a classic unisex jersey short sleeve tee that will become your new favorite! Made from 100% Airlume combed…",
+      "canonical": "https://bemoremodest.com/product/unisex-jersey-short-sleeve-tee-1",
+      "bytes": 24489
+    },
+    {
+      "path": "/product/mod-t-overall-bear",
+      "title": "MOD#$T Overall Bear | MOD#$T",
+      "description": "Introducing the MOD#$T Overall Bear Tee, featuring a playful and stylish design that's perfect for any occasion. This classic unisex jersey short sleeve tee…",
+      "canonical": "https://bemoremodest.com/product/mod-t-overall-bear",
+      "bytes": 29838
+    },
+    {
+      "path": "/product/mod-t-bear-classic-logo-sweatshirt",
+      "title": "MOD#$T Bear Classic Logo Sweatshirt | MOD#$T",
+      "description": "Introducing the MOD#$T Bear Classic Logo Sweatshirt, a stylish and comfortable addition to your wardrobe. Crafted from a seamless blend of soft cotton and…",
+      "canonical": "https://bemoremodest.com/product/mod-t-bear-classic-logo-sweatshirt",
+      "bytes": 25163
+    },
+    {
+      "path": "/product/unisex-jersey-short-sleeve-tee-2",
+      "title": "30% OFF - MOD#$T Unisex Lonely Bear Tee | MOD#$T",
+      "description": "*DISCOUNT SHOWN AT CHECKOUT* Get your hands on our MOD#$T Unisex Lonely Bear Tee, designed for anyone looking for a comfortable yet stylish t-shirt. Made…",
+      "canonical": "https://bemoremodest.com/product/unisex-jersey-short-sleeve-tee-2",
+      "bytes": 41838
+    },
+    {
+      "path": "/product/champion-womens-heritage-cropped-t-shirt",
+      "title": "30% OFF - MOD#$T Lonely Bear Champion - Women's Heritage Cropped T-Shirt | MOD#$T",
+      "description": "Introducing the MOD#$T Lonely Bear Champion - Women's Heritage Cropped T-Shirt, the latest addition to the Champion Heritage collection. Made with 100%…",
+      "canonical": "https://bemoremodest.com/product/champion-womens-heritage-cropped-t-shirt",
+      "bytes": 23804
+    },
+    {
+      "path": "/product/mod-t-bear-leather-patch-hat",
+      "title": "MOD#$T BEAR leather patch hat | MOD#$T",
+      "description": "The MOD#$T BEAR leather patch hats are made from 100% bio-washed chino twill. It's a very comfortable yet sturdy material that will last for ages. The 100%…",
+      "canonical": "https://bemoremodest.com/product/mod-t-bear-leather-patch-hat",
+      "bytes": 13116
+    },
+    {
+      "path": "/product/unisex-jersey-short-sleeve-tee-3",
+      "title": "30% 0FF - Balenciaga Bear Tee | MOD#$T",
+      "description": "DISCOUNT SHOWN AT CHECKOUT Introducing the \"Balenciaga Bear Tee\": Embrace timeless comfort and style with our classic unisex jersey short sleeve tee. Crafted…",
+      "canonical": "https://bemoremodest.com/product/unisex-jersey-short-sleeve-tee-3",
+      "bytes": 20515
+    },
+    {
+      "path": "/product/unisex-heavy-blend™-hooded-sweatshirt",
+      "title": "M-BEAR Heavy Blend™ Hooded Sweatshirt | MOD#$T",
+      "description": "This unisex heavy blend hooded sweatshirt is relaxation itself. Made with a thick blend of cotton and polyester, it feels plush, soft and warm, a perfect…",
+      "canonical": "https://bemoremodest.com/product/unisex-heavy-blend%E2%84%A2-hooded-sweatshirt",
+      "bytes": 28295
+    },
+    {
+      "path": "/product/nutrition-album-tee",
+      "title": "Nutrition Album Tee | MOD#$T",
+      "description": "Nutrition Album Tee — t-shirt from MOD#$T (Modest). $40.00 USD.",
+      "canonical": "https://bemoremodest.com/product/nutrition-album-tee",
+      "bytes": 23800
+    },
+    {
+      "path": "/product/heart-chakra-bear-t-shirt-minimalist-black-bear-chest-graphic",
+      "title": "Heart Chakra Bear T-Shirt — Minimalist Black Bear Chest Graphic | MOD#$T",
+      "description": "A garment-dyed cotton tee with a subtle, hand-drawn bear emblem at the chest — quietly rugged and soft to the touch. The heavyweight knit and relaxed…",
+      "canonical": "https://bemoremodest.com/product/heart-chakra-bear-t-shirt-minimalist-black-bear-chest-graphic",
+      "bytes": 21221
+    },
+    {
+      "path": "/product/women-s-chakra-bear-crop-tee-minimal-black-heart-chest-graphic-casual-summer-top",
+      "title": "Women’s Chakra Bear Crop Tee — Minimal Black Heart Chest Graphic, Casual Summer Top | MOD#$T",
+      "description": "Light, open, and unapologetically casual — this cropped tee sits soft across the shoulders and falls into an easy, relaxed silhouette. The dropped shoulders…",
+      "canonical": "https://bemoremodest.com/product/women-s-chakra-bear-crop-tee-minimal-black-heart-chest-graphic-casual-summer-top",
+      "bytes": 23781
+    },
+    {
+      "path": "/product/heart-chakra-album-tee-nostalgic-teddy-punching-bag-graphic-t-shirt",
+      "title": "Heart Chakra Album Tee — Nostalgic Teddy & Punching Bag Graphic T-Shirt | MOD#$T",
+      "description": "This lightweight jersey tee wears like a quiet memory — soft, slightly worn-in, and ready to travel with you. The square, moody print shows a dimly lit attic…",
+      "canonical": "https://bemoremodest.com/product/heart-chakra-album-tee-nostalgic-teddy-punching-bag-graphic-t-shirt",
+      "bytes": 26847
+    },
+    {
+      "path": "/product/mod-t-care-bear",
+      "title": "MOD#$T Care Bear | MOD#$T",
+      "description": "A heavyweight, garment-dyed tee featuring a warm, nostalgic photo of a well-loved teddy bear with a heart on its belly. The soft, washed-in color and relaxed…",
+      "canonical": "https://bemoremodest.com/product/mod-t-care-bear",
+      "bytes": 16805
+    }
+  ]
+}

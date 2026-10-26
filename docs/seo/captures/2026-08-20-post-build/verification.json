@@ -1,0 +1,896 @@
+{
+  "base": "http://127.0.0.1:4173",
+  "generatedAt": "2026-08-20T13:26:19.603Z",
+  "passed": 148,
+  "total": 148,
+  "results": [
+    {
+      "route": "/",
+      "check": "1. HTTP status 200",
+      "pass": true,
+      "detail": "got 200"
+    },
+    {
+      "route": "/",
+      "check": "2. self-referencing canonical",
+      "pass": true,
+      "detail": "got https://bemoremodest.com/"
+    },
+    {
+      "route": "/",
+      "check": "3. unique title",
+      "pass": true,
+      "detail": "\"MOD#$T (Modest) | Chicago Streetwear — Cashmere, Varsity Jackets &amp; Tees\""
+    },
+    {
+      "route": "/",
+      "check": "4. unique description",
+      "pass": true,
+      "detail": "175 chars"
+    },
+    {
+      "route": "/",
+      "check": "5. og:url matches canonical",
+      "pass": true,
+      "detail": "got https://bemoremodest.com/"
+    },
+    {
+      "route": "/",
+      "check": "6. raw-HTML route content",
+      "pass": true,
+      "detail": "1665 chars of readable text"
+    },
+    {
+      "route": "/",
+      "check": "8. structured data present",
+      "pass": true,
+      "detail": "3 JSON-LD blocks"
+    },
+    {
+      "route": "/",
+      "check": "9. structured data valid + entity correct",
+      "pass": true,
+      "detail": "entity fields checked"
+    },
+    {
+      "route": "/",
+      "check": "10. present in sitemap",
+      "pass": true,
+      "detail": "38 URLs in sitemap"
+    },
+    {
+      "route": "/",
+      "check": "11. internal links in raw HTML",
+      "pass": true,
+      "detail": "25 distinct internal links"
+    },
+    {
+      "route": "/",
+      "check": "12. indexable",
+      "pass": true,
+      "detail": "robots=\"index, follow, max-image-preview:large\""
+    },
+    {
+      "route": "/",
+      "check": "no support@ address",
+      "pass": true,
+      "detail": "support@ found in page source"
+    },
+    {
+      "route": "/",
+      "check": "no public phone number",
+      "pass": true,
+      "detail": "matched \"undefined\""
+    },
+    {
+      "route": "/",
+      "check": "no Fendi Frost reference",
+      "pass": true,
+      "detail": "fendi found in page source"
+    },
+    {
+      "route": "/about",
+      "check": "1. HTTP status 200",
+      "pass": true,
+      "detail": "got 200"
+    },
+    {
+      "route": "/about",
+      "check": "2. self-referencing canonical",
+      "pass": true,
+      "detail": "got https://bemoremodest.com/about"
+    },
+    {
+      "route": "/about",
+      "check": "3. unique title",
+      "pass": true,
+      "detail": "\"About Modest | MOD#$T\""
+    },
+    {
+      "route": "/about",
+      "check": "4. unique description",
+      "pass": true,
+      "detail": "162 chars"
+    },
+    {
+      "route": "/about",
+      "check": "5. og:url matches canonical",
+      "pass": true,
+      "detail": "got https://bemoremodest.com/about"
+    },
+    {
+      "route": "/about",
+      "check": "6. raw-HTML route content",
+      "pass": true,
+      "detail": "1088 chars of readable text"
+    },
+    {
+      "route": "/about",
+      "check": "8. structured data present",
+      "pass": true,
+      "detail": "3 JSON-LD blocks"
+    },
+    {
+      "route": "/about",
+      "check": "9. structured data valid + entity correct",
+      "pass": true,
+      "detail": "entity fields checked"
+    },
+    {
+      "route": "/about",
+      "check": "10. present in sitemap",
+      "pass": true,
+      "detail": "38 URLs in sitemap"
+    },
+    {
+      "route": "/about",
+      "check": "11. internal links in raw HTML",
+      "pass": true,
+      "detail": "21 distinct internal links"
+    },
+    {
+      "route": "/about",
+      "check": "12. indexable",
+      "pass": true,
+      "detail": "robots=\"index, follow, max-image-preview:large\""
+    },
+    {
+      "route": "/about",
+      "check": "no support@ address",
+      "pass": true,
+      "detail": "support@ found in page source"
+    },
+    {
+      "route": "/about",
+      "check": "no public phone number",
+      "pass": true,
+      "detail": "matched \"undefined\""
+    },
+    {
+      "route": "/about",
+      "check": "no Fendi Frost reference",
+      "pass": true,
+      "detail": "fendi found in page source"
+    },
+    {
+      "route": "/mens",
+      "check": "1. HTTP status 200",
+      "pass": true,
+      "detail": "got 200"
+    },
+    {
+      "route": "/mens",
+      "check": "2. self-referencing canonical",
+      "pass": true,
+      "detail": "got https://bemoremodest.com/mens"
+    },
+    {
+      "route": "/mens",
+      "check": "3. unique title",
+      "pass": true,
+      "detail": "\"Men's Streetwear | MOD#$T\""
+    },
+    {
+      "route": "/mens",
+      "check": "4. unique description",
+      "pass": true,
+      "detail": "128 chars"
+    },
+    {
+      "route": "/mens",
+      "check": "5. og:url matches canonical",
+      "pass": true,
+      "detail": "got https://bemoremodest.com/mens"
+    },
+    {
+      "route": "/mens",
+      "check": "6. raw-HTML route content",
+      "pass": true,
+      "detail": "1337 chars of readable text"
+    },
+    {
+      "route": "/mens",
+      "check": "8. structured data present",
+      "pass": true,
+      "detail": "3 JSON-LD blocks"
+    },
+    {
+      "route": "/mens",
+      "check": "9. structured data valid + entity correct",
+      "pass": true,
+      "detail": "entity fields checked"
+    },
+    {
+      "route": "/mens",
+      "check": "10. present in sitemap",
+      "pass": true,
+      "detail": "38 URLs in sitemap"
+    },
+    {
+      "route": "/mens",
+      "check": "11. internal links in raw HTML",
+      "pass": true,
+      "detail": "37 distinct internal links"
+    },
+    {
+      "route": "/mens",
+      "check": "12. indexable",
+      "pass": true,
+      "detail": "robots=\"index, follow, max-image-preview:large\""
+    },
+    {
+      "route": "/mens",
+      "check": "no support@ address",
+      "pass": true,
+      "detail": "support@ found in page source"
+    },
+    {
+      "route": "/mens",
+      "check": "no public phone number",
+      "pass": true,
+      "detail": "matched \"undefined\""
+    },
+    {
+      "route": "/mens",
+      "check": "no Fendi Frost reference",
+      "pass": true,
+      "detail": "fendi found in page source"
+    },
+    {
+      "route": "/womens",
+      "check": "1. HTTP status 200",
+      "pass": true,
+      "detail": "got 200"
+    },
+    {
+      "route": "/womens",
+      "check": "2. self-referencing canonical",
+      "pass": true,
+      "detail": "got https://bemoremodest.com/womens"
+    },
+    {
+      "route": "/womens",
+      "check": "3. unique title",
+      "pass": true,
+      "detail": "\"Women's Streetwear | MOD#$T\""
+    },
+    {
+      "route": "/womens",
+      "check": "4. unique description",
+      "pass": true,
+      "detail": "132 chars"
+    },
+    {
+      "route": "/womens",
+      "check": "5. og:url matches canonical",
+      "pass": true,
+      "detail": "got https://bemoremodest.com/womens"
+    },
+    {
+      "route": "/womens",
+      "check": "6. raw-HTML route content",
+      "pass": true,
+      "detail": "861 chars of readable text"
+    },
+    {
+      "route": "/womens",
+      "check": "8. structured data present",
+      "pass": true,
+      "detail": "3 JSON-LD blocks"
+    },
+    {
+      "route": "/womens",
+      "check": "9. structured data valid + entity correct",
+      "pass": true,
+      "detail": "entity fields checked"
+    },
+    {
+      "route": "/womens",
+      "check": "10. present in sitemap",
+      "pass": true,
+      "detail": "38 URLs in sitemap"
+    },
+    {
+      "route": "/womens",
+      "check": "11. internal links in raw HTML",
+      "pass": true,
+      "detail": "28 distinct internal links"
+    },
+    {
+      "route": "/womens",
+      "check": "12. indexable",
+      "pass": true,
+      "detail": "robots=\"index, follow, max-image-preview:large\""
+    },
+    {
+      "route": "/womens",
+      "check": "no support@ address",
+      "pass": true,
+      "detail": "support@ found in page source"
+    },
+    {
+      "route": "/womens",
+      "check": "no public phone number",
+      "pass": true,
+      "detail": "matched \"undefined\""
+    },
+    {
+      "route": "/womens",
+      "check": "no Fendi Frost reference",
+      "pass": true,
+      "detail": "fendi found in page source"
+    },
+    {
+      "route": "/accessories",
+      "check": "1. HTTP status 200",
+      "pass": true,
+      "detail": "got 200"
+    },
+    {
+      "route": "/accessories",
+      "check": "2. self-referencing canonical",
+      "pass": true,
+      "detail": "got https://bemoremodest.com/accessories"
+    },
+    {
+      "route": "/accessories",
+      "check": "3. unique title",
+      "pass": true,
+      "detail": "\"Accessories | MOD#$T\""
+    },
+    {
+      "route": "/accessories",
+      "check": "4. unique description",
+      "pass": true,
+      "detail": "129 chars"
+    },
+    {
+      "route": "/accessories",
+      "check": "5. og:url matches canonical",
+      "pass": true,
+      "detail": "got https://bemoremodest.com/accessories"
+    },
+    {
+      "route": "/accessories",
+      "check": "6. raw-HTML route content",
+      "pass": true,
+      "detail": "455 chars of readable text"
+    },
+    {
+      "route": "/accessories",
+      "check": "8. structured data present",
+      "pass": true,
+      "detail": "3 JSON-LD blocks"
+    },
+    {
+      "route": "/accessories",
+      "check": "9. structured data valid + entity correct",
+      "pass": true,
+      "detail": "entity fields checked"
+    },
+    {
+      "route": "/accessories",
+      "check": "10. present in sitemap",
+      "pass": true,
+      "detail": "38 URLs in sitemap"
+    },
+    {
+      "route": "/accessories",
+      "check": "11. internal links in raw HTML",
+      "pass": true,
+      "detail": "23 distinct internal links"
+    },
+    {
+      "route": "/accessories",
+      "check": "12. indexable",
+      "pass": true,
+      "detail": "robots=\"index, follow, max-image-preview:large\""
+    },
+    {
+      "route": "/accessories",
+      "check": "no support@ address",
+      "pass": true,
+      "detail": "support@ found in page source"
+    },
+    {
+      "route": "/accessories",
+      "check": "no public phone number",
+      "pass": true,
+      "detail": "matched \"undefined\""
+    },
+    {
+      "route": "/accessories",
+      "check": "no Fendi Frost reference",
+      "pass": true,
+      "detail": "fendi found in page source"
+    },
+    {
+      "route": "/product/big-bear-cashmere-sweater",
+      "check": "1. HTTP status 200",
+      "pass": true,
+      "detail": "got 200"
+    },
+    {
+      "route": "/product/big-bear-cashmere-sweater",
+      "check": "2. self-referencing canonical",
+      "pass": true,
+      "detail": "got https://bemoremodest.com/product/big-bear-cashmere-sweater"
+    },
+    {
+      "route": "/product/big-bear-cashmere-sweater",
+      "check": "3. unique title",
+      "pass": true,
+      "detail": "\"Big Bear Cashmere Sweater | MOD#$T\""
+    },
+    {
+      "route": "/product/big-bear-cashmere-sweater",
+      "check": "4. unique description",
+      "pass": true,
+      "detail": "155 chars"
+    },
+    {
+      "route": "/product/big-bear-cashmere-sweater",
+      "check": "5. og:url matches canonical",
+      "pass": true,
+      "detail": "got https://bemoremodest.com/product/big-bear-cashmere-sweater"
+    },
+    {
+      "route": "/product/big-bear-cashmere-sweater",
+      "check": "6. raw-HTML route content",
+      "pass": true,
+      "detail": "1393 chars of readable text"
+    },
+    {
+      "route": "/product/big-bear-cashmere-sweater",
+      "check": "8. structured data present",
+      "pass": true,
+      "detail": "3 JSON-LD blocks"
+    },
+    {
+      "route": "/product/big-bear-cashmere-sweater",
+      "check": "9. structured data valid + entity correct",
+      "pass": true,
+      "detail": "entity fields checked"
+    },
+    {
+      "route": "/product/big-bear-cashmere-sweater",
+      "check": "10. present in sitemap",
+      "pass": true,
+      "detail": "38 URLs in sitemap"
+    },
+    {
+      "route": "/product/big-bear-cashmere-sweater",
+      "check": "11. internal links in raw HTML",
+      "pass": true,
+      "detail": "21 distinct internal links"
+    },
+    {
+      "route": "/product/big-bear-cashmere-sweater",
+      "check": "12. indexable",
+      "pass": true,
+      "detail": "robots=\"index, follow, max-image-preview:large\""
+    },
+    {
+      "route": "/product/big-bear-cashmere-sweater",
+      "check": "no support@ address",
+      "pass": true,
+      "detail": "support@ found in page source"
+    },
+    {
+      "route": "/product/big-bear-cashmere-sweater",
+      "check": "no public phone number",
+      "pass": true,
+      "detail": "matched \"undefined\""
+    },
+    {
+      "route": "/product/big-bear-cashmere-sweater",
+      "check": "no Fendi Frost reference",
+      "pass": true,
+      "detail": "fendi found in page source"
+    },
+    {
+      "route": "/product/ketchup-mustard-varsity-jacket",
+      "check": "1. HTTP status 200",
+      "pass": true,
+      "detail": "got 200"
+    },
+    {
+      "route": "/product/ketchup-mustard-varsity-jacket",
+      "check": "2. self-referencing canonical",
+      "pass": true,
+      "detail": "got https://bemoremodest.com/product/ketchup-mustard-varsity-jacket"
+    },
+    {
+      "route": "/product/ketchup-mustard-varsity-jacket",
+      "check": "3. unique title",
+      "pass": true,
+      "detail": "\"KETCHUP &amp; MUSTARD VARSITY JACKET | MOD#$T\""
+    },
+    {
+      "route": "/product/ketchup-mustard-varsity-jacket",
+      "check": "4. unique description",
+      "pass": true,
+      "detail": "157 chars"
+    },
+    {
+      "route": "/product/ketchup-mustard-varsity-jacket",
+      "check": "5. og:url matches canonical",
+      "pass": true,
+      "detail": "got https://bemoremodest.com/product/ketchup-mustard-varsity-jacket"
+    },
+    {
+      "route": "/product/ketchup-mustard-varsity-jacket",
+      "check": "6. raw-HTML route content",
+      "pass": true,
+      "detail": "1387 chars of readable text"
+    },
+    {
+      "route": "/product/ketchup-mustard-varsity-jacket",
+      "check": "8. structured data present",
+      "pass": true,
+      "detail": "3 JSON-LD blocks"
+    },
+    {
+      "route": "/product/ketchup-mustard-varsity-jacket",
+      "check": "9. structured data valid + entity correct",
+      "pass": true,
+      "detail": "entity fields checked"
+    },
+    {
+      "route": "/product/ketchup-mustard-varsity-jacket",
+      "check": "10. present in sitemap",
+      "pass": true,
+      "detail": "38 URLs in sitemap"
+    },
+    {
+      "route": "/product/ketchup-mustard-varsity-jacket",
+      "check": "11. internal links in raw HTML",
+      "pass": true,
+      "detail": "21 distinct internal links"
+    },
+    {
+      "route": "/product/ketchup-mustard-varsity-jacket",
+      "check": "12. indexable",
+      "pass": true,
+      "detail": "robots=\"index, follow, max-image-preview:large\""
+    },
+    {
+      "route": "/product/ketchup-mustard-varsity-jacket",
+      "check": "no support@ address",
+      "pass": true,
+      "detail": "support@ found in page source"
+    },
+    {
+      "route": "/product/ketchup-mustard-varsity-jacket",
+      "check": "no public phone number",
+      "pass": true,
+      "detail": "matched \"undefined\""
+    },
+    {
+      "route": "/product/ketchup-mustard-varsity-jacket",
+      "check": "no Fendi Frost reference",
+      "pass": true,
+      "detail": "fendi found in page source"
+    },
+    {
+      "route": "/product/unisex-jersey-short-sleeve-tee",
+      "check": "1. HTTP status 200",
+      "pass": true,
+      "detail": "got 200"
+    },
+    {
+      "route": "/product/unisex-jersey-short-sleeve-tee",
+      "check": "2. self-referencing canonical",
+      "pass": true,
+      "detail": "got https://bemoremodest.com/product/unisex-jersey-short-sleeve-tee"
+    },
+    {
+      "route": "/product/unisex-jersey-short-sleeve-tee",
+      "check": "3. unique title",
+      "pass": true,
+      "detail": "\"MOD#$T Bear Classic Logo Tee | MOD#$T\""
+    },
+    {
+      "route": "/product/unisex-jersey-short-sleeve-tee",
+      "check": "4. unique description",
+      "pass": true,
+      "detail": "148 chars"
+    },
+    {
+      "route": "/product/unisex-jersey-short-sleeve-tee",
+      "check": "5. og:url matches canonical",
+      "pass": true,
+      "detail": "got https://bemoremodest.com/product/unisex-jersey-short-sleeve-tee"
+    },
+    {
+      "route": "/product/unisex-jersey-short-sleeve-tee",
+      "check": "6. raw-HTML route content",
+      "pass": true,
+      "detail": "1727 chars of readable text"
+    },
+    {
+      "route": "/product/unisex-jersey-short-sleeve-tee",
+      "check": "8. structured data present",
+      "pass": true,
+      "detail": "3 JSON-LD blocks"
+    },
+    {
+      "route": "/product/unisex-jersey-short-sleeve-tee",
+      "check": "9. structured data valid + entity correct",
+      "pass": true,
+      "detail": "entity fields checked"
+    },
+    {
+      "route": "/product/unisex-jersey-short-sleeve-tee",
+      "check": "10. present in sitemap",
+      "pass": true,
+      "detail": "38 URLs in sitemap"
+    },
+    {
+      "route": "/product/unisex-jersey-short-sleeve-tee",
+      "check": "11. internal links in raw HTML",
+      "pass": true,
+      "detail": "21 distinct internal links"
+    },
+    {
+      "route": "/product/unisex-jersey-short-sleeve-tee",
+      "check": "12. indexable",
+      "pass": true,
+      "detail": "robots=\"index, follow, max-image-preview:large\""
+    },
+    {
+      "route": "/product/unisex-jersey-short-sleeve-tee",
+      "check": "no support@ address",
+      "pass": true,
+      "detail": "support@ found in page source"
+    },
+    {
+      "route": "/product/unisex-jersey-short-sleeve-tee",
+      "check": "no public phone number",
+      "pass": true,
+      "detail": "matched \"undefined\""
+    },
+    {
+      "route": "/product/unisex-jersey-short-sleeve-tee",
+      "check": "no Fendi Frost reference",
+      "pass": true,
+      "detail": "fendi found in page source"
+    },
+    {
+      "route": "/contact",
+      "check": "1. HTTP status 200",
+      "pass": true,
+      "detail": "got 200"
+    },
+    {
+      "route": "/contact",
+      "check": "2. self-referencing canonical",
+      "pass": true,
+      "detail": "got https://bemoremodest.com/contact"
+    },
+    {
+      "route": "/contact",
+      "check": "3. unique title",
+      "pass": true,
+      "detail": "\"Contact Modest | MOD#$T\""
+    },
+    {
+      "route": "/contact",
+      "check": "4. unique description",
+      "pass": true,
+      "detail": "128 chars"
+    },
+    {
+      "route": "/contact",
+      "check": "5. og:url matches canonical",
+      "pass": true,
+      "detail": "got https://bemoremodest.com/contact"
+    },
+    {
+      "route": "/contact",
+      "check": "6. raw-HTML route content",
+      "pass": true,
+      "detail": "516 chars of readable text"
+    },
+    {
+      "route": "/contact",
+      "check": "8. structured data present",
+      "pass": true,
+      "detail": "3 JSON-LD blocks"
+    },
+    {
+      "route": "/contact",
+      "check": "9. structured data valid + entity correct",
+      "pass": true,
+      "detail": "entity fields checked"
+    },
+    {
+      "route": "/contact",
+      "check": "10. present in sitemap",
+      "pass": true,
+      "detail": "38 URLs in sitemap"
+    },
+    {
+      "route": "/contact",
+      "check": "11. internal links in raw HTML",
+      "pass": true,
+      "detail": "21 distinct internal links"
+    },
+    {
+      "route": "/contact",
+      "check": "12. indexable",
+      "pass": true,
+      "detail": "robots=\"index, follow, max-image-preview:large\""
+    },
+    {
+      "route": "/contact",
+      "check": "no support@ address",
+      "pass": true,
+      "detail": "support@ found in page source"
+    },
+    {
+      "route": "/contact",
+      "check": "no public phone number",
+      "pass": true,
+      "detail": "matched \"undefined\""
+    },
+    {
+      "route": "/contact",
+      "check": "no Fendi Frost reference",
+      "pass": true,
+      "detail": "fendi found in page source"
+    },
+    {
+      "route": "/faq",
+      "check": "1. HTTP status 200",
+      "pass": true,
+      "detail": "got 200"
+    },
+    {
+      "route": "/faq",
+      "check": "2. self-referencing canonical",
+      "pass": true,
+      "detail": "got https://bemoremodest.com/faq"
+    },
+    {
+      "route": "/faq",
+      "check": "3. unique title",
+      "pass": true,
+      "detail": "\"Frequently Asked Questions | MOD#$T\""
+    },
+    {
+      "route": "/faq",
+      "check": "4. unique description",
+      "pass": true,
+      "detail": "131 chars"
+    },
+    {
+      "route": "/faq",
+      "check": "5. og:url matches canonical",
+      "pass": true,
+      "detail": "got https://bemoremodest.com/faq"
+    },
+    {
+      "route": "/faq",
+      "check": "6. raw-HTML route content",
+      "pass": true,
+      "detail": "851 chars of readable text"
+    },
+    {
+      "route": "/faq",
+      "check": "8. structured data present",
+      "pass": true,
+      "detail": "4 JSON-LD blocks"
+    },
+    {
+      "route": "/faq",
+      "check": "9. structured data valid + entity correct",
+      "pass": true,
+      "detail": "entity fields checked"
+    },
+    {
+      "route": "/faq",
+      "check": "10. present in sitemap",
+      "pass": true,
+      "detail": "38 URLs in sitemap"
+    },
+    {
+      "route": "/faq",
+      "check": "11. internal links in raw HTML",
+      "pass": true,
+      "detail": "21 distinct internal links"
+    },
+    {
+      "route": "/faq",
+      "check": "12. indexable",
+      "pass": true,
+      "detail": "robots=\"index, follow, max-image-preview:large\""
+    },
+    {
+      "route": "/faq",
+      "check": "no support@ address",
+      "pass": true,
+      "detail": "support@ found in page source"
+    },
+    {
+      "route": "/faq",
+      "check": "no public phone number",
+      "pass": true,
+      "detail": "matched \"undefined\""
+    },
+    {
+      "route": "/faq",
+      "check": "no Fendi Frost reference",
+      "pass": true,
+      "detail": "fendi found in page source"
+    },
+    {
+      "route": "/products/big-bear-cashmere-sweater",
+      "check": "foreign namespace 301s to the authoritative URL",
+      "pass": true,
+      "detail": "status 301 → /product/big-bear-cashmere-sweater"
+    },
+    {
+      "route": "/collections/mens",
+      "check": "foreign namespace 301s to the authoritative URL",
+      "pass": true,
+      "detail": "status 301 → /mens"
+    },
+    {
+      "route": "/collections/all",
+      "check": "foreign namespace 301s to the authoritative URL",
+      "pass": true,
+      "detail": "status 301 → /"
+    },
+    {
+      "route": "/robots.txt",
+      "check": "robots.txt served",
+      "pass": true,
+      "detail": "status 200"
+    },
+    {
+      "route": "/robots.txt",
+      "check": "robots.txt declares the sitemap",
+      "pass": true,
+      "detail": "missing Sitemap directive"
+    },
+    {
+      "route": "/sitemap.xml",
+      "check": "sitemap served",
+      "pass": true,
+      "detail": "status 200"
+    },
+    {
+      "route": "/sitemap.xml",
+      "check": "sitemap covers every static route",
+      "pass": true,
+      "detail": "38 URLs"
+    },
+    {
+      "route": "/sitemap.xml",
+      "check": "sitemap uses only the singular /product namespace",
+      "pass": true,
+      "detail": "foreign namespace URL found in sitemap"
+    }
+  ]
+}
