@@ -2,3 +2,24 @@ project_id = "lkbapymfjcfrnskcdrmv"
 
 [functions.project-stats]
 verify_jwt = false
+
+# Public storefront endpoints. The anon key would add nothing here: it ships in the
+# client bundle, so it is not a secret and gates nothing.
+[functions.catalog]
+verify_jwt = false
+
+[functions.products]
+verify_jwt = false
+
+[functions.preorders]
+verify_jwt = false
+
+# Creating a Checkout Session costs nothing and reveals nothing, so this is open like
+# any storefront checkout. Abuse protection belongs in Stripe Radar, not here.
+[functions.checkout]
+verify_jwt = false
+
+# Must stay false. Stripe cannot present a Supabase JWT; the Stripe-Signature HMAC
+# check inside the function is what authenticates the caller.
+[functions.stripe-webhook]
+verify_jwt = false
