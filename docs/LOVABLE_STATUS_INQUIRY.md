@@ -1,3 +1,7 @@
+# Historical inquiry
+
+Written while Shopify was the commerce backend. Do not use it to re-connect Shopify. See `docs/PRINTIFY_STRIPE_CUTOVER.md`.
+
 # Lovable Status Inquiry — copy/paste this into Lovable chat
 
 Use this prompt in the **Lovable project chat** for `modest-chic-builder`. Do not merge to `main` based on assumptions — we need facts from Lovable first.

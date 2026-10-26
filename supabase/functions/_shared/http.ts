@@ -45,9 +45,8 @@ export async function guard(run: () => Promise<Response>): Promise<Response> {
 /**
  * Path segments after the function name.
  *
- * Supabase invokes a function at /functions/v1/<name>/<rest>, while the local Node
- * dev server serves /api/<name>/<rest>. Anchoring on the function name makes both
- * resolve the same way, so the frontend keeps one set of paths.
+ * Supabase invokes a function at /functions/v1/<name>/<rest>. Anchoring on the
+ * function name keeps nested paths such as /checkout/sessions/:id working.
  */
 export function subPath(req: Request, functionName: string): string[] {
   const segments = new URL(req.url).pathname.split("/").filter(Boolean);

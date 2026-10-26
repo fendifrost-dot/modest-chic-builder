@@ -71,6 +71,21 @@ Deno.test("sales tax is collected - the Node version collected none", () => {
   assertEquals(body.shipping_options[0].shipping_rate_data.tax_behavior, "exclusive");
 });
 
+Deno.test("automatic tax turns off only when STRIPE_AUTOMATIC_TAX is false", () => {
+  const previous = Deno.env.get("STRIPE_AUTOMATIC_TAX");
+  try {
+    Deno.env.set("STRIPE_AUTOMATIC_TAX", "false");
+    const off = buildCheckoutBody({ origin: ORIGIN, handoffId: HANDOFF, items: [item()] });
+    assertEquals(off.automatic_tax.enabled, false);
+    Deno.env.set("STRIPE_AUTOMATIC_TAX", "true");
+    const on = buildCheckoutBody({ origin: ORIGIN, handoffId: HANDOFF, items: [item()] });
+    assertEquals(on.automatic_tax.enabled, true);
+  } finally {
+    if (previous == null) Deno.env.delete("STRIPE_AUTOMATIC_TAX");
+    else Deno.env.set("STRIPE_AUTOMATIC_TAX", previous);
+  }
+});
+
 Deno.test("every order leaves a Stripe Customer behind", () => {
   const body = buildCheckoutBody({ origin: ORIGIN, handoffId: HANDOFF, items: [item()] });
   assertEquals(body.customer_creation, "always");

@@ -1,17 +1,22 @@
-import { useEffect } from 'react';
+import { lazy, Suspense, useEffect, useState } from 'react';
 import Header from '@/components/Header';
 import HeroSection from '@/components/HeroSection';
 import MarqueeBanner from '@/components/MarqueeBanner';
-import CollectionsSection from '@/components/CollectionsSection';
 import ProductGrid from '@/components/ProductGrid';
-import BrandStory from '@/components/BrandStory';
-import Newsletter from '@/components/Newsletter';
-import Footer from '@/components/Footer';
-import WelcomeOfferModal from '@/components/WelcomeOfferModal';
 import SeoHead from '@/components/SeoHead';
 import { pageTitle, SITE_DESCRIPTION } from '@/lib/site';
 
+const Signature = lazy(() => import('@/components/Signature'));
+const CollectionsSection = lazy(() => import('@/components/CollectionsSection'));
+const PreorderSection = lazy(() => import('@/components/PreorderSection'));
+const BrandStory = lazy(() => import('@/components/BrandStory'));
+const Newsletter = lazy(() => import('@/components/Newsletter'));
+const Footer = lazy(() => import('@/components/Footer'));
+const WelcomeOfferModal = lazy(() => import('@/components/WelcomeOfferModal'));
+
 const Index = () => {
+  const [belowFold, setBelowFold] = useState(false);
+
   useEffect(() => {
     if (window.location.hash) {
       const id = window.location.hash.slice(1);
@@ -21,20 +26,41 @@ const Index = () => {
     }
   }, []);
 
+  useEffect(() => {
+    const start = () => setBelowFold(true);
+    const idle = window.requestIdleCallback?.bind(window);
+    if (idle) {
+      const id = idle(start, { timeout: 1200 });
+      return () => window.cancelIdleCallback?.(id);
+    }
+    const id = window.setTimeout(start, 300);
+    return () => window.clearTimeout(id);
+  }, []);
+
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen">
       <SeoHead title={pageTitle()} description={SITE_DESCRIPTION} path="/" />
       <Header />
       <main>
         <HeroSection />
         <MarqueeBanner />
-        <ProductGrid title="Heart Chakra Collection" subtitle="Essentials" limit={10} query="id:8965877104817 OR id:8965878087857 OR id:8965883068593 OR id:8966533677233" />
-        <CollectionsSection />
-        <BrandStory />
-        <Newsletter />
+        <ProductGrid title="Heart Chakra Collection" subtitle="Essentials" limit={8} collection="featured" />
+        {belowFold && (
+          <Suspense fallback={null}>
+            <Signature />
+            <CollectionsSection />
+            <PreorderSection />
+            <BrandStory />
+            <Newsletter />
+          </Suspense>
+        )}
       </main>
-      <Footer />
-      <WelcomeOfferModal />
+      {belowFold && (
+        <Suspense fallback={null}>
+          <Footer />
+          <WelcomeOfferModal />
+        </Suspense>
+      )}
     </div>
   );
 };

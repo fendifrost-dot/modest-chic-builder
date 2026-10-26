@@ -1,65 +1,59 @@
-import Header from '@/components/Header';
-import ProductGrid from '@/components/ProductGrid';
-import Footer from '@/components/Footer';
-import SeoHead from '@/components/SeoHead';
-import { BreadcrumbJsonLd } from '@/components/JsonLd';
-import { pageTitle, SITE_URL } from '@/lib/site';
+import Header from "@/components/Header";
+import ProductGrid from "@/components/ProductGrid";
+import Footer from "@/components/Footer";
+import SeoHead from "@/components/SeoHead";
+import { BreadcrumbJsonLd } from "@/components/JsonLd";
+import { pageTitle, SITE_URL } from "@/lib/site";
 
 interface CollectionPageProps {
   title: string;
   subtitle: string;
   description: string;
   path: string;
-  /** If set, uses collectionByHandle query (exact Shopify parity). */
-  collectionHandle?: string;
-  /** Fallback: tag-based search query (used when no Shopify collection exists). */
-  query?: string;
-  /** Sort key for products query (e.g. CREATED_AT). */
+  collection?: string;
   sortKey?: string;
-  /** Reverse sort order. */
   reverse?: boolean;
   emptyMessage?: string;
 }
 
 const collectionConfig: Record<string, CollectionPageProps> = {
   mens: {
-    collectionHandle: 'frontpage',
+    collection: "mens",
     title: "Men's Collection",
-    subtitle: 'For Him',
-    path: '/mens',
-    description: "Shop men's MOD#$T luxury streetwear — cashmere sweaters, varsity jackets, tees, and limited drops crafted in Chicago.",
+    subtitle: "For Him",
+    path: "/mens",
+    description: "Shop men's MOD#$T luxury streetwear — tees, knits, and limited drops from Chicago.",
   },
   womens: {
-    collectionHandle: 'womens',
+    collection: "womens",
     title: "Women's Collection",
-    subtitle: 'For Her',
-    path: '/womens',
-    description: "Shop women's MOD#$T streetwear — chakra tees, bombers, and elevated essentials with a relaxed, modest fit.",
+    subtitle: "For Her",
+    path: "/womens",
+    description: "Shop women's MOD#$T streetwear — chakra tees and elevated essentials with a relaxed, modest fit.",
   },
   accessories: {
-    collectionHandle: 'accessories',
-    title: 'Accessories',
-    subtitle: 'Complete the Look',
-    path: '/accessories',
-    description: 'MOD#$T accessories to complete the look — ski masks, extras, and limited add-ons from Be More Modest.',
+    collection: "accessories",
+    title: "Accessories",
+    subtitle: "Complete the Look",
+    path: "/accessories",
+    description: "MOD#$T accessories to complete the look — masks, extras, and limited add-ons from Be More Modest.",
   },
-  'new-arrivals': {
-    title: 'New Arrivals',
-    subtitle: 'Just Dropped',
-    path: '/new-arrivals',
-    sortKey: 'CREATED_AT',
+  "new-arrivals": {
+    collection: "new-arrivals",
+    title: "New Arrivals",
+    subtitle: "Just Dropped",
+    path: "/new-arrivals",
+    sortKey: "CREATED_AT",
     reverse: true,
-    description: 'New MOD#$T arrivals — the latest limited-run streetwear drops from Be More Modest.',
+    description: "New MOD#$T arrivals — the latest limited-run streetwear drops from Be More Modest.",
   },
   sale: {
-    title: 'Sale',
-    subtitle: 'Limited Time',
-    path: '/sale',
-    query: 'tag:sale OR tag:Sale',
-    sortKey: 'CREATED_AT',
-    reverse: true,
-    description: 'Shop the MOD#$T sale — limited-time savings on luxury streetwear at checkout.',
-    emptyMessage: 'Exclusive savings of up to 30% are applied at checkout. Add pieces to your cart to see the offer on eligible items.',
+    collection: "sale",
+    title: "Sale",
+    subtitle: "Marked Down",
+    path: "/sale",
+    description: "MOD#$T pieces currently tagged for sale in the Printify catalog.",
+    emptyMessage: "No marked-down pieces at the moment. New subscribers can still use WELCOME10 on Stripe Checkout.",
   },
 };
 
@@ -72,14 +66,10 @@ const Collection = ({ collection }: Props) => {
 
   return (
     <div className="min-h-screen bg-background">
-      <SeoHead
-        title={pageTitle(config.title)}
-        description={config.description}
-        path={config.path}
-      />
+      <SeoHead title={pageTitle(config.title)} description={config.description} path={config.path} />
       <BreadcrumbJsonLd
         items={[
-          { name: 'Home', url: `${SITE_URL}/` },
+          { name: "Home", url: `${SITE_URL}/` },
           { name: config.title, url: `${SITE_URL}${config.path}` },
         ]}
       />
@@ -89,8 +79,7 @@ const Collection = ({ collection }: Props) => {
           title={config.title}
           subtitle={config.subtitle}
           limit={50}
-          collectionHandle={config.collectionHandle}
-          query={config.query}
+          collection={config.collection}
           sortKey={config.sortKey}
           reverse={config.reverse}
           jsonLdPath={config.path}

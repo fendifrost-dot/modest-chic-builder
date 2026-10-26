@@ -1,3 +1,7 @@
+# SUPERSEDED — live site only, not this branch
+
+The notes below describe the **currently published** Lovable site, which still uses Shopify. This branch removes that coupling and must not be published or merged while the Founder SEO/GEO test (baselined August 19, 2026) is open. Cutover plan: `docs/PRINTIFY_STRIPE_CUTOVER.md`.
+
 # Go-Live Status — bemoremodest.com (confirmed 2026-07-01)
 
 **Source of truth:** Lovable status report + live DNS/HTTP verification.  

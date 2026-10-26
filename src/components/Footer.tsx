@@ -12,6 +12,7 @@ const Footer = () => {
       { name: 'Accessories', href: '/accessories' },
       { name: 'New Arrivals', href: '/new-arrivals' },
       { name: 'Sale', href: '/sale' },
+      { name: "What's to Come", href: '/whats-to-come' },
     ],
     support: [
       { name: 'Contact Us', href: '/contact' },
@@ -114,7 +115,7 @@ const Footer = () => {
         <div className="container mx-auto px-6 lg:px-12 py-6">
           <div className="flex flex-col md:flex-row items-center justify-between gap-4">
             <p className="text-cream/40 text-xs">
-              © {currentYear} MOD#$T. All rights reserved.
+              © {currentYear} Modest Streetwear Apparel Inc. MOD#$T. Chicago.
             </p>
             
             {/* Social Links */}
@@ -156,11 +157,10 @@ const Footer = () => {
       <div className="border-t border-border">
         <div className="container mx-auto px-6 lg:px-12 py-4">
           <div className="flex items-center justify-center gap-6 text-cream/30 text-xs tracking-wider">
+            <span>STRIPE</span>
             <span>VISA</span>
             <span>MASTERCARD</span>
             <span>AMEX</span>
-            <span>AFFIRM</span>
-            <span>PAYPAL</span>
           </div>
         </div>
       </div>

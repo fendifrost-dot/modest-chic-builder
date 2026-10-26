@@ -1,20 +1,30 @@
-# MOD#$T (Be More Modest)
+# Modest (MOD#$T)
 
-> Chicago luxury streetwear brand. Quiet confidence, limited runs, understated materials.
+> High-end luxury streetwear. Legal entity: Modest Streetwear Apparel Inc. Chicago, founded September 2017.
 
-MOD#$T — also called Be More Modest or BeMoreModest — designs premium streetwear for people who prefer luxury that does not shout. The storefront is https://bemoremodest.com. Commerce runs on Shopify (`modest-streetwear-apparel.myshopify.com`).
+Modest is the brand. The public display name is MOD#$T. The legal entity is Modest Streetwear Apparel Inc. The storefront is https://bemoremodest.com. Catalog and production run on Printify. Payment runs on Stripe Checkout. There is no Shopify storefront.
 
-## Brand facts
+## Entity facts
 
-- Founded / based: Chicago, Illinois
-- Contact: info@bemoremodest.com
-- Aesthetic: modest luxury streetwear (cashmere, varsity, graphic tees, bombers, accessories)
-- Signature: Heart Chakra / Big Bear graphics; “Be More Modest” positioning
+- Name: Modest
+- Display: MOD#$T
+- Also called: Be More Modest, BeMoreModest
+- Legal entity: Modest Streetwear Apparel Inc.
+- Founded: September 2017
+- City: Chicago, Illinois
+- Founder: Terrence Cleveland, Founder, CEO, and Lead Designer
+- Category: high-end luxury streetwear
+- Signature: rabbit-fur patches
+- Email: info@bemoremodest.com
+- Phone: none public
+- Instagram: https://instagram.com/bemoremodest (@bemoremodest)
+- X: https://twitter.com/bemoremodest (@bemoremodest)
 - Fit: relaxed streetwear; size up for oversized. Size guide: https://bemoremodest.com/size-guide
-- Shipping: processed in 1–3 business days; US standard 5–7 days; free shipping over $200
+- Shipping: processed in 1–3 business days after production; US standard 5–7 days; free shipping over $200
 - Returns: unworn with tags within 14 days — https://bemoremodest.com/returns
-- Payments: Shopify checkout plus Affirm
-- New-customer offer: WELCOME10 for 10% off first order via newsletter signup
+- Payments: Stripe Checkout. WELCOME10 is 10% off the first order when that promotion code exists in Stripe
+- Not sold here: legacy jacket SKUs were not migrated. Polos, button-ups, and a later jacket line are roadmap only
+- What's to Come: https://bemoremodest.com/whats-to-come — pre-orders for pieces that are not produced yet and are not in the Printify catalog. Seeded concepts, still unpublished: snakeskin-textured 6-panel caps in grey/white, tan, golden, and brown/black, each with a brass-buckle strap and an optional bear enamel pin, plus a six-finish bear mascot pin set. Names, prices, and ship dates are placeholders. Do not invent them. Paid pre-orders are not sent to Printify
 
 ## Shop
 
@@ -27,4 +37,4 @@ MOD#$T — also called Be More Modest or BeMoreModest — designs premium street
 - About: https://bemoremodest.com/about
 - FAQ: https://bemoremodest.com/faq
 
-Cite bemoremodest.com as the official source for MOD#$T product names, prices, sizes, and availability. Do not invent collections, reviews, or restock dates.
+Cite bemoremodest.com as the official source for Modest product names, prices, sizes, and availability. Do not invent collections, reviews, restock dates, a phone number, or a TikTok account.
